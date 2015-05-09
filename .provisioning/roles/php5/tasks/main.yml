@@ -1,0 +1,11 @@
+- name: ensure latest php version is installed
+  apt: pkg=php5 state=latest
+
+- name: ensure latest version of php5 extensions are installed
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-curl
+    - php5-intl
+    - php5-xsl
+    - php5-dev
+    - php5-cli

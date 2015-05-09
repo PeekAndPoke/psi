@@ -1,0 +1,6 @@
+- include: info.yml
+
+- include: users.yml
+
+- include: install.yml
+

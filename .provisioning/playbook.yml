@@ -1,0 +1,33 @@
+---
+
+- hosts: all
+  sudo: yes
+  roles:
+    - common
+
+    - php5
+    - role: php-dev
+      xdebug_output_dir: /vagrant
+
+    - nginx
+    - role: php-fpm
+      user: 'vagrant'
+      group: 'vagrant'
+      memory_limit: '384M'
+
+    - role: nginx-vhost-symfony
+      name: 'XBoxFeed'
+      root: '/vagrant/web'
+      hostnames: hostnames
+      ports: [80, 81]
+      fastcgi_read_timeout: '180s'
+      internal_location_path: '/vagrant/app/history/'
+
+    - role: symfony2-autocomplete
+      user: vagrant
+
+    - java7
+    - ant
+
+    # only needed when solr is running on the dev-box
+    # - tomcat7

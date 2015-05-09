@@ -1,0 +1,26 @@
+{
+  "name": "peekandpoke/php-psi",
+  "description": "Java Streams Api inspired implementation for PHP. Php Streams (Api) Impl: PSI",
+
+  "require": {
+    "php": ">=5.3"
+  },
+
+  "require-dev": {
+    "phing/phing": "2.*@dev",
+    "phpunit/phpunit": "3.7.*",
+    "theseer/phpdox": "0.6.*",
+    "pdepend/pdepend": "1.1.*",
+    "phploc/phploc": "2.0.*",
+    "phpmd/phpmd": "1.5.*",
+    "sebastian/phpcpd": "1.4.*",
+    "mayflower/php-codebrowser": "1.1.*",
+    "squizlabs/php_codesniffer": "1.5.*"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
+  }
+}

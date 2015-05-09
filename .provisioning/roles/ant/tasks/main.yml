@@ -1,0 +1,4 @@
+- name: ensure ant is installed
+  apt:  pkg={{ item }} state=latest
+  with_items:
+    - ant

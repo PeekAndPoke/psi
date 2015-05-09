@@ -1,0 +1,25 @@
+
+- name: stop apache if running
+  service: name=apache2 state=stopped enabled=false
+
+- name: uninstall apache when installed
+  apt:  name=apache2 state=absent
+
+- name: ensure latest version of nginx is installed
+  apt:  name=nginx state=latest
+
+- name: ensure nginx is running after reboot
+  service: name=nginx state=started enabled=true
+
+- name: remove default nginx vhost
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify:
+    - restart nginx
+
+- name: create nginx vhost "blackhole"
+  template: src=blackhole.j2 dest=/etc/nginx/sites-available/000_blackhole
+  notify:
+    - restart nginx
+
+- name: enable nginx vhost "blackhole"
+  file:  path=/etc/nginx/sites-enabled/000_blackhole state=link src=/etc/nginx/sites-available/000_blackhole

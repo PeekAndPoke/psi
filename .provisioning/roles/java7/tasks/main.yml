@@ -1,0 +1,18 @@
+
+- name: add apt repository ppa:webupd8team/java
+  apt_repository: repo=ppa:webupd8team/java state=present update_cache=true
+
+- name: Automatically select the Oracle License
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+
+- name: ensure orcale-java7 is installed
+  apt: pkg= state=latest update-cache=yes force=yes
+  with_items:
+    - oracle-java7-installer
+    - oracle-java7-set-default
+
+- name: set JAVA_HOME in /etc/environment
+  lineinfile: dest=/etc/environment state=present regexp='JAVA_HOME=.*$' line="JAVA_HOME=/usr/lib/jvm/java-7-oracle"
+
+- name: set JAVA_HOME in /etc/default/tomcat7
+  lineinfile: dest=/etc/default/tomcat7 state=present regexp='#*JAVA_HOME=.*$' line="JAVA_HOME=/usr/lib/jvm/java-7-oracle"

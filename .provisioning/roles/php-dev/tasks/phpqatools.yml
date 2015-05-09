@@ -1,0 +1,26 @@
+# TODO: find a way to avoid github-rate-limit
+
+- name: install phpqatools - ensure directory {{ install_dir }} exists
+  file: path={{ install_dir }} state=directory mode=0777
+
+- name: install phpqatools - ensure composer.phar is downloaded to {{ install_dir }}
+  shell: chdir={{ install_dir }} creates={{ install_dir }}/composer.phar curl -sS https://getcomposer.org/installer | php
+
+- name: install phpqatools - ensure composer.phar is up to date
+  shell: chdir={{ install_dir }} php composer.phar self-update
+  register: phpqatools_composer_self_update
+  changed_when: "'You are already using composer version' not in phpqatools_composer_self_update.stdout"
+
+- name: install phpqatools - ensure phpqatools are installed
+  shell: chdir={{ install_dir }} creates={{ install_dir }}/composer.json php composer.phar require h4cc/phpqatools dev-master --prefer-dist --dev
+  register: phpqatools_composer_install
+- debug: var=phpqatools_composer_install.stdout_lines
+
+- name: install phpqatools - ensure phpqatools are installed completely  -> githab rate limit could have hit
+  shell: chdir={{ install_dir }} php composer.phar install --prefer-dist
+  register: phpqatools_composer_install
+  changed_when: "'Nothing to install or update' not in phpqatools_composer_install.stdout"
+- debug: var=phpqatools_composer_install.stdout
+
+- name: install phpqatools - ensure phpqatools is added to system-wide path
+  lineinfile: dest=/etc/environment state=present backrefs=yes regexp='PATH=(["]*)((?!.*?{{ install_dir }}/vendor/bin).*?)(["]*)$' line="PATH=\1\2:{{ install_dir }}/vendor/bin\3"

@@ -1,0 +1,30 @@
+
+- name: remove apt repository ppa:ondrej
+  apt_repository: repo=ppa:ondrej/php5 state=absent update_cache=true
+
+- name: ensure latest php version is installed
+  apt: pkg=php5 state=latest 
+
+- name: ensure latest version of php5 extensions are installed
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-curl
+    - php5-intl
+    - php5-xsl
+
+- name: ensure APC prerequisites are installed
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php-pear
+    - php5-dev
+    - make
+    - apache2-prefork-dev
+
+- name: install APC via pecl
+  shell: printf "\n" | pecl install apc
+  register: apc_install_result
+  changed_when: "'Build process completed successfully' in apc_install_result.stdout"
+  failed_when: "'Build process completed successfully' not in apc_install_result.stdout and 'pecl/apc is already installed' not in apc_install_result.stdout"
+
+- name: write APC config file
+  template: src=apc.ini.j2 dest=/etc/php5/conf.d/apc.ini 
