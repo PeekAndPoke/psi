@@ -1,3 +1,3 @@
 #!/bin/sh
 
-php tools/composer.phar $@
+/usr/bin/php ./tools/composer/composer.phar $@
