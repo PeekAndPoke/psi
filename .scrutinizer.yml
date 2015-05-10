@@ -6,9 +6,10 @@ tools:
 
 filter:
   excluded_paths:
+    - app/*
     - build/*
-    - tools/*
     - public/*
+    - tools/*
     - src/*/Tests
     - src/*/*/Tests
     - src/*/*/*/Tests
