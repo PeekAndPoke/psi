@@ -15,3 +15,8 @@ filter:
     - src/*/*/*/Tests
     - src/*/*/*/*/Tests
     - src/*/*/*/*/*/Tests
+
+checks:
+  php:
+    code_rating: true
+    duplication: true
