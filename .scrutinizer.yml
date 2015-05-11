@@ -11,11 +11,7 @@ filter:
     - build/*
     - public/*
     - tools/*
-    - src/*/Tests
-    - src/*/*/Tests
-    - src/*/*/*/Tests
-    - src/*/*/*/*/Tests
-    - src/*/*/*/*/*/Tests
+    - */Tests/*
 
 checks:
   php:
