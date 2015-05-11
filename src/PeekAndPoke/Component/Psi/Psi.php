@@ -70,16 +70,6 @@ class Psi
     }
 
     /**
-     * Use this to suppress warnings about unused parameters
-     *
-     * @param null $a
-     */
-    public static function nop($a = null)
-    {
-        // nop
-    }
-
-    /**
      * @param \Iterator $input
      */
     private function __construct(\Iterator $input)
