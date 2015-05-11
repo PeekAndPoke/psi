@@ -38,7 +38,7 @@ class PsiFactory
             return $iterator;
         }
 
-        return $this->createIterator(null);
+        return $this->createSingleIterator(null);
     }
 
     /**
