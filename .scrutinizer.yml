@@ -6,7 +6,7 @@ tools:
     timeout: 1200  # timeout in seconds : 20 minutes
 
 filter:
-  paths
+  paths:
     - src/*
   excluded_paths:
     - app/*
