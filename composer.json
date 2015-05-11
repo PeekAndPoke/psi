@@ -3,19 +3,17 @@
   "description": "Java Streams Api inspired implementation for PHP. Php Streams (Api) Impl: PSI",
 
   "require": {
-    "php": ">=5.3"
+    "php": ">=5.4"
   },
 
   "require-dev": {
     "phing/phing": "2.*@dev",
-    "phpunit/phpunit": "3.7.*",
-    "theseer/phpdox": "0.6.*",
-    "pdepend/pdepend": "1.1.*",
-    "phploc/phploc": "2.0.*",
-    "phpmd/phpmd": "1.5.*",
-    "sebastian/phpcpd": "1.4.*",
-    "mayflower/php-codebrowser": "1.1.*",
-    "squizlabs/php_codesniffer": "1.5.*"
+    "phpunit/phpunit": "~4.6",
+    "pdepend/pdepend": "~2.0",
+    "phploc/phploc": "~2.0",
+    "phpmd/phpmd": "~2.2",
+    "sebastian/phpcpd": "~2.0",
+    "squizlabs/php_codesniffer": "~2.3"
   },
 
   "autoload": {

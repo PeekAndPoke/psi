@@ -4,14 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
+namespace PeekAndPoke\Component\Psi\Operation\Intermediate;
+
+use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 
 /**
- * EachOperation
+ * EmptyIntermediateOp
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class EachOperation extends AbstractBinaryFunctionalOperation
+class EmptyIntermediateOp implements IntermediateOperationInterface
 {
     /**
      * {@inheritdoc}
@@ -20,8 +22,6 @@ class EachOperation extends AbstractBinaryFunctionalOperation
     {
         $useItem     = true;
         $canContinue = true;
-
-        $this->function->apply($input, $index);
 
         // return the input unmodified
         return $input;

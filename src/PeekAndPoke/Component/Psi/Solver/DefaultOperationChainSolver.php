@@ -70,22 +70,23 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
 
         while ($input->valid() && $continueWIthNextItem) {
 
-            $result = $input->current();
-
+            $result    = $input->current();
             $useResult = true;
 
+            // do the whole intermediate operation chain for the current input
             $operatorChain->rewind();
 
             while ($operatorChain->valid() && $useResult) {
 
                 /** @var IntermediateOperationInterface $current */
                 $current = $operatorChain->current();
-                $operatorChain->next();
-
-                $result = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
-
+                // apply intermediate operations
+                $result  = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
                 // track the continuation flags
                 $continueWIthNextItem = $continueWIthNextItem && $returnedCanContinue;
+
+                // iterate
+                $operatorChain->next();
             }
 
             if ($useResult) {

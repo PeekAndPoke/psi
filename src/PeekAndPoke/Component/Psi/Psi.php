@@ -20,6 +20,7 @@ use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\SortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserSortOperation;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\EmptyIntermediateOp;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\EachOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPredicate;
@@ -29,6 +30,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\SumOperation;
@@ -49,28 +51,19 @@ class Psi
     private $operationChainSolver = null;
 
     /**
-     * @param array|\Iterator $streamable
+     * @param mixed $streamable Everything that can be iterator over
+     * @param mixed $_          Provide as many params as you want (from 1 to n)
      *
      * @return Psi
      * @throws PsiException
      */
-    public static function it($streamable)
+    public static function it($streamable, $_ = null)
     {
-        if ($streamable instanceof \Iterator) {
-            return new Psi($streamable);
-        }
+        $factory = new PsiFactory();
 
-        if ($streamable instanceof \Traversable) {
-            // TODO: figure out what to do
-//            return new Psi(new \ArrayIterator($streamable));
-        }
+        $iterator = $factory->createIterator(func_get_args());
 
-        if (is_array($streamable)) {
-            return new Psi(new \ArrayIterator($streamable));
-        }
-
-
-        throw new PsiException('Invalid input, not an array an iterator');
+        return new Psi($iterator);
     }
 
     /**
@@ -291,6 +284,16 @@ class Psi
     }
 
     /**
+     * @param string $delimiter
+     *
+     * @return string
+     */
+    public function join($delimiter)
+    {
+        return $this->solveOperationsAndApplyTerminal(new JoinOperation($delimiter));
+    }
+
+    /**
      * @param mixed $default
      *
      * @return mixed
@@ -341,6 +344,12 @@ class Psi
      */
     private function solveOperationsAndApplyTerminal(TerminalOperationInterface $terminal)
     {
+        // When we have not a single operation in the chain we add a dummy one, in order to map down multiple input
+        // living inside the \AppendIterator (in case we have multiple inputs)
+        if (count($this->operationChain) == 0) {
+            $this->operationChain->append(new EmptyIntermediateOp());
+        }
+
         $result = $this->operationChainSolver->solve($this->operationChain, $this->input);
 
         return $terminal->apply($result);
