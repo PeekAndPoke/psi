@@ -13,7 +13,16 @@ filter:
     - build/*
     - public/*
     - tools/*
-    - */Tests/*
+    - src/*/Test/*
+    - src/*/Tests/*
+    - src/*/*/Test/*
+    - src/*/*/Tests/*
+    - src/*/*/*/Test/*
+    - src/*/*/*/Tests/*
+    - src/*/*/*/*/Test/*
+    - src/*/*/*/*/Tests/*
+    - src/*/*/*/*/*/Test/*
+    - src/*/*/*/*/*/Tests/*
 
 checks:
   php:
