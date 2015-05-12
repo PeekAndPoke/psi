@@ -12,7 +12,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
 use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolverInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
-use PeekAndPoke\Component\Psi\Operation\FullSet\FlatMapOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
@@ -29,6 +29,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
@@ -51,16 +52,13 @@ class Psi
     private $operationChainSolver = null;
 
     /**
-     * Create a Psi instance for the given input
-     *
-     * You can provide as many iteratable parameters as you wish. From 0 to n.
-     *
-     * @param mixed $_          Provide as many iteratable params as you want (from 0 to n)
+     * @param mixed $streamable Everything that can be iterator over
+     * @param mixed $_          Provide as many params as you want (from 1 to n)
      *
      * @return Psi
      * @throws PsiException
      */
-    public static function it($_ = null)
+    public static function it($streamable, $_ = null)
     {
         $factory = new PsiFactory();
 
@@ -72,7 +70,7 @@ class Psi
     /**
      * @param \Iterator $input
      */
-    private function __construct(\Iterator $input)
+    protected function __construct(\Iterator $input)
     {
         $this->operationChain       = new \ArrayIterator();
         $this->operationChainSolver = new DefaultOperationChainSolver();
@@ -171,11 +169,15 @@ class Psi
     ////  FULL SET OPERATIONS - working on all items at a time  ////////////////////////////////////////////////////////
 
     /**
+     * Flattens the input recursively into a no longer nested iterator.
+     *
+     * Example: [1, [2, [3, 4], 5], 6] will become [1, 2, 3, 4, 5, 6]
+     *
      * @return $this
      */
-    public function flatMap()
+    public function flatten()
     {
-        $this->operationChain->append(new FlatMapOperation());
+        $this->operationChain->append(new FlattenOperation());
 
         return $this;
     }
@@ -235,11 +237,23 @@ class Psi
     }
 
     /**
-     * @param \Closure|BinaryFunctionInterface $biFunction
+     * @param BinaryFunctionInterface|\Closure $biFunction
      *
      * @return $this
      */
     public function usort($biFunction)
+    {
+        $this->operationChain->append(new UserSortOperation($biFunction));
+
+        return $this;
+    }
+
+    /**
+     * @param BinaryFunctionInterface|\Closure $biFunction
+     *
+     * @return $this
+     */
+    public function uksort($biFunction)
     {
         $this->operationChain->append(new UserSortOperation($biFunction));
 
@@ -274,6 +288,14 @@ class Psi
     public function collect()
     {
         return $this->solveOperationsAndApplyTerminal(new CollectOperation());
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->solveOperationsAndApplyTerminal(new CollectToArrayOperation());
     }
 
     /**

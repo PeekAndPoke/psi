@@ -6,9 +6,13 @@
  */
 namespace PeekAndPoke\Component\Psi;
 
-
 use PeekAndPoke\Component\Psi\Exception\PsiException;
 
+/**
+ * PsiFactory
+ *
+ * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ */
 class PsiFactory
 {
     /**
@@ -38,7 +42,7 @@ class PsiFactory
             return $iterator;
         }
 
-        return $this->createSingleIterator(null);
+        return $this->createIterator(null);
     }
 
     /**

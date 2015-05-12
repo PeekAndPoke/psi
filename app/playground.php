@@ -9,7 +9,10 @@ use PeekAndPoke\Component\Psi\Psi;
 require_once(__DIR__ . '/bootstrap.php');
 
 $input1  = [1,2,3,4];
-$result = Psi::it($input1)->map(function ($i) { return $i * 2; })->join(', ');
+$result = Psi::it($input1)
+    ->filter(function ($i) { return $i > 2; })
+    ->map(function ($i) { return $i * 2; })
+    ->join(', ');
 
 var_dump($result);
 

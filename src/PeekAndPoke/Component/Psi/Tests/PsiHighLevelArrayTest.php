@@ -94,7 +94,7 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         ];
         $expected = [1, 2, 3, 4, 5, 6, 7, 8];
 
-        $result = Psi::it($input)->flatMap()->collect();
+        $result = Psi::it($input)->flatten()->collect();
 
         $this->assertPsiCollectOutputMatches($expected, $result);
     }

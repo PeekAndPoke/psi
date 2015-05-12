@@ -25,7 +25,7 @@ class PsiHighLevelMultipleInputsTest extends AbstractPsiTest
      */
     public function testMultipleInputs($input, $expected)
     {
-        $callable = array('\PeekAndPoke\Component\Psi\Psi', 'it');
+        $callable = ['\PeekAndPoke\Component\Psi\Psi', 'it'];
 
         /** @var Psi $psi */
         $psi = call_user_func_array($callable, $input);

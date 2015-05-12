@@ -35,7 +35,7 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
                 // execute all the collected unary operations
 
                 if ($unaryChain->count() > 0) {
-                    $tempResult = $this->solveIntermediateOperationChain($unaryChain, $tempResult);
+                    $tempResult = static::solveIntermediateOperationChain($unaryChain, $tempResult);
                     $unaryChain = new \ArrayIterator();
                 }
 
@@ -48,7 +48,7 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
 
         // resolve the rest of the unary operation
         if ($unaryChain->count() > 0) {
-            $tempResult = $this->solveIntermediateOperationChain($unaryChain, $tempResult);
+            $tempResult = static::solveIntermediateOperationChain($unaryChain, $tempResult);
         }
 
         return $tempResult;

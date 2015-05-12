@@ -9,7 +9,7 @@ namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
 
 /**
- * FullSetOperation
+ * AbstractSortingOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

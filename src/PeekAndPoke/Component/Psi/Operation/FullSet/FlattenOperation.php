@@ -9,11 +9,11 @@ namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
 
 /**
- * FlatMapOperation
+ * FlattenOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class FlatMapOperation implements FullSetOperationInterface
+class FlattenOperation implements FullSetOperationInterface
 {
     /**
      * {@inheritdoc}
