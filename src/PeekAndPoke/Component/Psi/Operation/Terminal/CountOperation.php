@@ -18,7 +18,7 @@ class CountOperation implements TerminalOperationInterface
     /**
      * {@inheritdoc}
      *
-     * @return float
+     * @return int
      */
     public function apply(\Iterator $set)
     {
