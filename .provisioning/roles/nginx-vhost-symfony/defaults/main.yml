@@ -1,2 +1,0 @@
-fastcgi_read_timeout: 60s
-internal_location_path: ''

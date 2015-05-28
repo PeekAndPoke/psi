@@ -62,18 +62,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
 
         # initial provisioning using Ansible (see http://docs.vagrantup.com/v2/provisioning/ansible.html)
-        default_config.vm.provision "ansible" do |ansible|
 
-            ansible.playbook = ".provisioning/playbook.yml"
+        default_config.vm.provision "shell", path: ".provision/provision.sh"
 
-            ansible.extra_vars = {
-                hosts: default_config.hostsupdater.aliases
-            }
-
-            # OUTPUT - VERBOSITY
-            # ansible.verbose = "vvv"
-
-        end
     end
 
     config.hostsupdater.aliases = [

@@ -1,7 +1,0 @@
-- name: create nginx vhost (Symfony2) for "{{ name }}"
-  template: src=vhost.j2 dest=/etc/nginx/sites-available/{{ name }}
-  notify:
-    - restart nginx
-
-- name: enable nginx vhost (Symfony2) for "{{ name }}"
-  file:  path=/etc/nginx/sites-enabled/{{ name }} state=link src=/etc/nginx/sites-available/{{ name }}

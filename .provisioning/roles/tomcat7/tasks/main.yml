@@ -1,6 +1,0 @@
-
-- name: ensure Tomcat7 is installed
-  apt: pkg=tomcat7 state=latest update-cache=yes
-
-- name: ensure Tomcat7 is running after reboot
-  service: name=tomcat7 state=started enabled=true
