@@ -12,5 +12,3 @@ sudo apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options
 
 # install debug tools
 sudo apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" php5-xdebug
-
-

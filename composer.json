@@ -7,7 +7,7 @@
   },
 
   "require-dev": {
-    "phing/phing": "2.*@dev",
+    "phing/phing": "~2.0",
     "phpunit/phpunit": "~4.6",
     "pdepend/pdepend": "~2.0",
     "phploc/phploc": "~2.0",
