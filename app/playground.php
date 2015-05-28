@@ -8,10 +8,13 @@ use PeekAndPoke\Component\Psi\Psi;
 
 require_once(__DIR__ . '/bootstrap.php');
 
-$input1  = [1,2,3,4];
+$input1  = [1,2,3,4,3,4];
 $result = Psi::it($input1)
-    ->filter(function ($i) { return $i > 2; })
-    ->map(function ($i) { return $i * 2; })
+    ->filterValueKey(function ($v, $k) { return $k > 2 || $v == 1; })
+    ->map(function ($v, $k) { return $v * $k; })
+    ->rsort()
+//    ->unique()
+    ->reverse()
     ->join(', ');
 
 var_dump($result);
@@ -35,6 +38,23 @@ $inputKv2 = [
     'c' => 'dd',
 ];
 
-$result = Psi::it($inputKv1, $inputKv2)->map(function($v, $k) { return $k . '#' . $v; })->join(', ');
+$result = Psi::it($inputKv1, $inputKv2)
+    ->map(function($v, $k) { return $k . '#' . $v; })
+    ->collect();
+
+var_dump($result);
+
+
+$a = [
+    1, 2,
+    [
+        'x' => [4, [5, 6]]
+    ]
+];
+
+$result = Psi::it($a)
+    ->flatten()
+    ->anyMatch(function ($i) { return $i == 4; })
+    ->join(', ');
 
 var_dump($result);

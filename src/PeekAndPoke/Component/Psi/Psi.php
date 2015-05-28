@@ -30,6 +30,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\CountOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
@@ -348,6 +349,14 @@ class Psi
     public function avg()
     {
         return $this->solveOperationsAndApplyTerminal(new AverageOperation());
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return $this->solveOperationsAndApplyTerminal(new CountOperation());
     }
 
     ////  PRIVATE METHODS  /////////////////////////////////////////////////////////////////////////////////////////////
