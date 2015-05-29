@@ -4,6 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsObject;
 use PeekAndPoke\Component\Psi\Psi;
 
 require_once(__DIR__ . '/bootstrap.php');
@@ -57,4 +61,26 @@ $result = Psi::it($a)
     ->anyMatch(function ($i) { return $i == 4; })
     ->join(', ');
 
+var_dump($result);
+
+/**  */
+class PlayA {}
+/**  */
+class PlayB extends PlayA {}
+/**  */
+class PlayC extends PlayB {}
+
+$input = [0, new \stdClass(), new PlayA(), new PlayB(), new PlayC()];
+
+$result = Psi::it($input)->filter(new IsObject())->toArray();
+var_dump($result);
+
+
+$result = Psi::it($input)->filter(new IsNotObject())->toArray();
+var_dump($result);
+
+$result = Psi::it($input)->filter(new IsInstanceOf("B"))->toArray();
+var_dump($result);
+
+$result = Psi::it($input)->filter(new IsNotInstanceOf("B"))->toArray();
 var_dump($result);

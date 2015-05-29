@@ -12,3 +12,25 @@
 Php Simple Iterations ... 
 
 Examples coming soon.
+
+
+# TODO
+
+## FullSet manipulations
+
+-> have a look a lodash.js
+
+- Chunk ([1,2,3,4] -> [[1,2], [3,4]]
+
+## Unary filter functions for strings
+
+- EndsWith
+- StartWith
+- Contains
+- Regex
+
+## Binary mapping function for string manipulations
+
+- Replace
+- RegexReplace
+

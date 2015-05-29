@@ -13,7 +13,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UnaryFunction implements UnaryFunctionInterface
+class UnaryClosure implements UnaryFunctionInterface
 {
     /** @var \Closure */
     private $function;

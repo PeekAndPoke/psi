@@ -8,10 +8,9 @@ namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
 use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolverInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeySortOperation;
@@ -96,31 +95,31 @@ class Psi
     ////  INTERMEDIATE OPERATIONS - working on one item at a time  /////////////////////////////////////////////////////
 
     /**
-     * @param \Closure|UnaryPredicateInterface $predicate
+     * @param \Closure|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
-    public function filter($predicate)
+    public function filter($unaryFunction)
     {
-        $this->operationChain->append(new FilterPredicate($predicate));
+        $this->operationChain->append(new FilterPredicate($unaryFunction));
 
         return $this;
     }
 
     /**
-     * @param \Closure|UnaryPredicateInterface $predicate
+     * @param \Closure|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
-    public function filterKey($predicate)
+    public function filterKey($unaryFunction)
     {
-        $this->operationChain->append(new FilterKeyPredicate($predicate));
+        $this->operationChain->append(new FilterKeyPredicate($unaryFunction));
 
         return $this;
     }
 
     /**
-     * @param \Closure|BinaryPredicateInterface $biPredicate
+     * @param \Closure|BinaryFunctionInterface $biPredicate
      *
      * @return $this
      */
@@ -132,13 +131,13 @@ class Psi
     }
 
     /**
-     * @param $predicate
+     * @param \Closure|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
-    public function anyMatch($predicate)
+    public function anyMatch($unaryFunction)
     {
-        $this->operationChain->append(new AnyMatchPredicate($predicate));
+        $this->operationChain->append(new AnyMatchPredicate($unaryFunction));
 
         return $this;
     }

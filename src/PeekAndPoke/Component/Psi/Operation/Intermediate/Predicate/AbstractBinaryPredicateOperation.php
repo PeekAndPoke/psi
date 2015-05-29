@@ -6,6 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
+use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
 use PeekAndPoke\Component\Psi\Predicate\BinaryPredicate;
@@ -21,14 +22,10 @@ abstract class AbstractBinaryPredicateOperation implements IntermediateOperation
     protected $predicate;
 
     /**
-     * @param \Closure|BinaryPredicateInterface $predicate
+     * @param \Closure|BinaryFunctionInterface $predicate
      */
     public function __construct($predicate)
     {
-        if ($predicate instanceof BinaryPredicateInterface) {
-            $this->predicate = $predicate;
-        } else {
-            $this->predicate = new BinaryPredicate($predicate);
-        }
+        $this->predicate = new BinaryPredicate($predicate);
     }
 }

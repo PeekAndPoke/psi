@@ -13,7 +13,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class BinaryFunction implements BinaryFunctionInterface
+class BinaryClosure implements BinaryFunctionInterface
 {
     /** @var \Closure */
     private $function;

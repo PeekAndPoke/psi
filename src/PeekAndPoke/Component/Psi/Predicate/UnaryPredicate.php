@@ -6,6 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Predicate;
 
+use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
 
 /**
@@ -15,13 +16,13 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
  */
 class UnaryPredicate implements UnaryPredicateInterface
 {
-    /** @var \Closure */
+    /** @var \Closure|UnaryFunctionInterface */
     private $predicate;
 
     /**
-     * @param \Closure $predicate
+     * @param \Closure|UnaryFunctionInterface $predicate
      */
-    public function __construct(\Closure $predicate)
+    public function __construct($predicate)
     {
         $this->predicate = $predicate;
     }

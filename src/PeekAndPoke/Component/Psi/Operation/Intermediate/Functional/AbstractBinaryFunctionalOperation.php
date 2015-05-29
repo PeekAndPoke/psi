@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Functions\BinaryFunction;
+use PeekAndPoke\Component\Psi\Functions\BinaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 
@@ -28,7 +28,7 @@ abstract class AbstractBinaryFunctionalOperation implements IntermediateOperatio
         if ($function instanceof BinaryFunctionInterface) {
             $this->function = $function;
         } else {
-            $this->function = new BinaryFunction($function);
+            $this->function = new BinaryClosure($function);
         }
     }
 }

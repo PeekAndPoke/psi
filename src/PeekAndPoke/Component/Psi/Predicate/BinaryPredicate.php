@@ -6,6 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Predicate;
 
+use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
 
 /**
@@ -15,13 +16,13 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
  */
 class BinaryPredicate implements BinaryPredicateInterface
 {
-    /** @var \Closure */
+    /** @var \Closure|BinaryFunctionInterface */
     private $predicate;
 
     /**
-     * @param \Closure $predicate
+     * @param \Closure|BinaryFunctionInterface $predicate
      */
-    public function __construct(\Closure $predicate)
+    public function __construct($predicate)
     {
         $this->predicate = $predicate;
     }

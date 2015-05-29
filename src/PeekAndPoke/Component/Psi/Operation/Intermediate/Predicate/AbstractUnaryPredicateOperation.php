@@ -6,6 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
+use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
 use PeekAndPoke\Component\Psi\Predicate\UnaryPredicate;
@@ -21,14 +22,10 @@ abstract class AbstractUnaryPredicateOperation implements IntermediateOperationI
     protected $predicate;
 
     /**
-     * @param \Closure|UnaryPredicateInterface $predicate
+     * @param \Closure|UnaryFunctionInterface $predicate
      */
     public function __construct($predicate)
     {
-        if ($predicate instanceof UnaryPredicateInterface) {
-            $this->predicate = $predicate;
-        } else {
-            $this->predicate = new UnaryPredicate($predicate);
-        }
+        $this->predicate = new UnaryPredicate($predicate);
     }
 }

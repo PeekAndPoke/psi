@@ -280,6 +280,9 @@ class PsiOperationsTest extends AbstractPsiTest
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @return array
+     */
     public static function provideTestSort()
     {
         return [

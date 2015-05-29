@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Functions\BinaryFunction;
+use PeekAndPoke\Component\Psi\Functions\BinaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
 
@@ -28,7 +28,7 @@ class UserSortOperation implements FullSetOperationInterface
         if ($biFunction instanceof BinaryFunctionInterface) {
             $this->biFunction = $biFunction;
         } else {
-            $this->biFunction = new BinaryFunction($biFunction);
+            $this->biFunction = new BinaryClosure($biFunction);
         }
 
     }

@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Functions\UnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\UnaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 
@@ -28,7 +28,7 @@ abstract class AbstractUnaryFunctionalOperation implements IntermediateOperation
         if ($function instanceof UnaryFunctionInterface) {
             $this->function = $function;
         } else {
-            $this->function = new UnaryFunction($function);
+            $this->function = new UnaryClosure($function);
         }
     }
 }
