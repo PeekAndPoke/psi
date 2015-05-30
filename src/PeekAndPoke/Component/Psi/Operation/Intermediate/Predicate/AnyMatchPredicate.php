@@ -19,7 +19,7 @@ class AnyMatchPredicate extends AbstractUnaryPredicateOperation
     public function apply($input, $index, &$useItem, &$canContinue)
     {
         $useItem     = true;
-        $canContinue = ! $this->predicate->test($input, $index);
+        $canContinue = ! $this->predicate->test($input);
 
         return $input;
     }

@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\EqualTo;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
@@ -70,7 +71,7 @@ class PlayB extends PlayA {}
 /**  */
 class PlayC extends PlayB {}
 
-$input = [0, new \stdClass(), new PlayA(), new PlayB(), new PlayC()];
+$input = [0, "z", new \stdClass(), new PlayA(), new PlayB(), new PlayC()];
 
 $result = Psi::it($input)->filter(new IsObject())->toArray();
 var_dump($result);
@@ -83,4 +84,7 @@ $result = Psi::it($input)->filter(new IsInstanceOf("B"))->toArray();
 var_dump($result);
 
 $result = Psi::it($input)->filter(new IsNotInstanceOf("B"))->toArray();
+var_dump($result);
+
+$result = Psi::it($input)->filter(new EqualTo("B"))->toArray();
 var_dump($result);

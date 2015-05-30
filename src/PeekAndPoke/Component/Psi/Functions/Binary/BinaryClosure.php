@@ -4,16 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions;
+namespace PeekAndPoke\Component\Psi\Functions\Binary;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 
 /**
  * UnaryFunction
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UnaryClosure implements UnaryFunctionInterface
+class BinaryClosure implements BinaryFunctionInterface
 {
     /** @var \Closure */
     private $function;
@@ -29,22 +29,22 @@ class UnaryClosure implements UnaryFunctionInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke($input)
+    public function __invoke($input, $index)
     {
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         /** @noinspection PhpVoidFunctionResultUsedInspection */
-        return $this->function->__invoke($input);
+        return $this->function->__invoke($input, $index);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function apply($input)
+    public function apply($input, $index)
     {
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         /** @noinspection PhpVoidFunctionResultUsedInspection */
-        return $this->function->__invoke($input);
+        return $this->function->__invoke($input, $index);
     }
 }

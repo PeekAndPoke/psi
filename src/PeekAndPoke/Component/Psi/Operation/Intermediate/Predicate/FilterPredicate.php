@@ -18,7 +18,7 @@ class FilterPredicate extends AbstractUnaryPredicateOperation
      */
     public function apply($input, $index, &$useItem, &$canContinue)
     {
-        $useItem     = $this->predicate->test($input, $index);
+        $useItem     = $this->predicate->test($input);
         $canContinue = true;
 
         return $input;

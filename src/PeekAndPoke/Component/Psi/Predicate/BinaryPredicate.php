@@ -16,11 +16,11 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
  */
 class BinaryPredicate implements BinaryPredicateInterface
 {
-    /** @var \Closure|BinaryFunctionInterface */
+    /** @var BinaryFunctionInterface|\Closure */
     private $predicate;
 
     /**
-     * @param \Closure|BinaryFunctionInterface $predicate
+     * @param BinaryFunctionInterface|\Closure $predicate
      */
     public function __construct($predicate)
     {

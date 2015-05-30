@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Functions\UnaryClosure;
+use PeekAndPoke\Component\Psi\Functions\Unary\UnaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 
@@ -17,7 +17,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterfac
  */
 abstract class AbstractUnaryFunctionalOperation implements IntermediateOperationInterface
 {
-    /** @var \Closure|UnaryFunctionInterface */
+    /** @var UnaryFunctionInterface */
     protected $function;
 
     /**

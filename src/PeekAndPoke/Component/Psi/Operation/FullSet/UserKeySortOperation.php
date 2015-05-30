@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Functions\BinaryClosure;
+use PeekAndPoke\Component\Psi\Functions\Binary\BinaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
 

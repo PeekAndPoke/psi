@@ -16,11 +16,11 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
  */
 class UnaryPredicate implements UnaryPredicateInterface
 {
-    /** @var \Closure|UnaryFunctionInterface */
+    /** @var UnaryFunctionInterface|\Closure */
     private $predicate;
 
     /**
-     * @param \Closure|UnaryFunctionInterface $predicate
+     * @param UnaryFunctionInterface|\Closure $predicate
      */
     public function __construct($predicate)
     {

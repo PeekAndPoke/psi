@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Functions\BinaryClosure;
+use PeekAndPoke\Component\Psi\Functions\Binary\BinaryClosure;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
 
@@ -17,7 +17,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterfac
  */
 abstract class AbstractBinaryFunctionalOperation implements IntermediateOperationInterface
 {
-    /** @var \Closure|BinaryFunctionInterface */
+    /** @var BinaryFunctionInterface */
     protected $function;
 
     /**

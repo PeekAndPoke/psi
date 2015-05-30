@@ -18,12 +18,19 @@ Examples coming soon.
 
 ## FullSet manipulations
 
--> have a look a lodash.js
+-> have a look a lodash.js what do they do and how do they call the methods
 
 - Chunk ([1,2,3,4] -> [[1,2], [3,4]]
 
+- usortBy (function ($i) { return $i->getY(); }
+- uniqueBy (function ($i) { return $i->getY(); }
+
 ## Unary filter functions for strings
 
+- ToLower
+- ToUpper
+- Camelize
+- ... camel to dashes
 - EndsWith
 - StartWith
 - Contains
