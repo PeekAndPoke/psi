@@ -52,13 +52,12 @@ class Psi
     private $operationChainSolver = null;
 
     /**
-     * @param mixed $streamable Everything that can be iterator over
-     * @param mixed $_          Provide as many params as you want (from 1 to n)
+     * @param mixed $_ Everything that can be iterated, Provide as many params as you want (from 1 to n)
      *
      * @return Psi
      * @throws PsiException
      */
-    public static function it($streamable, $_ = null)
+    public static function it($_ = null)
     {
         $factory = new PsiFactory();
 
