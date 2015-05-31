@@ -16,13 +16,13 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\UnaryPredicateInterface;
  */
 class UnaryPredicate implements UnaryPredicateInterface
 {
-    /** @var UnaryFunctionInterface|\Closure */
+    /** @var callable|UnaryFunctionInterface|\Closure */
     private $predicate;
 
     /**
-     * @param UnaryFunctionInterface|\Closure $predicate
+     * @param callable|UnaryFunctionInterface|\Closure $predicate
      */
-    public function __construct($predicate)
+    public function __construct(callable $predicate)
     {
         $this->predicate = $predicate;
     }
@@ -68,9 +68,6 @@ class UnaryPredicate implements UnaryPredicateInterface
      */
     public function test($input)
     {
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
         return (bool) $this->predicate->__invoke($input);
     }
 }

@@ -16,13 +16,13 @@ use PeekAndPoke\Component\Psi\Interfaces\Predicate\BinaryPredicateInterface;
  */
 class BinaryPredicate implements BinaryPredicateInterface
 {
-    /** @var BinaryFunctionInterface|\Closure */
+    /** @var callable|BinaryFunctionInterface|\Closure */
     private $predicate;
 
     /**
-     * @param BinaryFunctionInterface|\Closure $predicate
+     * @param callable|BinaryFunctionInterface|\Closure $predicate
      */
-    public function __construct($predicate)
+    public function __construct(callable $predicate)
     {
         $this->predicate = $predicate;
     }
@@ -68,9 +68,6 @@ class BinaryPredicate implements BinaryPredicateInterface
      */
     public function test($input1, $input2)
     {
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
         return (bool) $this->predicate->__invoke($input1, $input2);
     }
 }
