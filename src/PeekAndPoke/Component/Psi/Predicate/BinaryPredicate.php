@@ -68,6 +68,8 @@ class BinaryPredicate implements BinaryPredicateInterface
      */
     public function test($input1, $input2)
     {
-        return (bool) $this->predicate->__invoke($input1, $input2);
+        $p = $this->predicate;
+
+        return (bool) $p($input1, $input2);
     }
 }

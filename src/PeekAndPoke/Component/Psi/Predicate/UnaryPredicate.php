@@ -68,6 +68,8 @@ class UnaryPredicate implements UnaryPredicateInterface
      */
     public function test($input)
     {
-        return (bool) $this->predicate->__invoke($input);
+        $p = $this->predicate;
+
+        return (bool) $p($input);
     }
 }
