@@ -44,6 +44,7 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
             // negatives
             [new \ArrayIterator(),  false],
             [null,                  false],
+            [true,                  false],
             [0,                     false],
             ['Z',                   false],
             [new MockA(),           false],
