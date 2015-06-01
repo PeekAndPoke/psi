@@ -6,15 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsArray;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsBool;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotBool;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 
 /**
- * Test IsArray
+ * Test IsBoolIsNotBoolTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsArrayTest extends \PHPUnit_Framework_TestCase
+class IsBoolIsNotBoolTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param $psiValue
@@ -22,9 +23,26 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsArray($psiValue, $expectedResult)
+    public function testIsBool($psiValue, $expectedResult)
     {
-        $subject = new IsArray();
+        $subject = new IsBool();
+
+        $result = $subject->apply($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testIsNotBool($psiValue, $expectedResult)
+    {
+        $expectedResult = ! $expectedResult;
+
+        $subject = new IsNotBool();
 
         $result = $subject->apply($psiValue);
 
@@ -38,13 +56,12 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            [[],                    true],
-            [[1],                   true],
+            [true,                  true],
+            [false,                 true],
 
             // negatives
             [new \ArrayIterator(),  false],
             [null,                  false],
-            [true,                  false],
             [0,                     false],
             ['Z',                   false],
             [new MockA(),           false],

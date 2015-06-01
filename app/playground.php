@@ -88,3 +88,12 @@ var_dump($result);
 
 $result = Psi::it($input)->filter(new EqualTo("B"))->toArray();
 var_dump($result);
+
+
+
+
+$result = Psi::it([], [])->toArray();
+var_dump($result);
+
+
+var_dump(is_float(null));

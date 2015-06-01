@@ -9,11 +9,11 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
 
 /**
- * IsDouble
+ * IsBool
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsDouble extends AbstractUnaryFunction
+class IsNotBool extends AbstractUnaryFunction
 {
     /**
      * @param mixed $input
@@ -22,6 +22,6 @@ class IsDouble extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return is_double($input);
+        return ! is_bool($input);
     }
 }
