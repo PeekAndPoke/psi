@@ -18,14 +18,15 @@ use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\SortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\UserKeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserSortOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\EmptyIntermediateOp;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\EachOperation;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPredicate;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterPredicate;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
@@ -254,7 +255,7 @@ class Psi
      */
     public function uksort($biFunction)
     {
-        $this->operationChain->append(new UserSortOperation($biFunction));
+        $this->operationChain->append(new UserKeySortOperation($biFunction));
 
         return $this;
     }

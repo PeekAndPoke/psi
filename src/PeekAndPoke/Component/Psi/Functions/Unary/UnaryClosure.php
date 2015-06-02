@@ -36,15 +36,4 @@ class UnaryClosure implements UnaryFunctionInterface
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         return $this->function->__invoke($input);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function apply($input)
-    {
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
-        return $this->function->__invoke($input);
-    }
 }

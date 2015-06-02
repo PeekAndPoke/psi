@@ -4,7 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
+namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
 
@@ -23,6 +23,10 @@ class IsNotInstanceOf extends AbstractParameterisedUnaryFunction
     public function __invoke($input)
     {
         $n = $this->val;
+
+        if (is_string($n) == false && is_object($n) == false) {
+            return true;
+        }
 
         return ! $input instanceof $n;
     }

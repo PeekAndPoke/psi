@@ -6,17 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsCallable;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotCallable;
-use PeekAndPoke\Component\Psi\Tests\Mocks\CallableMock;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotResource;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsResource;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Tests\Mocks\ToStringMock;
 
 /**
- * Test IsCallableIsNotCallableTest
+ * Test IsResource
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
+class IsResourceIsNotResourceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param $psiValue
@@ -24,9 +24,9 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsCallable($psiValue, $expectedResult)
+    public function testIsResource($psiValue, $expectedResult)
     {
-        $subject = new IsCallable();
+        $subject = new IsResource();
 
         $result = $subject->apply($psiValue);
 
@@ -39,11 +39,11 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsNotCallable($psiValue, $expectedResult)
+    public function testIsNotResource($psiValue, $expectedResult)
     {
         $expectedResult = ! $expectedResult;
 
-        $subject = new IsNotCallable();
+        $subject = new IsNotResource();
 
         $result = $subject->apply($psiValue);
 
@@ -55,18 +55,25 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      */
     public static function provide()
     {
+        $reflect = new \ReflectionClass(new MockA());
+
+        $openFile = fopen($reflect->getFileName(), 'rb');
+
+        $closedFile = fopen($reflect->getFileName(), 'rb');
+        fclose($closedFile);
+
         return [
             // positives
-            [function () {},        true],
-            [new CallableMock(),    true],
+            [$openFile,             true],
 
             // negatives
-            [new \ArrayIterator(),  false],
-            [true,                  false],
+            [$closedFile,           false],
             [null,                  false],
             [0,                     false],
-            ['Z',                   false],
+            [true,                  false],
+            [false,                 false],
             [new MockA(),           false],
+            [new ToStringMock('a'), false],
         ];
     }
 }

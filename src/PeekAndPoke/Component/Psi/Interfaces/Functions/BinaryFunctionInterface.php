@@ -21,12 +21,4 @@ interface BinaryFunctionInterface
      * @return mixed
      */
     public function __invoke($input1, $input2);
-
-    /**
-     * @param mixed $input1
-     * @param mixed $input2
-     *
-     * @return mixed
-     */
-    public function apply($input1, $input2);
 }

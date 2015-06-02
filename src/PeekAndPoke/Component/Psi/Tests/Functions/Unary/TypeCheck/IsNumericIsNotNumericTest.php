@@ -6,17 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsCallable;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotCallable;
-use PeekAndPoke\Component\Psi\Tests\Mocks\CallableMock;
-use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotNumeric;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNumeric;
+use PeekAndPoke\Component\Psi\Tests\Mocks\ToStringMock;
 
 /**
- * Test IsCallableIsNotCallableTest
+ * Test IsNumeric
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
+class IsNumericIsNotNumericTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param $psiValue
@@ -24,9 +23,9 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsCallable($psiValue, $expectedResult)
+    public function testIsNumeric($psiValue, $expectedResult)
     {
-        $subject = new IsCallable();
+        $subject = new IsNumeric();
 
         $result = $subject->apply($psiValue);
 
@@ -39,11 +38,11 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsNotCallable($psiValue, $expectedResult)
+    public function testIsNotNumeric($psiValue, $expectedResult)
     {
         $expectedResult = ! $expectedResult;
 
-        $subject = new IsNotCallable();
+        $subject = new IsNotNumeric();
 
         $result = $subject->apply($psiValue);
 
@@ -57,16 +56,23 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            [function () {},        true],
-            [new CallableMock(),    true],
+            [0,                     true],
+            [1.0,                   true],
+            [(int) 1.0,             true],
+            [(float) 1.0,           true],
+            ['0',                   true],
+            ['1.0',                 true],
+            ['123',                 true],
 
             // negatives
+            [null,                  false],
+            ['z0',                  false],
+            ['0z',                  false],
             [new \ArrayIterator(),  false],
             [true,                  false],
-            [null,                  false],
-            [0,                     false],
+            [false,                 false],
             ['Z',                   false],
-            [new MockA(),           false],
+            [new ToStringMock(1),   false],
         ];
     }
 }

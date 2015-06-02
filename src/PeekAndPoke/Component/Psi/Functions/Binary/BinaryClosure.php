@@ -36,15 +36,4 @@ class BinaryClosure implements BinaryFunctionInterface
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         return $this->function->__invoke($input, $index);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function apply($input, $index)
-    {
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
-        return $this->function->__invoke($input, $index);
-    }
 }

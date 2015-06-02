@@ -6,17 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsCallable;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotCallable;
-use PeekAndPoke\Component\Psi\Tests\Mocks\CallableMock;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsObject;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 
 /**
- * Test IsCallableIsNotCallableTest
+ * Test IsObject
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
+class IsObjectIsNotObjectTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param $psiValue
@@ -24,9 +23,9 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsCallable($psiValue, $expectedResult)
+    public function testIsObject($psiValue, $expectedResult)
     {
-        $subject = new IsCallable();
+        $subject = new IsObject();
 
         $result = $subject->apply($psiValue);
 
@@ -39,11 +38,11 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsNotCallable($psiValue, $expectedResult)
+    public function testIsNotObject($psiValue, $expectedResult)
     {
         $expectedResult = ! $expectedResult;
 
-        $subject = new IsNotCallable();
+        $subject = new IsNotObject();
 
         $result = $subject->apply($psiValue);
 
@@ -57,16 +56,17 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            [function () {},        true],
-            [new CallableMock(),    true],
+            [new \ArrayIterator(),  true],
+            [new MockA(),           true],
+            [new \stdClass(),       true],
 
             // negatives
-            [new \ArrayIterator(),  false],
-            [true,                  false],
             [null,                  false],
             [0,                     false],
-            ['Z',                   false],
-            [new MockA(),           false],
+            ['2',                   false],
+            ['z',                   false],
+            [true,                  false],
+            [false,                 false],
         ];
     }
 }

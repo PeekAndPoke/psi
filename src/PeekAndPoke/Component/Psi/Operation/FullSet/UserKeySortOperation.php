@@ -6,33 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Functions\Binary\BinaryClosure;
-use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunction;
 
 /**
  * UserKeySortOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UserKeySortOperation implements FullSetOperationInterface
+class UserKeySortOperation extends AbstractBinaryFunction implements FullSetOperationInterface
 {
-    /** @var BinaryFunctionInterface */
-    private $biFunction;
-
-    /**
-     * @param \Closure|BinaryFunctionInterface $biFunction
-     */
-    public function __construct($biFunction)
-    {
-        if ($biFunction instanceof BinaryFunctionInterface) {
-            $this->biFunction = $biFunction;
-        } else {
-            $this->biFunction = new BinaryClosure($biFunction);
-        }
-
-    }
-
     /**
      * {@inheritdoc}
      */

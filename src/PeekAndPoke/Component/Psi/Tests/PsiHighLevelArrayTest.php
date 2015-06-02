@@ -75,7 +75,7 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
 
     ////  TEST FULL SET OPERATIONS  ////////////////////////////////////////////////////////////////////////////////////
 
-    public function testFlatMapOperation()
+    public function testFlattenOperation()
     {
         $input = [
             [
@@ -97,6 +97,48 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $result = Psi::it($input)->flatten()->collect();
 
         $this->assertPsiCollectOutputMatches($expected, $result);
+    }
+
+    // TODO: test value-sort operations
+
+    public function testKsortOperation()
+    {
+        $input    = ['z' => 1, 'a' => 2];
+        $expected = ['a' => 2, 'z' => 1];
+
+        $result = Psi::it($input)->ksort()->toArray();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testKRsortOperation()
+    {
+        $input    = ['a' => 1, 'z' => 2];
+        $expected = ['z' => 2, 'a' => 1];
+
+        $result = Psi::it($input)->krsort()->toArray();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testUKsortOperation()
+    {
+        $input    = ['z' => 1, 'a' => 2];
+        $expected = ['a' => 2, 'z' => 1];
+
+        $result = Psi::it($input)->uksort(function ($a, $b) { return $a > $b; })->toArray();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testReverseOperation()
+    {
+        $input    = [1, 2];
+        $expected = [2, 1];
+
+        $result = Psi::it($input)->reverse()->toArray();
+
+        $this->assertSame($expected, $result);
     }
 
     ////  TERMINAL OPERATIONS  /////////////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +180,37 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
 
         $result = Psi::it($input)->avg();
 
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCountTerminalOperation()
+    {
+        $input = [1, 2, 3];
+        $expected = 3;
+
+        $result = Psi::it($input)->count();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testJoinOperation()
+    {
+        $input = [1, 2, 3];
+        $expected = '1,2,3';
+
+        $result = Psi::it($input)->join(',');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testToArrayOperation()
+    {
+        $input = [1, 2, 3];
+        $expected = [2, 4, 6];
+
+        $result = Psi::it($input)->map(function ($i) { return $i * 2; })->toArray();
+
+        $this->assertTrue(is_array($result));
         $this->assertEquals($expected, $result);
     }
 

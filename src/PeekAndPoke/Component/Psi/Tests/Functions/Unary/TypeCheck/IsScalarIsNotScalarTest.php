@@ -6,17 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsCallable;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotCallable;
-use PeekAndPoke\Component\Psi\Tests\Mocks\CallableMock;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotScalar;
+use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsScalar;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 
 /**
- * Test IsCallableIsNotCallableTest
+ * Test IsScalar
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
+class IsScalarIsNotScalarTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param $psiValue
@@ -24,9 +23,9 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsCallable($psiValue, $expectedResult)
+    public function testIsScalar($psiValue, $expectedResult)
     {
-        $subject = new IsCallable();
+        $subject = new IsScalar();
 
         $result = $subject->apply($psiValue);
 
@@ -39,11 +38,11 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provide
      */
-    public function testIsNotCallable($psiValue, $expectedResult)
+    public function testIsNotScalar($psiValue, $expectedResult)
     {
         $expectedResult = ! $expectedResult;
 
-        $subject = new IsNotCallable();
+        $subject = new IsNotScalar();
 
         $result = $subject->apply($psiValue);
 
@@ -57,15 +56,15 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            [function () {},        true],
-            [new CallableMock(),    true],
+            [0,                     true],
+            [0.0,                   true],
+            [(float) 0,             true],
+            ['',                    true],
+            [true,                  true],
+            [false,                 true],
 
             // negatives
-            [new \ArrayIterator(),  false],
-            [true,                  false],
             [null,                  false],
-            [0,                     false],
-            ['Z',                   false],
             [new MockA(),           false],
         ];
     }

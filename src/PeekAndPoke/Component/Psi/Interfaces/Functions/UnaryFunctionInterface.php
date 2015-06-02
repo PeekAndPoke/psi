@@ -20,11 +20,4 @@ interface UnaryFunctionInterface
      * @return mixed
      */
     public function __invoke($input);
-
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function apply($input);
 }

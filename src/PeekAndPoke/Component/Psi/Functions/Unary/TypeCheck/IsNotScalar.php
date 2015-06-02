@@ -22,6 +22,6 @@ class IsNotScalar extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return is_scalar($input);
+        return ! is_scalar($input);
     }
 }

@@ -5,8 +5,9 @@
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\EqualTo;
+use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\GreaterThan;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsInstanceOf;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsNotInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsObject;
 use PeekAndPoke\Component\Psi\Psi;
@@ -90,10 +91,7 @@ $result = Psi::it($input)->filter(new EqualTo("B"))->toArray();
 var_dump($result);
 
 
+$input = [0, 1, 2, 3];
 
-
-$result = Psi::it([], [])->toArray();
+$result = Psi::it($input)->filter(new GreaterThan(1))->toArray();
 var_dump($result);
-
-
-var_dump(is_float(null));

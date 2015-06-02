@@ -6,12 +6,15 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
+use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
+use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunction;
+
 /**
  * MapOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class MapOperation extends AbstractBinaryFunctionalOperation
+class MapOperation extends AbstractBinaryFunction implements IntermediateOperationInterface
 {
     /**
      * {@inheritdoc}
@@ -21,6 +24,6 @@ class MapOperation extends AbstractBinaryFunctionalOperation
         $useItem     = true;
         $canContinue = true;
 
-        return $this->function->apply($input, $index);
+        return $this->biFunction->__invoke($input, $index);
     }
 }

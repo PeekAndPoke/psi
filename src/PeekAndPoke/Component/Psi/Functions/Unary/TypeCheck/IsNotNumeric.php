@@ -22,6 +22,6 @@ class IsNotNumeric extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return ! is_integer($input);
+        return ! is_numeric($input);
     }
 }
