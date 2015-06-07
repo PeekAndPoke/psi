@@ -4,7 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
+namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
 

@@ -7,7 +7,7 @@
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Comparison;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsNotInstanceOf;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsInstanceOf;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockB;
 

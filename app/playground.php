@@ -6,7 +6,7 @@
  */
 use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\EqualTo;
 use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\GreaterThan;
-use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsNotInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsObject;
