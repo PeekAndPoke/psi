@@ -9,11 +9,11 @@ namespace PeekAndPoke\Component\Psi\Operation;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 
 /**
- * AbstractUnaryFunction
+ * AbstractUnaryFunctionOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractUnaryFunction
+abstract class AbstractUnaryFunctionOperation
 {
     /** @var UnaryFunctionInterface */
     protected $function;

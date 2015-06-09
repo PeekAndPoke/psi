@@ -9,7 +9,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 
 /**
- * AbstractUnaryFunction
+ * AbstractUnaryFunctionOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

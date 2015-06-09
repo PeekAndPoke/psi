@@ -24,7 +24,7 @@ class IsNotInstanceOf extends AbstractParameterisedUnaryFunction
     {
         $n = $this->val;
 
-        if (is_string($n) == false && is_object($n) == false) {
+        if (is_string($n) === false && is_object($n) === false) {
             return true;
         }
 

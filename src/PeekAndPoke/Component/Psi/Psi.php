@@ -12,6 +12,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
 use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolverInterface;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\GroupOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
@@ -178,6 +179,18 @@ class Psi
     public function flatten()
     {
         $this->operationChain->append(new FlattenOperation());
+
+        return $this;
+    }
+
+    /**
+     * @param UnaryFunctionInterface|\Closure $function
+     *
+     * @return $this
+     */
+    public function group($function)
+    {
+        $this->operationChain->append(new GroupOperation($function));
 
         return $this;
     }

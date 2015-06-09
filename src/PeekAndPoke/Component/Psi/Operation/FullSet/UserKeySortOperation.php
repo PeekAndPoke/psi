@@ -7,14 +7,14 @@
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
 use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
-use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunction;
+use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**
  * UserKeySortOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UserKeySortOperation extends AbstractBinaryFunction implements FullSetOperationInterface
+class UserKeySortOperation extends AbstractBinaryFunctionOperation implements FullSetOperationInterface
 {
     /**
      * {@inheritdoc}

@@ -9,11 +9,11 @@ namespace PeekAndPoke\Component\Psi\Operation;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 
 /**
- * AbstractBinaryFunction
+ * AbstractBinaryFunctionOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractBinaryFunction
+abstract class AbstractBinaryFunctionOperation
 {
     /** @var BinaryFunctionInterface */
     protected $biFunction;

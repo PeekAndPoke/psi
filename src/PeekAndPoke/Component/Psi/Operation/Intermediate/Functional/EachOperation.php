@@ -7,14 +7,14 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
 use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
-use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunction;
+use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**
  * EachOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class EachOperation extends AbstractBinaryFunction implements IntermediateOperationInterface
+class EachOperation extends AbstractBinaryFunctionOperation implements IntermediateOperationInterface
 {
     /**
      * {@inheritdoc}
