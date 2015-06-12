@@ -17,6 +17,7 @@ use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseSortOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\SortByOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\SortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserKeySortOperation;
@@ -226,6 +227,18 @@ class Psi
     public function sort($sortFlags = null)
     {
         $this->operationChain->append(new SortOperation($sortFlags));
+
+        return $this;
+    }
+
+    /**
+     * @param UnaryFunctionInterface|\Closure $function Return the value used for comparison
+     *
+     * @return $this
+     */
+    public function sortBy($function)
+    {
+        $this->operationChain->append(new SortByOperation($function));
 
         return $this;
     }

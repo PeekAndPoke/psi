@@ -66,29 +66,54 @@ $result = Psi::it($a)
 var_dump($result);
 
 /**  */
-class PlayA {}
+class PlayA
+{
+    private $val;
+
+    /**
+     * @param $val
+     */
+    public function __construct($val = null)
+    {
+        $this->val = $val;
+    }
+
+    /**
+     * @return null
+     */
+    public function getVal()
+    {
+        return $this->val;
+    }
+}
 /**  */
 class PlayB extends PlayA {}
 /**  */
 class PlayC extends PlayB {}
 
-$input = [0, "z", new \stdClass(), new PlayA(), new PlayB(), new PlayC()];
+$input = [0, "z", new \stdClass(), new PlayA(20), new PlayB(10), new PlayC(30)];
 
 $result = Psi::it($input)->filter(new IsObject())->toArray();
 var_dump($result);
 
-
 $result = Psi::it($input)->filter(new IsNotObject())->toArray();
 var_dump($result);
 
-$result = Psi::it($input)->filter(new IsInstanceOf("B"))->toArray();
+$result = Psi::it($input)->filter(new IsInstanceOf("PlayB"))->toArray();
 var_dump($result);
 
-$result = Psi::it($input)->filter(new IsNotInstanceOf("B"))->toArray();
+$result = Psi::it($input)->filter(new IsNotInstanceOf("PlayB"))->toArray();
 var_dump($result);
 
-$result = Psi::it($input)->filter(new EqualTo("B"))->toArray();
+$result = Psi::it($input)->filter(new EqualTo("PlayB"))->toArray();
 var_dump($result);
+
+$result = Psi::it($input)
+    ->filter(new IsInstanceOf("PlayA"))
+    ->sortBy(function (PlayA $i) { return $i->getVal(); })
+    ->toArray();
+var_dump("sortBy: ", $result);
+
 
 
 $input = [0, 1, 2, 3];
