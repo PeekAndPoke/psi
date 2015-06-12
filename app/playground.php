@@ -95,3 +95,11 @@ $input = [0, 1, 2, 3];
 
 $result = Psi::it($input)->filter(new GreaterThan(1))->toArray();
 var_dump($result);
+
+
+$result = Psi::it(
+    ['a', 'b', 'c', 'x', 'y', 'abz'],
+    ['d', 'e', 'f']
+)->toArray();
+
+var_dump($result);

@@ -10,10 +10,10 @@ require 'pp'
 
 user = ENV['USER']
 
-projectGroup = "peekandpoke"
-projectName  = "php-blueprint"
-hostname     = "#{projectName.downcase}-#{projectGroup.downcase}.#{user.downcase}.local"
-localIp      = "192.168.56.101"
+project_group = "peekandpoke"
+project_name  = "psi"
+hostname      = "#{project_group.downcase}.#{project_name.downcase}.local"
+local_ip      = "192.168.56.101"
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         default_config.vm.hostname = hostname
 
         # Configure a private network adapter
-        default_config.vm.network "private_network", ip: localIp
+        default_config.vm.network "private_network", ip: local_ip
 
         # And set the aliases to be used by the vagrant hostupdate plugin (see https://github.com/cogitatio/vagrant-hostsupdater)
         default_config.hostsupdater.aliases = [hostname]
@@ -44,6 +44,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         default_config.ssh.private_key_path = "~/.ssh/id_rsa"
         default_config.ssh.forward_agent = true
 
+        if Vagrant::Util::Platform.windows?
+            # config.vm.synced_folder ".", "/vagrant", type: "rsync"
+            config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data"
+        else
+            config.vm.synced_folder ".", "/vagrant", type: "nfs"
+        end
+
         # configure the VirtualBox-Provider (see http://docs.vagrantup.com/v2/virtualbox/configuration.html)
         default_config.vm.provider "virtualbox" do |vb|
 
@@ -51,7 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             # vb.gui = true
 
             # Name the Machine - this ist what will be displayed in the VirtualBox-Management-Gui
-            vb.name  = "V-#{projectGroup}-#{projectName}-#{localIp}-#{Time.now.to_i}"
+            vb.name  = "V-#{project_group}-#{project_name}-#{local_ip}-#{Time.now.to_i}"
 
             # Customize any other parameters
             vb.customize [
