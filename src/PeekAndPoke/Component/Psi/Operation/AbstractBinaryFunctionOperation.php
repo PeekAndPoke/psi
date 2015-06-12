@@ -15,7 +15,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
  */
 abstract class AbstractBinaryFunctionOperation
 {
-    /** @var BinaryFunctionInterface */
+    /** @var callable */
     protected $biFunction;
 
     /**
@@ -27,8 +27,6 @@ abstract class AbstractBinaryFunctionOperation
             $this->biFunction = $biFunction;
         } else {
             // TODO: add a check that this is a \Closure and that is has the correct number of parameters
-
-//            $this->function = new BinaryClosure($function);
             $this->biFunction = $biFunction;
         }
     }

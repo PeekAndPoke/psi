@@ -98,8 +98,10 @@ var_dump($result);
 
 
 $result = Psi::it(
-    ['a', 'b', 'c', 'x', 'y', 'abz'],
-    ['d', 'e', 'f']
-)->toArray();
+    [0 => 'a', 1 => 'b', 2 => 'c', 'x', 'y', 'abz'],
+    [0 => 'd', 1 => 'e', 2 => 'f']
+)
+    ->unique()
+    ->join(', ');
 
 var_dump($result);

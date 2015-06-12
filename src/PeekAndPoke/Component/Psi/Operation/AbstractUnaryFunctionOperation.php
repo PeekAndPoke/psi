@@ -15,7 +15,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
  */
 abstract class AbstractUnaryFunctionOperation
 {
-    /** @var UnaryFunctionInterface */
+    /** @var callable */
     protected $function;
 
     /**
@@ -27,8 +27,6 @@ abstract class AbstractUnaryFunctionOperation
             $this->function = $function;
         } else {
             // TODO: add a check that this is a \Closure and that is has the correct number of parameters
-
-//            $this->function = new UnaryClosure($function);
             $this->function = $function;
         }
     }

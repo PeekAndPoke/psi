@@ -6,14 +6,12 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
-
 /**
  * IsNotInstanceOf
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotInstanceOf extends AbstractParameterisedUnaryFunction
+class IsNotInstanceOf extends IsInstanceOf
 {
     /**
      * @param mixed $input
@@ -22,12 +20,6 @@ class IsNotInstanceOf extends AbstractParameterisedUnaryFunction
      */
     public function __invoke($input)
     {
-        $n = $this->val;
-
-        if (is_string($n) === false && is_object($n) === false) {
-            return true;
-        }
-
-        return ! $input instanceof $n;
+        return ! parent::__invoke($input);
     }
 }

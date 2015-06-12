@@ -7,22 +7,29 @@
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
+use PeekAndPoke\Component\Psi\Interfaces\PsiFactoryInterface;
+use PeekAndPoke\Component\Psi\Iterator\KeylessAppendIterator;
+use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
 
 /**
  * PsiFactory
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiFactory
+class PsiFactory implements PsiFactoryInterface
 {
     /**
-     * @param array $iteratables
-     *
-     * @return \Iterator
-     *
-     * @throws PsiException
+     * {@inheritdoc}
      */
-    public function createIterator(array $iteratables)
+    public function createSolver()
+    {
+        return new DefaultOperationChainSolver();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createIterator(array $iteratables, PsiOptions $options)
     {
         $count = count($iteratables);
 
@@ -31,9 +38,18 @@ class PsiFactory
         }
 
         if ($count > 1) {
-            $iterator = new \AppendIterator();
+            // when we have multiple inputs we need an option to decide on how to deal with colliding keys
+            if ($options->isPreserveKeysOfMultipleInputs()) {
+                // this iterator return the original keys of each child iterator
+                // -> this leads to conflicts OR means we preserve keys
+                $iterator = new \AppendIterator();
+            } else {
+                // this iterator will create numeric keys from 0 .. n
+                $iterator = new KeylessAppendIterator();
+            }
 
             foreach ($iteratables as $iteratable) {
+
                 $iterator->append(
                     $this->createSingleIterator($iteratable)
                 );
@@ -42,7 +58,7 @@ class PsiFactory
             return $iterator;
         }
 
-        return $this->createSingleIterator(null);
+        return new \ArrayIterator();
     }
 
     /**

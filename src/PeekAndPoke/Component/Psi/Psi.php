@@ -10,7 +10,7 @@ use PeekAndPoke\Component\Psi\Exception\PsiException;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
-use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolverInterface;
+use PeekAndPoke\Component\Psi\Interfaces\PsiFactoryInterface;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\GroupOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
@@ -37,7 +37,6 @@ use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\SumOperation;
-use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
 
 /**
  * Psi the Php Streams Api Implementation (inspired by Java Streams Api)
@@ -46,12 +45,15 @@ use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
  */
 class Psi
 {
-    /** @var \Iterator */
-    private $input;
+    /** @var array */
+    private $inputs;
+
     /** @var \ArrayIterator */
     private $operationChain = null;
-    /** @var OperationChainSolverInterface  */
-    private $operationChainSolver = null;
+    /** @var PsiFactoryInterface */
+    private $factory = null;
+
+    private $options = null;
 
     /**
      * @param mixed $_ Everything that can be iterated, Provide as many params as you want (from 1 to n)
@@ -61,34 +63,53 @@ class Psi
      */
     public static function it($_ = null)
     {
-        $factory = new PsiFactory();
-
-        $iterator = $factory->createIterator(func_get_args());
-
-        return new Psi($iterator);
+        return new Psi(func_get_args());
     }
 
     /**
-     * @param \Iterator $input
+     * @param array $inputs
      */
-    protected function __construct(\Iterator $input)
+    protected function __construct($inputs)
     {
-        $this->operationChain       = new \ArrayIterator();
-        $this->operationChainSolver = new DefaultOperationChainSolver();
+        $this->operationChain = new \ArrayIterator();
+        $this->factory        = new PsiFactory();
+        $this->options        = new PsiOptions();
 
-        $this->input = $input;
+        $this->inputs = $inputs;
     }
 
     ////  CONFIGURATION METHODS  ///////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param OperationChainSolverInterface $solver
+     * @param PsiFactoryInterface $factory
      *
      * @return $this
      */
-    public function useSolver(OperationChainSolverInterface $solver)
+    public function useFactory(PsiFactoryInterface $factory)
     {
-        $this->operationChainSolver = $solver;
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
+     * Configure if the keys should be preserved when we have multiple inputs.
+     *
+     * Depending on the inputs, preserving the keys will most likely lead to conflicts in the operation like
+     * - sort
+     * - unique
+     * Thus the outcome of these operations will be unpredicted.
+     *
+     * By default this option is turned OFF. So for multiple inputs the keys will get lost. On the other hand all
+     * values will survive all operations.
+     *
+     * @param bool $preserve
+     *
+     * @return $this
+     */
+    public function preserveKeysOfMultipleInputs($preserve = true)
+    {
+        $this->options->setPreserveKeysOfMultipleInputs($preserve);
 
         return $this;
     }
@@ -262,6 +283,18 @@ class Psi
     }
 
     /**
+     * @param int|null $sortFlags
+     *
+     * @return $this
+     */
+    public function unique($sortFlags = null)
+    {
+        $this->operationChain->append(new UniqueOperation($sortFlags));
+
+        return $this;
+    }
+
+    /**
      * @param BinaryFunctionInterface|\Closure $biFunction
      *
      * @return $this
@@ -279,16 +312,6 @@ class Psi
     public function reverse()
     {
         $this->operationChain->append(new ReverseOperation());
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function unique()
-    {
-        $this->operationChain->append(new UniqueOperation());
 
         return $this;
     }
@@ -386,7 +409,10 @@ class Psi
             $this->operationChain->append(new EmptyIntermediateOp());
         }
 
-        $result = $this->operationChainSolver->solve($this->operationChain, $this->input);
+        $iterator = $this->factory->createIterator($this->inputs, $this->options);
+        $solver   = $this->factory->createSolver();
+
+        $result = $solver->solve($this->operationChain, $iterator);
 
         return $terminal->apply($result);
     }

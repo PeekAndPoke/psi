@@ -22,12 +22,14 @@ class IsInstanceOf extends AbstractParameterisedUnaryFunction
      */
     public function __invoke($input)
     {
-        $n = $this->val;
+        return $this->isApplicable() && ($input instanceof $this->val);
+    }
 
-        if (is_string($n) === false && is_object($n) === false) {
-            return false;
-        }
-
-        return $input instanceof $n;
+    /**
+     * @return bool
+     */
+    private function isApplicable()
+    {
+        return is_string($this->val) || is_object($this->val);
     }
 }
