@@ -22,8 +22,9 @@ Examples coming soon.
 
 - Chunk ([1,2,3,4] -> [[1,2], [3,4]]
 
-- usortBy (function ($i) { return $i->getY(); }
-- uniqueBy (function ($i) { return $i->getY(); }
+(x) sortBy (function ($i) { return $i->getY(); }
+  ( ) ASC / DESC 
+( ) uniqueBy (function ($i) { return $i->getY(); }
 
 ## Unary filter functions for strings
 
@@ -41,3 +42,6 @@ Examples coming soon.
 - Replace
 - RegexReplace
 
+## Terminal
+
+- getLast
