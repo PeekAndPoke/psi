@@ -24,6 +24,6 @@ class MinOperation implements TerminalOperationInterface
     {
         $data = iterator_to_array($set);
 
-        return min($data);
+        return count($data) > 0 ? min($data) : 0;
     }
 }

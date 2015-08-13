@@ -24,6 +24,6 @@ class MaxOperation implements TerminalOperationInterface
     {
         $data = iterator_to_array($set);
 
-        return max($data);
+        return count($data) > 0 ? max($data) : 0;
     }
 }
