@@ -32,6 +32,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPre
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToMapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CountOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
@@ -345,6 +346,16 @@ class Psi
     public function toArray()
     {
         return $this->solveOperationsAndApplyTerminal(new CollectToArrayOperation());
+    }
+
+    /**
+     * @param UnaryFunctionInterface|Callable $function
+     *
+     * @return array
+     */
+    public function toMap($function)
+    {
+        return $this->solveOperationsAndApplyTerminal(new CollectToMapOperation($function));
     }
 
     /**
