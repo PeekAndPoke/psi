@@ -350,8 +350,8 @@ class Psi
     }
 
     /**
-     * @param UnaryFunctionInterface|Callable $keyMapper   Maps the value down to a string or number
-     * @param UnaryFunctionInterface|Callable $valueMapper If not given the value will not be changed
+     * @param BinaryFunctionInterface|Callable $keyMapper   Maps the value down to a string or number
+     * @param BinaryFunctionInterface|Callable $valueMapper If not given the value will not be changed
      *
      * @return array
      */

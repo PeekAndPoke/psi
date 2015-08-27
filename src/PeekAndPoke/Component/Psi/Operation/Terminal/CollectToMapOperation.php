@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
 
 /**
@@ -16,14 +16,14 @@ use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
  */
 class CollectToMapOperation implements TerminalOperationInterface
 {
-    /** @var \Closure|UnaryFunctionInterface */
+    /** @var \Closure|BinaryFunctionInterface */
     private $keyMapper;
-    /** @var \Closure|UnaryFunctionInterface */
+    /** @var \Closure|BinaryFunctionInterface */
     private $valueMapper;
 
     /**
-     * @param \Closure|UnaryFunctionInterface $keyMapper
-     * @param \Closure|UnaryFunctionInterface $valueMapper
+     * @param \Closure|BinaryFunctionInterface $keyMapper
+     * @param \Closure|BinaryFunctionInterface $valueMapper
      */
     public function __construct($keyMapper, $valueMapper)
     {
@@ -43,8 +43,8 @@ class CollectToMapOperation implements TerminalOperationInterface
         $keyMapper   = $this->keyMapper;
         $valueMapper = $this->valueMapper;
 
-        foreach ($set as $item) {
-            $result[$keyMapper($item)] = $valueMapper($item);
+        foreach ($set as $key => $item) {
+            $result[$keyMapper($item, $key)] = $valueMapper($item, $key);
         }
 
         return $result;
