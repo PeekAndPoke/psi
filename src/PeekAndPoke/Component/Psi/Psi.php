@@ -7,6 +7,7 @@
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
+use PeekAndPoke\Component\Psi\Functions\Unary\Mapper\IdentityMapper;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
@@ -349,13 +350,19 @@ class Psi
     }
 
     /**
-     * @param UnaryFunctionInterface|Callable $function
+     * @param UnaryFunctionInterface|Callable $keyMapper   Maps the value down to a string or number
+     * @param UnaryFunctionInterface|Callable $valueMapper If not given the value will not be changed
      *
      * @return array
      */
-    public function toMap($function)
+    public function toMap($keyMapper, $valueMapper = null)
     {
-        return $this->solveOperationsAndApplyTerminal(new CollectToMapOperation($function));
+        return $this->solveOperationsAndApplyTerminal(
+            new CollectToMapOperation(
+                $keyMapper,
+                $valueMapper ? $valueMapper : new IdentityMapper()
+            )
+        );
     }
 
     /**
