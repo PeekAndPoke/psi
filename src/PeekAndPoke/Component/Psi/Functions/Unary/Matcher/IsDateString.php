@@ -36,6 +36,10 @@ class IsDateString extends AbstractUnaryFunction
             return false;
         }
 
+        if (preg_match('/(\d{4})-(\d{2})-(\d{2})T((\d{2}):(\d{2}):(\d{2}))\.(\d{3})Z/', $str)) {
+            return true;
+        }
+
         $stamp = strtotime($str);
 
         if (!is_numeric($stamp)) {
