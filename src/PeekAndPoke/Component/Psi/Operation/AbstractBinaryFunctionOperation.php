@@ -15,7 +15,7 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
  */
 abstract class AbstractBinaryFunctionOperation
 {
-    /** @var callable */
+    /** @var \Closure|BinaryFunctionInterface */
     protected $biFunction;
 
     /**

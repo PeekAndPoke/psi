@@ -24,7 +24,8 @@ class EachOperation extends AbstractBinaryFunctionOperation implements Intermedi
         $useItem     = true;
         $canContinue = true;
 
-        $this->biFunction->__invoke($input, $index);
+        $fun = $this->biFunction;
+        $fun($input, $index);
 
         // return the input unmodified
         return $input;

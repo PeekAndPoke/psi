@@ -180,7 +180,7 @@ class PsiOperationsTest extends AbstractPsiTest
         $expected = [];
 
         $result = Psi::it($input)
-            ->each(function (PsiTestObject $v) { return $v->getAge() > 10; })->toArray();
+            ->each(function (PsiTestObject $v) { /* noop */ })->toArray();
 
         $this->assertEquals($expected, $result);
     }
@@ -196,8 +196,14 @@ class PsiOperationsTest extends AbstractPsiTest
             $heidi = new PsiTestObject('Heidi', 52),
         ];
 
-        Psi::it($input)->each(function (PsiTestObject $v) { return $v->incAge(1); })->collect();
+        $str = '';
 
+        Psi::it($input)->each(function (PsiTestObject $v) use (&$str) {
+            $v->incAge(1);
+            $str .= $v->getName();
+        })->collect();
+
+        $this->assertEquals('KarlEdgarHeidi', $str);
         $this->assertEquals(50 + 1, $karl->getAge());
         $this->assertEquals(10 + 1, $edgar->getAge());
         $this->assertEquals(52 + 1, $heidi->getAge());
