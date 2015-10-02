@@ -27,7 +27,7 @@ class IsObjectIsNotObjectTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsObject();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsObjectIsNotObjectTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotObject();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

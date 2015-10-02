@@ -27,7 +27,7 @@ class IsFloatIsNotFloatTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsFloat();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsFloatIsNotFloatTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotFloat();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

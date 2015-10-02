@@ -27,7 +27,7 @@ class IsArrayIsNotArrayTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsArray();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsArrayIsNotArrayTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotArray();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

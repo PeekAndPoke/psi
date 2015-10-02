@@ -28,20 +28,26 @@ Examples coming soon.
 
 ## Unary filter functions for strings
 
+String-Mappers
 - ToLower
 - ToUpper
 - Camelize
 - ... camel to dashes
-- EndsWith
-- StartWith
-- Contains
-- Regex
-
-## Binary mapping function for string manipulations
-
+- UcFirst, LcFirst
 - Replace
 - RegexReplace
 
+Matchers
+- EndsWith
+- StartWith
+- ContainsString
+- Regex
+
+
+- IsMultipleOf    ... isMultipleOf(3) will give true for 0, 3, 6, ...
+
 ## Terminal
 
+(X) getFirst
 - getLast
+- getRandom

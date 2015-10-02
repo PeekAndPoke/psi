@@ -28,7 +28,7 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsCallable();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -45,7 +45,7 @@ class IsCallableIsNotCallableTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotCallable();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

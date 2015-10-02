@@ -27,7 +27,7 @@ class IsIntegerIsNotIntegerTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsInteger();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsIntegerIsNotIntegerTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotInteger();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

@@ -4,24 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
 
 /**
- * NotSameAs does a type safe comparison "!=="
+ * SameAs does a type safe comparison "==="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotSameAs extends AbstractParameterisedUnaryFunction
+class SameAs extends AbstractParameterisedUnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {
-        return $input !== $this->val;
+        return $input === $this->getValue();
     }
 }

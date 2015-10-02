@@ -4,10 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\EqualTo;
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\NotEqualTo;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\EqualTo;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\NotEqualTo;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockB;
 use PeekAndPoke\Component\Psi\Tests\Mocks\ToStringMock;
@@ -30,7 +30,7 @@ class EqualToNotEqualToTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new EqualTo($subjectArgument);
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -48,7 +48,7 @@ class EqualToNotEqualToTest extends \PHPUnit_Framework_TestCase
 
         $subject = new NotEqualTo($subjectArgument);
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

@@ -4,9 +4,9 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\LessThanOrEqual;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\LessThanOrEqual;
 
 /**
  * Test LessThanOrEqual
@@ -26,7 +26,7 @@ class LessThanOrEqualTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new LessThanOrEqual($subjectArgument);
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

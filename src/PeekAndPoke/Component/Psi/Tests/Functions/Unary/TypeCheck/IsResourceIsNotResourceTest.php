@@ -28,7 +28,7 @@ class IsResourceIsNotResourceTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsResource();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -45,7 +45,7 @@ class IsResourceIsNotResourceTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotResource();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

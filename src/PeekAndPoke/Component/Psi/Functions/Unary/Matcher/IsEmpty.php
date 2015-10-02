@@ -4,22 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
+
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
 
 /**
- * IsNotInstanceOf
+ * IsEmpty
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotInstanceOf extends IsInstanceOf
+class IsEmpty extends AbstractUnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {
-        return ! parent::__invoke($input);
+        return empty($input);
     }
 }

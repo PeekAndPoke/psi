@@ -27,7 +27,7 @@ class IsScalarIsNotScalarTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsScalar();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsScalarIsNotScalarTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotScalar();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

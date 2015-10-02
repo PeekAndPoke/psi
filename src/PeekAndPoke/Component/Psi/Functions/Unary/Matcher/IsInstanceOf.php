@@ -4,7 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
 
@@ -18,18 +18,21 @@ class IsInstanceOf extends AbstractParameterisedUnaryFunction
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {
-        return $this->isApplicable() && ($input instanceof $this->val);
+        $val = $this->getValue();
+
+        return $this->isApplicable($val) && ($input instanceof $val);
     }
 
     /**
+     * @param $val
      * @return bool
      */
-    private function isApplicable()
+    private function isApplicable($val)
     {
-        return is_string($this->val) || is_object($this->val);
+        return is_string($val) || is_object($val);
     }
 }

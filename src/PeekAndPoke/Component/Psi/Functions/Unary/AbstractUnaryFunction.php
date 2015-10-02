@@ -15,13 +15,4 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
  */
 abstract class AbstractUnaryFunction implements UnaryFunctionInterface
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function apply($input)
-    {
-        return $this->__invoke($input);
-    }
 }

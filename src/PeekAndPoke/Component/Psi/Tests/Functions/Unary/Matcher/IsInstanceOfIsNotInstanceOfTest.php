@@ -4,10 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Comparison;
+namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsNotInstanceOf;
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsNotInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsInstanceOf;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockA;
 use PeekAndPoke\Component\Psi\Tests\Mocks\MockB;
 
@@ -29,7 +29,7 @@ class IsInstanceOfIsNotInstanceOfTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsInstanceOf($subjectArgument);
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -47,7 +47,7 @@ class IsInstanceOfIsNotInstanceOfTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotInstanceOf($subjectArgument);
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }

@@ -28,7 +28,7 @@ class IsStringIsNotStringTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsString();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -45,7 +45,7 @@ class IsStringIsNotStringTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotString();
 
-        $result = $subject->apply($psiValue);
+        $result = $subject->__invoke($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
