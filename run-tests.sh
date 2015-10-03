@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-php vendor/bin/phpunit
+php vendor/phpunit/phpunit/phpunit

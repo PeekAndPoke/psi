@@ -36,7 +36,7 @@ class IsDateString extends AbstractUnaryFunction
             return false;
         }
 
-        if (preg_match('/(\d{4})-(\d{2})-(\d{2})T((\d{2}):(\d{2}):(\d{2}))\.(\d{3})Z/', $str)) {
+        if (preg_match('/^(\d{4})-(\d{2})-(\d{2})T((\d{2}):(\d{2}):(\d{2}))(\.(\d{3})Z|\+\d{2}:\d{2})$/', $str)) {
             return true;
         }
 
@@ -46,10 +46,6 @@ class IsDateString extends AbstractUnaryFunction
             return false;
         }
 
-        if (checkdate(date('m', $stamp), date('d', $stamp), date('Y', $stamp))) {
-            return true;
-        }
-
-        return false;
+        return checkdate(date('m', $stamp), date('d', $stamp), date('Y', $stamp));
     }
 }

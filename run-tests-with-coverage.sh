@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-php vendor/bin/phpunit -c phpunit-coverage.xml
+php vendor/phpunit/phpunit/phpunit -c phpunit-coverage.xml

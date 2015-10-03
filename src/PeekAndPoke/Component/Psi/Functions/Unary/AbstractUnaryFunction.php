@@ -15,4 +15,10 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
  */
 abstract class AbstractUnaryFunction implements UnaryFunctionInterface
 {
+    /**
+     * c'tor
+     */
+    public function __construct()
+    {
+    }
 }

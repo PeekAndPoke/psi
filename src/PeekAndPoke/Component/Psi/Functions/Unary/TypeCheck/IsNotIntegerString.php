@@ -6,14 +6,12 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
-
 /**
- * IsIntegerString check if the string contains an integer
+ * IsNotIntegerString check if the string contains an integer
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsIntegerString extends AbstractUnaryFunction
+class IsNotIntegerString extends IsIntegerString
 {
     /**
      * @param mixed $input
@@ -22,6 +20,6 @@ class IsIntegerString extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return is_string($input) && is_numeric($input) && (((int) $input) == $input);
+        return ! parent::__invoke($input);
     }
 }

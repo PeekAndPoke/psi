@@ -4,14 +4,14 @@ php:
   - 5.5
   - 5.6
   - hhvm
-#  - nightly
+  - nightly
 
 before_script:
   - composer self-update
   - composer install --prefer-dist --optimize-autoloader
 
 script:
-  - vendor/bin/phpunit --coverage-clover=coverage.clover
+  - phpunit --coverage-clover=coverage.clover
   - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:

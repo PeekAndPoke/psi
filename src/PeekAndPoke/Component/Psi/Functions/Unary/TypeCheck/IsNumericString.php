@@ -22,6 +22,6 @@ class IsNumericString extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return is_numeric($input) && (((double) $input) == $input);
+        return is_string($input) && is_numeric($input) && (((double) $input) == $input);
     }
 }
