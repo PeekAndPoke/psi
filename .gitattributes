@@ -1,8 +1,9 @@
 /tools export-ignore
 
-*.php   text eol=lf diff=php whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
-*.phtml text eol=lf
-*.xml   text eol=lf whitespace=blank-at-eol
-*.xsd   text eol=lf whitespace=blank-at-eol
-*.md    text eol=lf
-*.sh    text eol=lf
+*.php       text eol=lf diff=php whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
+*.phtml     text eol=lf
+*.xml       text eol=lf whitespace=blank-at-eol
+*.xsd       text eol=lf whitespace=blank-at-eol
+*.md        text eol=lf
+*.sh        text eol=lf
+Vagrantfile text eol=lf
