@@ -33,6 +33,42 @@ class LocalDate
     }
 
     /**
+     * @return LocalDate
+     */
+    public static function now()
+    {
+        return self::raw(new \DateTime());
+    }
+
+    /**
+     * When you need the same "now" multiple times
+     *
+     * @return LocalDate
+     */
+    public static function stickyNow()
+    {
+        static $v;
+        return $v ?: $v = self::raw(new \DateTime());
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     * @return LocalDate
+     */
+    public static function raw(\DateTime $dateTime)
+    {
+        $tz = $dateTime->getTimezone();
+        // normalize input coming from Javascript or Java etc...
+        if ($tz->getName() == 'Z') {
+            $tz = new \DateTimeZone('Etc/UTC');
+        }
+
+//        var_dump($tz->getLocation(), $tz->getName(), $tz->listIdentifiers(), $tz->listAbbreviations());
+
+        return new LocalDate($dateTime, $tz);
+    }
+
+    /**
      * @param \DateTime|string     $date     The date or a string the DateTime c'tor can understand
      * @param \DateTimeZone|string $timezone The timezone or a string the DateTimeZone c'tor can understand
      */
