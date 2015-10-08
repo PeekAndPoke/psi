@@ -10,9 +10,9 @@ require 'pp'
 
 user = ENV['USER']
 
-project_group = "peekandpoke"
 project_name  = "psi"
-hostname      = "#{project_group.downcase}.#{project_name.downcase}.local"
+project_group = "peekandpoke"
+hostname      = "#{project_name.downcase}.#{project_group.downcase}.local"
 local_ip      = "192.168.56.101"
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
