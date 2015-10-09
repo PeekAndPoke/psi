@@ -16,3 +16,4 @@ sudo apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options
 
 # install sphinx for documentation
 sudo pip install sphinx sphinx-autobuild
+sudo pip install recommonmark
