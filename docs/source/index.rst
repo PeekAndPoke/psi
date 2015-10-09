@@ -24,9 +24,12 @@ Let's start with an example.
    $result = Psi::it($input)
       ->filter(new IsInstanceOf(Person::class))
       ->filter(function (Person $p) { return $p->getAge() >= 18; })
+      ->sortBy(function (Person $p) { return $p->getAge(); })
+      ->reverse()
       ->collect();
 
-The example above will filter the input and will only keep instances of *Person* that have an age of at least 18 years.
+The example above will filter the input and will only keep instances of *Person* that have an age of at least 18 years,
+sorts them by age descending.
 
 
 Contents

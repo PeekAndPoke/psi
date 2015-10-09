@@ -9,10 +9,30 @@
 
 # PSI
 
-Php Simple Iterations ... 
+PSI aims at helping you to write better and more stable PHP-Code. Especially when it comes to iterating, filter,
+sorting.
 
-Examples coming soon.
+## Example
 
+```php
+   
+$input = $service->getStuff();
+
+$result = Psi::it($input)
+  ->filter(new IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->sortBy(function (Person $p) { return $p->getAge(); })
+  ->reverse()
+  ->collect();
+
+```
+
+The example above will filter the input and will only keep instances of *Person* that have an age of at least 18 years,
+sorts them by age descending.
+
+## Go ahead
+
+Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
 
 # TODO
 
@@ -51,3 +71,9 @@ Matchers
 (X) getFirst
 - getLast
 - getRandom
+
+
+
+# How to doc
+
+http://www.sitepoint.com/using-sphinx-for-php-project-documentation/
