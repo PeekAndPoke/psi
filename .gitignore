@@ -2,5 +2,7 @@
 /.vagrant/
 /vendor
 /build
+/cache
+/docs/build
 
 *.iml
