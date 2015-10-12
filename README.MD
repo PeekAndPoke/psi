@@ -34,9 +34,9 @@ sorts them by age descending.
 
 Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
 
-# TODO
+## todo
 
-## FullSet manipulations
+### FullSet manipulations
 
 -> have a look a lodash.js what do they do and how do they call the methods
 
@@ -46,7 +46,7 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
   ( ) ASC / DESC 
 ( ) uniqueBy (function ($i) { return $i->getY(); }
 
-## Unary filter functions for strings
+### Unary filter functions for strings
 
 String-Mappers
 - ToLower
@@ -66,7 +66,7 @@ Matchers
 
 - IsMultipleOf    ... isMultipleOf(3) will give true for 0, 3, 6, ...
 
-## Terminal
+### Terminal
 
 (X) getFirst
 - getLast
@@ -74,6 +74,6 @@ Matchers
 
 
 
-# How to doc
+## How to doc
 
 http://www.sitepoint.com/using-sphinx-for-php-project-documentation/
