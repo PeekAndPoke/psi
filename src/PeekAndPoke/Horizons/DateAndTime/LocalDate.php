@@ -26,10 +26,7 @@ class LocalDate
      */
     public static function fromTimestamp($timestamp, $timezone)
     {
-        return new LocalDate(
-            (new \DateTime())->setTimestamp($timestamp),
-            $timezone
-        );
+        return new LocalDate($timestamp, $timezone);
     }
 
     /**
@@ -58,32 +55,51 @@ class LocalDate
     public static function raw(\DateTime $dateTime)
     {
         $tz = $dateTime->getTimezone();
+
         // normalize input coming from Javascript or Java etc...
         if ($tz->getName() == 'Z') {
             $tz = new \DateTimeZone('Etc/UTC');
         }
 
-//        var_dump($tz->getLocation(), $tz->getName(), $tz->listIdentifiers(), $tz->listAbbreviations());
-
         return new LocalDate($dateTime, $tz);
     }
 
     /**
-     * @param \DateTime|string     $date     The date or a string the DateTime c'tor can understand
-     * @param \DateTimeZone|string $timezone The timezone or a string the DateTimeZone c'tor can understand
+     * @param \DateTime|string|float $input    The date or a string the DateTime c'tor can understand or a timestamp
+     * @param \DateTimeZone|string   $timezone The timezone or a string the DateTimeZone c'tor can understand
      */
-    public function __construct($date, $timezone)
+    public function __construct($input, $timezone)
     {
         if (! $timezone instanceof \DateTimeZone) {
             $timezone = new \DateTimeZone((string) $timezone);
         }
 
-        if ($date instanceof \DateTime) {
-            $date = clone $date;
+        /////
+        // We have to trick PHP a bit here, but why?
+        //
+        // Apparently things behave different, when setting a timezone like
+        // a) 'Europe/Berlin'
+        // b) '+02:00'
+        //
+        // When the date already has a timezone set then
+        // a) will only set the timezone
+        // b) will set the timezone and will also change the timestamp by 2 hours
+        //
+        // Therefore we create a fresh date, that does not have a timezone yet, set the timestamp, and then apply the
+        // timezone
+        //
+        // See the unit tests for more as well
+        ////
+
+        if ($input instanceof \DateTime) {
+            $date = (new \DateTime())->setTimestamp($input->getTimestamp());
+        } elseif (is_numeric($input)) {
+            $date = (new \DateTime())->setTimestamp($input);
         } else {
-            $date = new \DateTime($date, $timezone);
+            $date = new \DateTime($input);
         }
 
+        // now we have a fresh date and we can set the timezone
         $date->setTimezone($timezone);
 
         $this->date     = $date;

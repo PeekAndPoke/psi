@@ -1,9 +1,9 @@
 {
   "name": "peekandpoke/psi",
-  "description": "Java Streams Api inspired implementation for PHP. Php Streams (Api) Impl: PSI",
+  "description": "Java Streams Api inspired implementation for PHP. Php Streams (Api) Impl: PSI. PHP >= 5.5.10 required because of this: https://bugs.php.net/bug.php?id=45543",
 
   "require": {
-    "php": ">=5.4"
+    "php": ">=5.5.10"
   },
 
   "require-dev": {

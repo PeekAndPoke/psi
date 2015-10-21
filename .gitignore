@@ -4,5 +4,6 @@
 /build
 /cache
 /docs/build
+/tmp
 
 *.iml
