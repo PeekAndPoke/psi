@@ -100,7 +100,24 @@ class LocalDate
         }
 
         // now we have a fresh date and we can set the timezone
-        $date->setTimezone($timezone);
+
+        // normal PHP or HHVM
+        if (! defined('HHVM_VERSION')) {
+            $date->setTimezone($timezone);
+        } else {
+            // and we have to take of the HHVM with another work-arround
+            $offset = $timezone->getOffset($date);
+            $offsetHours = (int) ($offset / 3600);
+            $offsetMins  = (int) abs(($offset - $offsetHours * 3600) / 60);
+
+            $offsetStr = ($offsetHours > 0 ? '+' : '-') . abs($offsetHours) . ':' . $offsetMins;
+            $dateStr   = $date->format('Y-m-d\TH:i:s') . $offsetStr;
+
+//        var_dump('-----', $date->format('c'), $dateStr);
+
+            $date = new \DateTime($dateStr);
+            $date->modify($offset . ' seconds');
+        }
 
         $this->date     = $date;
         $this->timezone = $timezone;
