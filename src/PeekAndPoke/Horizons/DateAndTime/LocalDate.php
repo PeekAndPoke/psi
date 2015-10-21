@@ -70,10 +70,6 @@ class LocalDate
      */
     public function __construct($input, $timezone)
     {
-        if (! $timezone instanceof \DateTimeZone) {
-            $timezone = new \DateTimeZone((string) $timezone);
-        }
-
         /////
         // We have to trick PHP a bit here, but why?
         //
@@ -103,20 +99,24 @@ class LocalDate
 
         // normal PHP or HHVM
         if (! defined('HHVM_VERSION')) {
+            if (! $timezone instanceof \DateTimeZone) {
+                $timezone = new \DateTimeZone((string) $timezone);
+            }
+
             $date->setTimezone($timezone);
         } else {
-            // and we have to take of the HHVM with another work-arround
-            $offset = $timezone->getOffset($date);
-            $offsetHours = (int) ($offset / 3600);
-            $offsetMins  = (int) abs(($offset - $offsetHours * 3600) / 60);
-
-            $offsetStr = ($offsetHours > 0 ? '+' : '-') . abs($offsetHours) . ':' . $offsetMins;
-            $dateStr   = $date->format('Y-m-d\TH:i:s') . $offsetStr;
-
-//        var_dump('-----', $date->format('c'), $dateStr);
-
-            $date = new \DateTime($dateStr);
-            $date->modify($offset . ' seconds');
+            if ($timezone instanceof \DateTimeZone) {
+                $date->setTimezone($timezone);
+            } else {
+                try {
+                    $timezone = new \DateTimeZone((string) $timezone);
+                    $date->setTimezone($timezone);
+                } catch (\Exception $e) {
+                    $dateStr = $date->format('Y-m-d\TH:i:s') . (string) $timezone;
+                    $date = new \DateTime($dateStr);
+                    $timezone = $date->getTimezone();
+                }
+            }
         }
 
         $this->date     = $date;
