@@ -3,7 +3,7 @@ tools:
   php_pdepend: true
   php_analyzer: true
   external_code_coverage:
-    timeout: 1200  # timeout in seconds : 20 minutes
+    timeout: 600  # timeout in seconds : 10 minutes
 
 filter:
   paths:
