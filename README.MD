@@ -36,6 +36,10 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 
 ## todo
 
+### HHVM
+
+- thing like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
+
 ### FullSet manipulations
 
 -> have a look a lodash.js what do they do and how do they call the methods

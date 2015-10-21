@@ -15,6 +15,13 @@ use PeekAndPoke\Horizons\DateAndTime\LocalDate;
  */
 class LocalDateTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('LocalDate not yet supporting HHVM');
+        }
+    }
+
     /**
      * @dataProvider provideTestFromTimestamp
      *
