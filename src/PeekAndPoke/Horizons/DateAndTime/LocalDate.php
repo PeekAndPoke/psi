@@ -70,6 +70,10 @@ class LocalDate
      */
     public function __construct($input, $timezone)
     {
+        if (! $timezone instanceof \DateTimeZone) {
+            $timezone = new \DateTimeZone((string) $timezone);
+        }
+
         /////
         // We have to trick PHP a bit here, but why?
         //
@@ -87,19 +91,25 @@ class LocalDate
         // See the unit tests for more as well
         ////
         if ($input instanceof \DateTime) {
-            $date = (new \DateTime())->setTimestamp($input->getTimestamp());
+            $date = (new \DateTime())
+                ->setTimestamp($input->getTimestamp())
+                ->setTimezone($timezone);
         } elseif (is_numeric($input)) {
-            $date = (new \DateTime())->setTimestamp($input);
+            $date = (new \DateTime())
+                ->setTimestamp($input)
+                ->setTimezone($timezone);
         } else {
-            $date = new \DateTime($input);
-        }
+            // when we have string input, we immediately use the timezone
+            $date = new \DateTime($input, $timezone);
 
-        if (! $timezone instanceof \DateTimeZone) {
-            $timezone = new \DateTimeZone((string) $timezone);
+            // since the given 2nd parameter is ignored for dates like '...+02:00' we check if we need to convert the
+            // timezone
+            if ($date->getTimezone()->getOffset($date) !== $timezone->getOffset($date)) {
+                $date = (new \DateTime())
+                    ->setTimestamp($date->getTimestamp())
+                    ->setTimezone($timezone);
+            }
         }
-
-        // now we have a fresh date and we can set the timezone
-        $date->setTimezone($timezone);
 
         $this->date     = $date;
         $this->timezone = $timezone;

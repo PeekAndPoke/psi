@@ -44,7 +44,9 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 
 -> have a look a lodash.js what do they do and how do they call the methods
 
-- Chunk ([1,2,3,4] -> [[1,2], [3,4]]
+- Chunk [1,2,3,4] -> [[1,2], [3,4]]
+- GroupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
+
 
 (x) sortBy (function ($i) { return $i->getY(); }
   ( ) ASC / DESC 
