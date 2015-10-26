@@ -38,17 +38,6 @@ class LocalDate
     }
 
     /**
-     * When you need the same "now" multiple times
-     *
-     * @return LocalDate
-     */
-    public static function stickyNow()
-    {
-        static $v;
-        return $v ?: $v = self::raw(new \DateTime());
-    }
-
-    /**
      * @param \DateTime $dateTime
      * @return LocalDate
      */
@@ -140,6 +129,15 @@ class LocalDate
     }
 
     /**
+     * @return \DateTimeZone
+     */
+    public function getTimezone()
+    {
+        return clone $this->timezone;
+    }
+
+
+    /**
      * @return int
      */
     public function getOffset()
@@ -148,21 +146,23 @@ class LocalDate
     }
 
     /**
-     * @return \DateTimeZone
+     * @return float
      */
-    public function getTimezone()
+    public function getOffsetInMinutes()
     {
-        return clone $this->timezone;
+        $offset = $this->getTimezone()->getOffset($this->getDate());
+
+        return $offset / 60;
     }
 
     /**
      * @return float
      */
-    public function getTimezoneOffsetInHours()
+    public function getOffsetInHours()
     {
         $offset = $this->getTimezone()->getOffset($this->getDate());
 
-        return $offset / (60 * 60);
+        return $offset / 3600;
     }
 
     /**
@@ -290,55 +290,67 @@ class LocalDate
      */
     public function modifyBySeconds($numSeconds)
     {
-        $numSeconds = (int) $numSeconds;
-
-        $dateCloned = clone $this->date;
-        $dateCloned->modify("$numSeconds seconds");
-
-        return new LocalDate($dateCloned, $this->timezone);
+        return LocalDate::fromTimestamp(
+            $this->getTimestamp() + (int) $numSeconds,
+            $this->getTimezone()
+        );
     }
 
     /**
-     * @param int $numMinutes
+     * @param float $numMinutes
      *
      * @return LocalDate
      */
     public function modifyByMinutes($numMinutes)
     {
-        $numMinutes = (int) $numMinutes;
-
-        $dateCloned = clone $this->date;
-        $dateCloned->modify("$numMinutes minutes");
-
-        return new LocalDate($dateCloned, $this->timezone);
+        return $this->modifyBySeconds(((double) $numMinutes) * 60);
     }
 
     /**
-     * @param int $numHours
+     * @param float $numHours
      *
      * @return LocalDate
      */
     public function modifyByHours($numHours)
     {
-        $numHours = (int) $numHours;
-
-        $dateCloned = clone $this->date;
-        $dateCloned->modify("$numHours hours");
-
-        return new LocalDate($dateCloned, $this->timezone);
+        return $this->modifyBySeconds(((double) $numHours) * 3600);
     }
 
     /**
-     * @param int $numDays
+     * @param float $numDays
      *
      * @return LocalDate
      */
     public function modifyByDays($numDays)
     {
-        $numDays = (int) $numDays;
+        return $this->modifyBySeconds(((double) $numDays) * 86400);
+    }
+
+    /**
+     * @param \DateInterval|string $interval
+     *
+     * @deprecated use addInterval or subInterval
+     *
+     * @return LocalDate
+     */
+    public function modifyByInterval($interval)
+    {
+        return $this->addInterval($interval);
+    }
+
+    /**
+     * @param \DateInterval|string $interval
+     *
+     * @return LocalDate
+     */
+    public function addInterval($interval)
+    {
+        if (!$interval instanceof \DateInterval) {
+            $interval = new \DateInterval($interval);
+        }
 
         $dateCloned = clone $this->date;
-        $dateCloned->modify("$numDays days");
+        $dateCloned->add($interval);
 
         return new LocalDate($dateCloned, $this->timezone);
     }
@@ -348,14 +360,14 @@ class LocalDate
      *
      * @return LocalDate
      */
-    public function modifyByInterval($interval)
+    public function subInterval($interval)
     {
         if (!$interval instanceof \DateInterval) {
             $interval = new \DateInterval($interval);
         }
 
         $dateCloned = clone $this->date;
-        $dateCloned->add($interval);
+        $dateCloned->sub($interval);
 
         return new LocalDate($dateCloned, $this->timezone);
     }
@@ -437,17 +449,68 @@ class LocalDate
     }
 
     /**
+     * Get the number of seconds between this and the other.
+     *
+     * The result will be negative when this is after the other
+     *
      * @param LocalDate|\DateTime $other
      *
-     * @return float Absolute number of minutes this and the other
+     * @return float
+     */
+    public function diffInSeconds($other)
+    {
+        $other = $this->ensure($other);
+
+        return ($other->getTimestamp() - $this->getTimestamp());
+    }
+
+    /**
+     * Get the number of minutes between this and the other.
+     *
+     * The result will be negative when this is after the other
+     *
+     * @param LocalDate|\DateTime $other
+     *
+     * @return float
      */
     public function diffInMinutes($other)
     {
         $other = $this->ensure($other);
 
-        return abs(($this->getTimestamp() - $other->getTimestamp()) / (60));
+        return $this->diffInSeconds($other) / 60;
     }
 
+    /**
+     * Get the number of minutes between this and the other.
+     *
+     * The result will be negative when this is after the other
+     *
+     * @param LocalDate|\DateTime $other
+     *
+     * @return float
+     */
+    public function diffInHours($other)
+    {
+        $other = $this->ensure($other);
+
+        return $this->diffInSeconds($other) / 3600;
+    }
+
+    /**
+     * Get the number of minutes between this and the other.
+     *
+     * The result will be negative when this is after the other
+     *
+     * @param LocalDate|\DateTime $other
+     *
+     * @return float
+     */
+    public function diffInDays($other)
+    {
+        $other = $this->ensure($other);
+
+        return $this->diffInSeconds($other) / 86400;
+    }
 
     /**
      * @param LocalDate|\DateTime $other

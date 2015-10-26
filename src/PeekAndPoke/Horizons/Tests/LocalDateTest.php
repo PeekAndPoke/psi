@@ -11,6 +11,9 @@ use PeekAndPoke\Horizons\DateAndTime\LocalDate;
 /**
  * LocalDateTest
  *
+ * TODO: what is the maximal and minimal Date in PHP?
+ * TODO: should we throw exceptions, when we have an over- / underflow when modifying dates? Probably yes.
+ *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class LocalDateTest extends \PHPUnit_Framework_TestCase
@@ -132,6 +135,15 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testNow()
+    {
+        $now      = new \DateTime();
+        $localNow = LocalDate::now();
+
+        $this->assertLessThan(1, $localNow->getTimestamp() - $now->getTimestamp(), 'Now must be constructed correctly');
+        $this->assertGreaterThanOrEqual(0, $now->getTimestamp() - $localNow->getTimestamp(), 'Now must be constructed correctly');
+    }
+
     /**
      * @dataProvider provideTestConstructor
      *
@@ -163,7 +175,6 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
            ['282828282', 'Etc/UTC',          '1978-12-18T11:24:42+00:00'],
 
            ['today',     'Etc/UTC',          $todayPrefix . '+00:00'],
-           ['today',     'Europe/Berlin',    $todayPrefix . '+02:00'],
            ['today',     'America/Chicago',  $todayPrefix . '-05:00'],
            ['today',     '+02:00',           $todayPrefix . '+02:00'],
            ['today',     '-02:00',           $todayPrefix . '-02:00'],
@@ -210,5 +221,347 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
            [new \DateTime('1978-12-18T12:00:00-01:00', $etc), 'Europe/Berlin',   '1978-12-18T14:00:00+01:00'],
            [new \DateTime('1978-12-18T12:00:00-01:00', $etc), 'America/Chicago', '1978-12-18T07:00:00-06:00'],
        ];
+    }
+
+    /**
+     */
+    public function testGetDate()
+    {
+        $date    = new \DateTime();
+        $subject = LocalDate::raw($date);
+
+        $this->assertNotSame($date, $subject->getDate(), 'getDate() must return a cloned date time object');
+        $this->assertEquals($date, $subject->getDate(), 'The returned date must have the same value');
+    }
+
+    /**
+     */
+    public function getTimestamp()
+    {
+        $subject = new LocalDate('1978-12-18T11:24:42+00:00', 'Etc/UTC');
+
+        $this->assertEquals(282828282, $subject->getTimestamp(), 'Getting the timestamp must work');
+    }
+
+    /**
+     * @dataProvider provideTestModifyBySeconds
+     *
+     * @param string $dateStr
+     * @param string $tzStr
+     * @param float  $bySeconds
+     * @param string $expected
+     */
+    public function testModifyBySeconds($dateStr, $tzStr, $bySeconds, $expected)
+    {
+        $date = new LocalDate($dateStr, $tzStr);
+
+        $mod = $date->modifyBySeconds($bySeconds);
+
+        $this->assertEquals($expected, $mod->format(), 'Modifying a date by seconds must work');
+        $this->assertEquals((int) $bySeconds, $date->diffInSeconds($mod), 'Diff in secs must be correct');
+        $this->assertEquals((int) $bySeconds, 0 - $mod->diffInSeconds($date), 'Diff in secs must be correct');
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideTestModifyBySeconds()
+    {
+        return [
+            // Test summer to winter time shift in London
+            ['2015-10-24T10:00:00+01:00', 'Europe/London',   24*60*60, '2015-10-25T09:00:00+00:00'],
+            ['2015-10-25T10:00:00+00:00', 'Europe/London', - 24*60*60, '2015-10-24T11:00:00+01:00'],
+            // Test summer to winter time shift in Berlin
+            ['2015-10-24T10:00:00+02:00', 'Europe/Berlin',   24*60*60, '2015-10-25T09:00:00+01:00'],
+            ['2015-10-25T10:00:00+01:00', 'Europe/Berlin', - 24*60*60, '2015-10-24T11:00:00+02:00'],
+
+            // Test winter to summer time shift in London
+            ['2015-03-28T10:00:00+00:00', 'Europe/London',   24*60*60, '2015-03-29T11:00:00+01:00'],
+            ['2015-03-29T10:00:00+01:00', 'Europe/London', - 24*60*60, '2015-03-28T09:00:00+00:00'],
+            // Test winter to summer time shift in Berlin
+            ['2015-03-28T10:00:00+01:00', 'Europe/Berlin',   24*60*60, '2015-03-29T11:00:00+02:00'],
+            ['2015-03-29T10:00:00+02:00', 'Europe/Berlin', - 24*60*60, '2015-03-28T09:00:00+01:00'],
+
+            // test leap-year
+            ['2016-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24*60*60, '2016-12-31T00:00:00+01:00'],
+            ['2017-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24*60*60, '2016-01-02T00:00:00+01:00'],
+
+            // Test edge cases
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',              0, '2018-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',              1, '2018-01-01T00:00:01+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',            - 1, '2017-12-31T23:59:59+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',            0.5, '2018-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',            1.5, '2018-01-01T00:00:01+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',          - 1.5, '2017-12-31T23:59:59+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24*60*60, '2019-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24*60*60, '2017-01-01T00:00:00+01:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestModifyByMinutes
+     *
+     * @param string $dateStr
+     * @param string $tzStr
+     * @param float  $byMinutes
+     * @param string $expected
+     */
+    public function testModifyByMinutes($dateStr, $tzStr, $byMinutes, $expected)
+    {
+        $date = new LocalDate($dateStr, $tzStr);
+
+        $mod = $date->modifyByMinutes($byMinutes);
+
+        $this->assertEquals($expected, $mod->format(), 'Modifying a date by minutes must work');
+        $this->assertEquals((float) $byMinutes, $date->diffInMinutes($mod), 'Diff in mins must be correct');
+        $this->assertEquals((float) $byMinutes, 0 - $mod->diffInMinutes($date), 'Diff in mins must be correct');
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideTestModifyByMinutes()
+    {
+        return [
+            // Test summer to winter time shift in London
+            ['2015-10-24T10:00:00+01:00', 'Europe/London',   24*60, '2015-10-25T09:00:00+00:00'],
+            ['2015-10-25T10:00:00+00:00', 'Europe/London', - 24*60, '2015-10-24T11:00:00+01:00'],
+            // Test summer to winter time shift in Berlin
+            ['2015-10-24T10:00:00+02:00', 'Europe/Berlin',   24*60, '2015-10-25T09:00:00+01:00'],
+            ['2015-10-25T10:00:00+01:00', 'Europe/Berlin', - 24*60, '2015-10-24T11:00:00+02:00'],
+
+            // Test winter to summer time shift in London
+            ['2015-03-28T10:00:00+00:00', 'Europe/London',   24*60, '2015-03-29T11:00:00+01:00'],
+            ['2015-03-29T10:00:00+01:00', 'Europe/London', - 24*60, '2015-03-28T09:00:00+00:00'],
+            // Test winter to summer time shift in Berlin
+            ['2015-03-28T10:00:00+01:00', 'Europe/Berlin',   24*60, '2015-03-29T11:00:00+02:00'],
+            ['2015-03-29T10:00:00+02:00', 'Europe/Berlin', - 24*60, '2015-03-28T09:00:00+01:00'],
+
+            // test leap-year
+            ['2016-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24*60, '2016-12-31T00:00:00+01:00'],
+            ['2017-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24*60, '2016-01-02T00:00:00+01:00'],
+
+            // Test edge cases
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',           0, '2018-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',           1, '2018-01-01T00:01:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',         - 1, '2017-12-31T23:59:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',         0.5, '2018-01-01T00:00:30+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',         1.5, '2018-01-01T00:01:30+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',       - 1.5, '2017-12-31T23:58:30+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24*60, '2019-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24*60, '2017-01-01T00:00:00+01:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestModifyByHours
+     *
+     * @param string $dateStr
+     * @param string $tzStr
+     * @param float  $byHours
+     * @param string $expected
+     */
+    public function testModifyByHours($dateStr, $tzStr, $byHours, $expected)
+    {
+        $date = new LocalDate($dateStr, $tzStr);
+
+        $mod = $date->modifyByHours($byHours);
+
+        $this->assertEquals($expected, $mod->format(), 'Modifying a date by hours must work');
+        $this->assertEquals((float) $byHours, $date->diffInHours($mod), 'Diff in hours must be correct');
+        $this->assertEquals((float) $byHours, 0 - $mod->diffInHours($date), 'Diff in hours must be correct');
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideTestModifyByHours()
+    {
+        return [
+            // Test summer to winter time shift in London
+            ['2015-10-24T10:00:00+01:00', 'Europe/London',   24, '2015-10-25T09:00:00+00:00'],
+            ['2015-10-25T10:00:00+00:00', 'Europe/London', - 24, '2015-10-24T11:00:00+01:00'],
+            // Test summer to winter time shift in Berlin
+            ['2015-10-24T10:00:00+02:00', 'Europe/Berlin',   24, '2015-10-25T09:00:00+01:00'],
+            ['2015-10-25T10:00:00+01:00', 'Europe/Berlin', - 24, '2015-10-24T11:00:00+02:00'],
+
+            // Test winter to summer time shift in London
+            ['2015-03-28T10:00:00+00:00', 'Europe/London',   24, '2015-03-29T11:00:00+01:00'],
+            ['2015-03-29T10:00:00+01:00', 'Europe/London', - 24, '2015-03-28T09:00:00+00:00'],
+            // Test winter to summer time shift in Berlin
+            ['2015-03-28T10:00:00+01:00', 'Europe/Berlin',   24, '2015-03-29T11:00:00+02:00'],
+            ['2015-03-29T10:00:00+02:00', 'Europe/Berlin', - 24, '2015-03-28T09:00:00+01:00'],
+
+            // test leap-year
+            ['2016-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24, '2016-12-31T00:00:00+01:00'],
+            ['2017-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24, '2016-01-02T00:00:00+01:00'],
+
+            // Test edge cases
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',        0, '2018-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',        1, '2018-01-01T01:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      - 1, '2017-12-31T23:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      0.5, '2018-01-01T00:30:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      1.5, '2018-01-01T01:30:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',    - 1.5, '2017-12-31T22:30:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   365*24, '2019-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin', - 365*24, '2017-01-01T00:00:00+01:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestModifyByDays
+     *
+     * @param string $dateStr
+     * @param string $tzStr
+     * @param float  $byDays
+     * @param string $expected
+     */
+    public function testModifyByDays($dateStr, $tzStr, $byDays, $expected)
+    {
+        $date = new LocalDate($dateStr, $tzStr);
+
+        $mod = $date->modifyByDays($byDays);
+
+        $this->assertEquals($expected, $mod->format(), 'Modifying a date by days must work');
+        $this->assertEquals((float) $byDays, $date->diffInDays($mod), 'Diff in days must be correct');
+        $this->assertEquals((float) $byDays, 0 - $mod->diffInDays($date), 'Diff in days must be correct');
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideTestModifyByDays()
+    {
+        return [
+            // Test summer to winter time shift in London
+            ['2015-10-24T10:00:00+01:00', 'Europe/London',   1, '2015-10-25T09:00:00+00:00'],
+            ['2015-10-25T10:00:00+00:00', 'Europe/London', - 1, '2015-10-24T11:00:00+01:00'],
+            // Test summer to winter time shift in Berlin
+            ['2015-10-24T10:00:00+02:00', 'Europe/Berlin',   1, '2015-10-25T09:00:00+01:00'],
+            ['2015-10-25T10:00:00+01:00', 'Europe/Berlin', - 1, '2015-10-24T11:00:00+02:00'],
+
+            // Test winter to summer time shift in London
+            ['2015-03-28T10:00:00+00:00', 'Europe/London',   1, '2015-03-29T11:00:00+01:00'],
+            ['2015-03-29T10:00:00+01:00', 'Europe/London', - 1, '2015-03-28T09:00:00+00:00'],
+            // Test winter to summer time shift in Berlin
+            ['2015-03-28T10:00:00+01:00', 'Europe/Berlin',   1, '2015-03-29T11:00:00+02:00'],
+            ['2015-03-29T10:00:00+02:00', 'Europe/Berlin', - 1, '2015-03-28T09:00:00+01:00'],
+
+            // test leap-year
+            ['2016-01-01T00:00:00+01:00', 'Europe/Berlin',   365, '2016-12-31T00:00:00+01:00'],
+            ['2017-01-01T00:00:00+01:00', 'Europe/Berlin', - 365, '2016-01-02T00:00:00+01:00'],
+
+            // Test edge cases
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',            0, '2018-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',            1, '2018-01-02T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',          - 1, '2017-12-31T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',          0.5, '2018-01-01T12:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',          1.5, '2018-01-02T12:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',        - 1.5, '2017-12-30T12:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      1*365.0, '2019-01-01T00:00:00+01:00'],
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',    - 1*365.0, '2017-01-01T00:00:00+01:00'],
+
+            // incl. one leap-year (2020)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      4*365.0, '2021-12-31T00:00:00+01:00'],
+            // incl. one leap-year (2016)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',    - 4*365.0, '2014-01-02T00:00:00+01:00'],
+            // incl. one leap-year (2020, 2024)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',      8*365.0, '2025-12-30T00:00:00+01:00'],
+            // incl. one leap-year (2016, 2012)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',    - 8*365.0, '2010-01-03T00:00:00+01:00'],
+            // incl. one leap-year (2020, 2024, 2028)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',     12*365.0, '2029-12-29T00:00:00+01:00'],
+            // incl. one leap-year (2016, 2012, 2008)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   - 12*365.0, '2006-01-04T00:00:00+01:00'],
+            // incl. one leap-year (2020, 2024, 2028, 2032)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',     16*365.0, '2033-12-28T00:00:00+01:00'],
+            // incl. one leap-year (2016, 2012, 2008, 2004)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   - 16*365.0, '2002-01-05T00:00:00+01:00'],
+            // incl. leap-years (2020, 2024, 2028, 2032, 2036)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',     20*365.0, '2037-12-27T00:00:00+01:00'],
+            // incl. leap-years (2016, 2012, 2008, 2004, 2000)
+            ['2018-01-01T00:00:00+01:00', 'Europe/Berlin',   - 20*365.0, '1998-01-06T00:00:00+01:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestAddInterval
+     *
+     * The modification by interval MUST be aware of day light saving shifts, so one day can even be 25 or 23 hours.
+     *
+     * @param string $dateStr
+     * @param string $tzStr
+     * @param string $intervalStr
+     * @param string $expectedAdd
+     * @param string $expectedSub
+     */
+    public function testAddSubInterval($dateStr, $tzStr, $intervalStr, $expectedAdd, $expectedSub)
+    {
+        $localDate = new LocalDate($dateStr, $tzStr);
+
+        $added  = $localDate->addInterval(new \DateInterval($intervalStr));
+        $subbed = $localDate->subInterval(new \DateInterval($intervalStr));
+
+        $this->assertEquals($expectedAdd, $added->format(),  'Adding an interval must work');
+        $this->assertEquals($expectedSub, $subbed->format(), 'Subbing an interval must work');
+    }
+
+    /**
+     * @return array
+     */
+    public static function provideTestAddInterval()
+    {
+        return [
+            // Test summer to winter time shift in London
+            ['2015-10-24T10:00:00+01:00',  'Europe/London', 'P1D', '2015-10-25T09:00:00+00:00', '2015-10-23T10:00:00+01:00'],
+            ['2015-10-25T10:00:00+00:00',  'Europe/London', 'P1D', '2015-10-26T10:00:00+00:00', '2015-10-24T11:00:00+01:00'],
+
+            // Test summer to winter time shift in Berlin
+            ['2015-10-24T10:00:00+02:00',  'Europe/Berlin', 'P1D', '2015-10-25T09:00:00+01:00', '2015-10-23T10:00:00+02:00'],
+            ['2015-10-25T10:00:00+01:00',  'Europe/Berlin', 'P1D', '2015-10-26T10:00:00+01:00', '2015-10-24T11:00:00+02:00'],
+
+            // Test winter to summer time shift in London
+            ['2015-03-28T10:00:00+00:00',  'Europe/London', 'P1D', '2015-03-29T11:00:00+01:00', '2015-03-27T10:00:00+00:00'],
+            // Test winter to summer time shift in Berlin
+            ['2015-03-28T10:00:00+01:00',  'Europe/Berlin', 'P1D', '2015-03-29T11:00:00+02:00', '2015-03-27T10:00:00+01:00'],
+
+            // TODO: more granular tests
+
+            //
+            //            // test leap-year
+            //            ['2016-01-01T00:00:00+01:00',    365, '2016-12-31T00:00:00+01:00'],
+            //            ['2017-01-01T00:00:00+01:00',  - 365, '2016-01-02T00:00:00+01:00'],
+            //
+            //            // Test edge cases
+            //            ['2018-01-01T00:00:00+01:00',             0, '2018-01-01T00:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',             1, '2018-01-02T00:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',           - 1, '2017-12-31T00:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',           0.5, '2018-01-01T12:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',           1.5, '2018-01-02T12:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',         - 1.5, '2017-12-30T12:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',       1*365.0, '2019-01-01T00:00:00+01:00'],
+            //            ['2018-01-01T00:00:00+01:00',     - 1*365.0, '2017-01-01T00:00:00+01:00'],
+            //
+            //            // incl. one leap-year (2020)
+            //            ['2018-01-01T00:00:00+01:00',       4*365.0, '2021-12-31T00:00:00+01:00'],
+            //            // incl. one leap-year (2016)
+            //            ['2018-01-01T00:00:00+01:00',     - 4*365.0, '2014-01-02T00:00:00+01:00'],
+            //            // incl. one leap-year (2020, 2024)
+            //            ['2018-01-01T00:00:00+01:00',       8*365.0, '2025-12-30T00:00:00+01:00'],
+            //            // incl. one leap-year (2016, 2012)
+            //            ['2018-01-01T00:00:00+01:00',     - 8*365.0, '2010-01-03T00:00:00+01:00'],
+            //            // incl. one leap-year (2020, 2024, 2028)
+            //            ['2018-01-01T00:00:00+01:00',      12*365.0, '2029-12-29T00:00:00+01:00'],
+            //            // incl. one leap-year (2016, 2012, 2008)
+            //            ['2018-01-01T00:00:00+01:00',    - 12*365.0, '2006-01-04T00:00:00+01:00'],
+            //            // incl. one leap-year (2020, 2024, 2028, 2032)
+            //            ['2018-01-01T00:00:00+01:00',      16*365.0, '2033-12-28T00:00:00+01:00'],
+            //            // incl. one leap-year (2016, 2012, 2008, 2004)
+            //            ['2018-01-01T00:00:00+01:00',    - 16*365.0, '2002-01-05T00:00:00+01:00'],
+            //            // incl. leap-years (2020, 2024, 2028, 2032, 2036)
+            //            ['2018-01-01T00:00:00+01:00',      20*365.0, '2037-12-27T00:00:00+01:00'],
+            //            // incl. leap-years (2016, 2012, 2008, 2004, 2000)
+            //            ['2018-01-01T00:00:00+01:00',    - 20*365.0, '1998-01-06T00:00:00+01:00'],
+        ];
     }
 }
