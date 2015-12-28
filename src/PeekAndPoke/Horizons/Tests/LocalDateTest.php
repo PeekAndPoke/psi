@@ -268,6 +268,7 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
      */
     public static function provideTestModifyBySeconds()
     {
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
         return [
             // Test summer to winter time shift in London
             ['2015-10-24T10:00:00+01:00', 'Europe/London',   24*60*60, '2015-10-25T09:00:00+00:00'],
@@ -323,6 +324,7 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
      */
     public static function provideTestModifyByMinutes()
     {
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
         return [
             // Test summer to winter time shift in London
             ['2015-10-24T10:00:00+01:00', 'Europe/London',   24*60, '2015-10-25T09:00:00+00:00'],
@@ -378,6 +380,7 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
      */
     public static function provideTestModifyByHours()
     {
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
         return [
             // Test summer to winter time shift in London
             ['2015-10-24T10:00:00+01:00', 'Europe/London',   24, '2015-10-25T09:00:00+00:00'],
