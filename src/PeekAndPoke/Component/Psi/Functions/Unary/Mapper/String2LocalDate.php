@@ -28,7 +28,7 @@ class String2LocalDate extends AbstractParameterisedUnaryFunction
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return LocalDate
      */
     public function __invoke($input)
     {

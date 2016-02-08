@@ -14,6 +14,8 @@ use PeekAndPoke\Horizons\DateAndTime\LocalDate;
  * TODO: what is the maximal and minimal Date in PHP?
  * TODO: should we throw exceptions, when we have an over- / underflow when modifying dates? Probably yes.
  *
+ * TODO: test the method that accept \DateTime as well as LocalDate for handling both correctly
+ *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class LocalDateTest extends \PHPUnit_Framework_TestCase
@@ -503,11 +505,19 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
     {
         $localDate = new LocalDate($dateStr, $tzStr);
 
+        // test with object parameter
         $added  = $localDate->addInterval(new \DateInterval($intervalStr));
         $subbed = $localDate->subInterval(new \DateInterval($intervalStr));
 
         $this->assertEquals($expectedAdd, $added->format(),  'Adding an interval must work');
         $this->assertEquals($expectedSub, $subbed->format(), 'Subbing an interval must work');
+
+        // test with string parameter
+        $added  = $localDate->addInterval($intervalStr);
+        $subbed = $localDate->subInterval($intervalStr);
+
+        $this->assertEquals($expectedAdd, $added->format(),  'Adding an interval as string must work');
+        $this->assertEquals($expectedSub, $subbed->format(), 'Subbing an interval as string must work');
     }
 
     /**
@@ -567,5 +577,303 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
             //            // incl. leap-years (2016, 2012, 2008, 2004, 2000)
             //            ['2018-01-01T00:00:00+01:00',    - 20*365.0, '1998-01-06T00:00:00+01:00'],
         ];
+    }
+
+    public function testToString()
+    {
+        $subject = new LocalDate('2016-01-01', 'Etc/UTC');
+
+        $this->assertEquals('2016-01-01T00:00:00+00:00', (string) $subject);
+    }
+
+    public function testGetOffset()
+    {
+        $winter = new LocalDate('2010-12-21', 'America/New_York');
+        $summer = new LocalDate('2008-06-21', 'America/New_York');
+
+        $this->assertEquals(-18000, $winter->getOffset());
+        $this->assertEquals(-14400, $summer->getOffset());
+    }
+
+    public function testGetOffsetInMinutes()
+    {
+        $winter = new LocalDate('2010-12-21', 'America/New_York');
+        $summer = new LocalDate('2008-06-21', 'America/New_York');
+
+        $this->assertEquals(-18000 / 60, $winter->getOffsetInMinutes());
+        $this->assertEquals(-14400 / 60, $summer->getOffsetInMinutes());
+    }
+
+    public function testGetOffsetInHours()
+    {
+        $winter = new LocalDate('2010-12-21', 'America/New_York');
+        $summer = new LocalDate('2008-06-21', 'America/New_York');
+
+        $this->assertEquals(-18000 / 3600, $winter->getOffsetInHours());
+        $this->assertEquals(-14400 / 3600, $summer->getOffsetInHours());
+    }
+
+    public function testGetClone()
+    {
+        $subject = new LocalDate('2016-01-01', 'Europe/Berlin');
+        $clone   = $subject->getClone();
+
+        // the values must be the same
+        $this->assertEquals($subject->getTimestamp(), $clone->getTimestamp());
+        $this->assertEquals($subject->getTimezone(), $clone->getTimezone());
+
+        // but they must be represented by other objects
+        $this->assertNotSame($subject, $clone);
+        $this->assertNotSame($subject->getDate(), $clone->getDate());
+        $this->assertNotSame($subject->getTimezone(), $clone->getTimezone());
+    }
+
+    public function testGetDaylightSavingShift()
+    {
+        $subject = new LocalDate('2016-01-01', 'Europe/Berlin');
+        $this->assertEquals(0, $subject->getDaylightSavingShift());
+
+        // spring forward
+        $subject = new LocalDate('2016-03-27T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(3600, $subject->getDaylightSavingShift());
+
+        // and fall back
+        $subject = new LocalDate('2016-10-30T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(-3600, $subject->getDaylightSavingShift());
+    }
+
+    public function testGetNearestStartOfDay()
+    {
+        $subject = new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getNearestStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T11:59:59', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getNearestStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getNearestStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T24:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getNearestStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T24:59:59', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getNearestStartOfDay());
+    }
+
+    public function testGetStartOfDay()
+    {
+        $subject = new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfDay());
+
+        $subject = new LocalDate('2016-01-01T24:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getStartOfDay());
+    }
+
+    public function testGetStartOfPreviousDay()
+    {
+        $subject = new LocalDate('2016-01-02T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfPreviousDay());
+
+        $subject = new LocalDate('2016-01-02T01:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfPreviousDay());
+
+        $subject = new LocalDate('2016-01-02T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfPreviousDay());
+
+        $subject = new LocalDate('2016-01-02T23:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01', 'Europe/Berlin'), $subject->getStartOfPreviousDay());
+
+        $subject = new LocalDate('2016-01-02T24:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getStartOfPreviousDay());
+    }
+
+    public function testGetStartOfNextDay()
+    {
+        $subject = new LocalDate('2016-01-02T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-03', 'Europe/Berlin'), $subject->getStartOfNextDay());
+
+        $subject = new LocalDate('2016-01-02T01:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-03', 'Europe/Berlin'), $subject->getStartOfNextDay());
+
+        $subject = new LocalDate('2016-01-02T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-03', 'Europe/Berlin'), $subject->getStartOfNextDay());
+
+        $subject = new LocalDate('2016-01-02T23:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-03', 'Europe/Berlin'), $subject->getStartOfNextDay());
+
+        $subject = new LocalDate('2016-01-02T24:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-04', 'Europe/Berlin'), $subject->getStartOfNextDay());
+    }
+
+    public function testEndOfDay()
+    {
+        $subject = new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getEndOfDay());
+
+        $subject = new LocalDate('2016-01-01T12:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-02', 'Europe/Berlin'), $subject->getEndOfDay());
+
+        $subject = new LocalDate('2016-01-01T24:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-03', 'Europe/Berlin'), $subject->getEndOfDay());
+    }
+
+    public function testAlignToMinutesInterval()
+    {
+        $subject = new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(0));
+        $this->assertEquals(new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+        $this->assertEquals(new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(60));
+        $this->assertEquals(new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(1440));
+
+        $subject = new LocalDate('2016-01-01T00:00:06', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+
+        $subject = new LocalDate('2016-01-01T00:07:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:07:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+
+        $subject = new LocalDate('2016-01-01T00:08:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:07:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+
+        $subject = new LocalDate('2016-01-01T00:13:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:07:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+
+        $subject = new LocalDate('2016-01-01T00:14:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:14:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+
+        $subject = new LocalDate('2016-01-01T00:15:00', 'Europe/Berlin');
+        $this->assertEquals(new LocalDate('2016-01-01T00:14:00', 'Europe/Berlin'), $subject->alignToMinutesInterval(7));
+    }
+
+    public function testGetMinutesIntoDay()
+    {
+        $subject = new LocalDate('2016-01-01T00:00:00', 'Europe/Berlin');
+        $this->assertSame(0, $subject->getMinutesIntoDay());
+
+        $subject = new LocalDate('2016-01-01T00:00:01', 'Europe/Berlin');
+        $this->assertSame(0, $subject->getMinutesIntoDay());
+
+        $subject = new LocalDate('2016-01-01T12:00:00', 'Europe/Berlin');
+        $this->assertSame(720, $subject->getMinutesIntoDay());
+
+        $subject = new LocalDate('2016-01-01T23:59:59', 'Europe/Berlin');
+        $this->assertSame(1439, $subject->getMinutesIntoDay());
+    }
+
+    public function testGetWeekDay()
+    {
+        $subject = new LocalDate('2016-02-07', 'Europe/Berlin');
+        $this->assertSame(7, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-08', 'Europe/Berlin');
+        $this->assertSame(1, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-09', 'Europe/Berlin');
+        $this->assertSame(2, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-10', 'Europe/Berlin');
+        $this->assertSame(3, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-11', 'Europe/Berlin');
+        $this->assertSame(4, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-12', 'Europe/Berlin');
+        $this->assertSame(5, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-13', 'Europe/Berlin');
+        $this->assertSame(6, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-14', 'Europe/Berlin');
+        $this->assertSame(7, $subject->getWeekday());
+
+        $subject = new LocalDate('2016-02-15', 'Europe/Berlin');
+        $this->assertSame(1, $subject->getWeekday());
+    }
+
+    public function testMin()
+    {
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:00:00', 'Europe/Berlin');
+        $this->assertEquals($compare->format('c'), $subject->min($compare)->format('c'));
+
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:00:02', 'Europe/Berlin');
+        $this->assertEquals($subject->format('c'), $subject->min($compare)->format('c'));
+
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new \DateTime('2016-02-08T00:00:00', new \DateTimeZone('Europe/Berlin'));
+        $this->assertEquals($compare->format('c'), $subject->min($compare)->format('c'));
+    }
+
+    public function testMax()
+    {
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:00:00', 'Europe/Berlin');
+        $this->assertEquals($subject->format('c'), $subject->max($compare)->format('c'));
+
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:00:02', 'Europe/Berlin');
+        $this->assertEquals($compare->format('c'), $subject->max($compare)->format('c'));
+
+        $subject = new LocalDate('2016-02-08T00:00:01', 'Europe/Berlin');
+        $compare = new \DateTime('2016-02-08T00:00:00', new \DateTimeZone('Europe/Berlin'));
+        $this->assertEquals($subject->format('c'), $subject->max($compare)->format('c'));
+    }
+
+    public function testIsBeforeOrEqual()
+    {
+        $subject = new LocalDate('2016-02-08T00:00:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $this->assertTrue($subject->isBeforeOrEqual($compare));
+
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $this->assertTrue($subject->isBeforeOrEqual($compare));
+
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:29:59', 'Europe/Berlin');
+        $this->assertFalse($subject->isBeforeOrEqual($compare));
+
+        // also test across time zones
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:30:00', 'Europe/London');
+        $this->assertTrue($subject->isBeforeOrEqual($compare));
+
+        // also test across time zones
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:29:59', 'Europe/London');
+        $this->assertFalse($subject->isBeforeOrEqual($compare));
+    }
+
+    public function testIsAfterOrEqual()
+    {
+        $subject = new LocalDate('2016-02-08T00:00:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $this->assertFalse($subject->isAfterOrEqual($compare));
+
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $this->assertTrue($subject->isAfterOrEqual($compare));
+
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T01:29:59', 'Europe/Berlin');
+        $this->assertTrue($subject->isAfterOrEqual($compare));
+
+        // also test across time zones
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:30:00', 'Europe/London');
+        $this->assertTrue($subject->isAfterOrEqual($compare));
+
+        // also test across time zones
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:29:59', 'Europe/London');
+        $this->assertTrue($subject->isAfterOrEqual($compare));
+
+        // also test across time zones
+        $subject = new LocalDate('2016-02-08T01:30:00', 'Europe/Berlin');
+        $compare = new LocalDate('2016-02-08T00:30:01', 'Europe/London');
+        $this->assertFalse($subject->isAfterOrEqual($compare));
     }
 }

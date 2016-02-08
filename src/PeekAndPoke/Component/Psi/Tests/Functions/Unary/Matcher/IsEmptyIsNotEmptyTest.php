@@ -26,7 +26,7 @@ class IsEmptyIsNotEmptyTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsEmpty();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -43,7 +43,7 @@ class IsEmptyIsNotEmptyTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotEmpty();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -57,8 +57,8 @@ class IsEmptyIsNotEmptyTest extends \PHPUnit_Framework_TestCase
             // positives - ensure substitution
             [0,             true],
             [0.0,           true],
-            ["",            true],
-            ["0",           true],
+            ['',            true],
+            ['0',           true],
             [null,          true],
             [false,         true],
             [[],            true],
@@ -66,8 +66,8 @@ class IsEmptyIsNotEmptyTest extends \PHPUnit_Framework_TestCase
             // positives
             [1,                 false],
             [0.1,               false],
-            [" ",               false],
-            ["1",               false],
+            [' ',               false],
+            ['1',               false],
             [new \stdClass(),   false],
             [true,              false],
             [[1],               false],

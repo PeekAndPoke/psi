@@ -46,7 +46,7 @@ class LocalDate
         $tz = $dateTime->getTimezone();
 
         // normalize input coming from Javascript or Java etc...
-        if ($tz->getName() == 'Z') {
+        if ($tz->getName() === 'Z') {
             $tz = new \DateTimeZone('Etc/UTC');
         }
 
@@ -138,7 +138,11 @@ class LocalDate
 
 
     /**
+     * Get the offset of the timezone in seconds
+     *
      * @return int
+     *
+     * @see DateTime::getOffset
      */
     public function getOffset()
     {
@@ -205,6 +209,9 @@ class LocalDate
 
     /**
      * Get the nearest start of a day, either the current or the next day depending on the time in the day
+     *
+     * Every time BEFORE 12:00 will result in the start of that day.
+     * Every time AFTER and INCLUDING 12:00 will result in the start of the next day.
      *
      * @return LocalDate
      */
@@ -379,6 +386,10 @@ class LocalDate
      */
     public function alignToMinutesInterval($minutesInterval)
     {
+        if ($minutesInterval <= 0) {
+            return $this->getClone();
+        }
+
         // This is a work-around for the day-light-saving shift days
         // If we would use minutesIntoDay and then add those to startOfDay, we loose one hour.
         // Example would be '2015-03-29 11:20' with tz 'Europe/Berlin' would result in '2015-03-29 10:00'
@@ -545,7 +556,7 @@ class LocalDate
     {
         $other = $this->ensure($other);
 
-        return $this->date == $other->date;
+        return $this->date->getTimestamp() === $other->date->getTimestamp();
     }
 
     /**
@@ -583,10 +594,6 @@ class LocalDate
     {
         if ($input instanceof LocalDate) {
             return $input;
-        }
-
-        if ($input instanceof \DateTime) {
-            return new LocalDate($input, $this->timezone);
         }
 
         return new LocalDate($input, $this->timezone);

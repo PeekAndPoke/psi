@@ -73,7 +73,6 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
             ->usort(function (PsiTestObject $a, PsiTestObject $b) { return $a->getAge() > $b->getAge(); })
             ->map(function (PsiTestObject $a) { return $a->getName(); })
             ->getFirst();
-        ;
 
         $this->assertSame($expected, $result);
     }
@@ -89,7 +88,6 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         $result = Psi::it($input)
             ->usort(function (PsiTestObject $a, PsiTestObject $b) { return $a->getAge() < $b->getAge(); })
             ->getFirst();
-        ;
 
         $this->assertSame($expected, $result);
     }
@@ -105,7 +103,6 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         $result = Psi::it($input)
             ->map(function (PsiTestObject $a) { return $a->getAge(); })
             ->sum();
-        ;
 
         $this->assertSame(50 + 10 + 52, $result);
     }
@@ -121,7 +118,6 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         $result = Psi::it($input)
             ->map(function (PsiTestObject $a) { return $a->getAge(); })
             ->avg();
-        ;
 
         $this->assertSame((50 + 10 + 52) / 3, $result);
     }
@@ -137,7 +133,6 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         Psi::it($input)
             ->each(function (PsiTestObject $a) { $a->incAge(); })
             ->collect();
-        ;
 
         $this->assertEquals(50 + 1, $karl->getAge());
         $this->assertEquals(10 + 1, $edgar->getAge());
@@ -153,9 +148,8 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         ];
 
         Psi::it($input)
-           ->each(function (PsiTestObject $a, $idx) { $a->incAge($idx); })
-           ->collect();
-        ;
+            ->each(function (PsiTestObject $a, $idx) { $a->incAge($idx); })
+            ->collect();
 
         $this->assertEquals(50 + 0, $karl->getAge());
         $this->assertEquals(10 + 1, $edgar->getAge());
@@ -219,7 +213,7 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         $expected = [$karl, $heidi];
 
         $result = Psi::it($input)
-                     ->filterValueKey(function (PsiTestObject $v, $k) { return $v->getName() == 'Karl' || $k > 1; })
+                     ->filterValueKey(function (PsiTestObject $v, $k) { return $v->getName() === 'Karl' || $k > 1; })
                      ->collect();
 
         $this->assertPsiCollectOutputMatches($expected, $result);

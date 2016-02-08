@@ -27,7 +27,7 @@ class IsNumericStringIsNotNumericStringTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsNumericString();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsNumericStringIsNotNumericStringTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotNumericString();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -56,16 +56,16 @@ class IsNumericStringIsNotNumericStringTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            ["0",                   true],
-            ["1",                   true],
-            ["01",                  true],
-            ["10",                  true],
-            ["123",                 true],
-            ["-0",                  true],
-            ["-1",                  true],
-            ["-01",                 true],
-            ["-10",                 true],
-            ["-123",                true],
+            ['0',                   true],
+            ['1',                   true],
+            ['01',                  true],
+            ['10',                  true],
+            ['123',                 true],
+            ['-0',                  true],
+            ['-1',                  true],
+            ['-01',                 true],
+            ['-10',                 true],
+            ['-123',                true],
 
             ['0.1',                 true],
             ['1.01',                true],

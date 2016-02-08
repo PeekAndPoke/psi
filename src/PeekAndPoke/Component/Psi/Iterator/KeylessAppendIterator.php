@@ -13,6 +13,9 @@ namespace PeekAndPoke\Component\Psi\Iterator;
  */
 class KeylessAppendIterator extends \AppendIterator
 {
+    /**
+     * @var int
+     */
     private $key;
 
     public function rewind()
@@ -31,7 +34,7 @@ class KeylessAppendIterator extends \AppendIterator
     }
 
     /**
-     * @return null
+     * @return int
      */
     public function key()
     {

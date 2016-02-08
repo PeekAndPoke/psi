@@ -27,7 +27,7 @@ class IsIntegerStringIsNotIntegerStringTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new IsIntegerString();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -44,7 +44,7 @@ class IsIntegerStringIsNotIntegerStringTest extends \PHPUnit_Framework_TestCase
 
         $subject = new IsNotIntegerString();
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -56,16 +56,16 @@ class IsIntegerStringIsNotIntegerStringTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // positives
-            ["0",                   true],
-            ["1",                   true],
-            ["01",                  true],
-            ["10",                  true],
-            ["123",                 true],
-            ["-0",                  true],
-            ["-1",                  true],
-            ["-01",                 true],
-            ["-10",                 true],
-            ["-123",                true],
+            ['0',                   true],
+            ['1',                   true],
+            ['01',                  true],
+            ['10',                  true],
+            ['123',                 true],
+            ['-0',                  true],
+            ['-1',                  true],
+            ['-01',                 true],
+            ['-10',                 true],
+            ['-123',                true],
 
             // TODO: do we really accept the .0 ones ?
             ['0.0',                 true],

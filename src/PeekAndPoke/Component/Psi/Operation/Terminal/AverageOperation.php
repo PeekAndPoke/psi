@@ -24,7 +24,7 @@ class AverageOperation implements TerminalOperationInterface
     {
         $data = iterator_to_array($set);
 
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return 0;
         }
 
