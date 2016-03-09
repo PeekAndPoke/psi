@@ -193,7 +193,7 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         $expected = [$karl];
 
         $result = Psi::it($input)
-                     ->filterKey(function ($k) { return $k == 0; })
+                     ->filterKey(function ($k) { return $k === 0; })
                      ->collect();
 
         $this->assertPsiCollectOutputMatches($expected, $result);
