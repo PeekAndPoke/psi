@@ -402,6 +402,10 @@ class LocalDate
      */
     public function alignToMinutesInterval($minutesInterval)
     {
+        if ($minutesInterval <= 0) {
+            return $this;
+        }
+
         // This is a work-around for the day-light-saving shift days
         // If we would use minutesIntoDay and then add those to startOfDay, we loose one hour.
         // Example would be '2015-03-29 11:20' with tz 'Europe/Berlin' would result in '2015-03-29 10:00'
