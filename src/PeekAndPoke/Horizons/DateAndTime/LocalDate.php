@@ -89,15 +89,11 @@ class LocalDate
                 ->setTimezone($timezone);
         } else {
             // when we have string input, we immediately use the timezone
-            $date = new \DateTime($input, $timezone);
-
-            // since the given 2nd parameter is ignored for dates like '...+02:00' we check if we need to convert the
-            // timezone
-            if ($date->getTimezone()->getOffset($date) !== $timezone->getOffset($date)) {
-                $date = (new \DateTime())
-                    ->setTimestamp($date->getTimestamp())
-                    ->setTimezone($timezone);
-            }
+            $tmp = new \DateTime($input, $timezone);
+            // we reconstruct the date time again in order to set the timezone on the inner one
+            $date = (new \DateTime())
+                ->setTimestamp($tmp->getTimestamp())
+                ->setTimezone($timezone);
         }
 
         $this->date     = $date;
@@ -438,11 +434,19 @@ class LocalDate
     }
 
     /**
+     * Get the weekday with Sun = 0, Mon = 1, ... Sat = 6
+     *
      * @return int
      */
     public function getWeekday()
     {
-        return (int) $this->format('N');
+        $day = (int) $this->format('N');
+
+        if ($day === 7) {
+            return 0;
+        }
+
+        return $day;
     }
 
     ////  COMPARISON METHODS  //////////////////////////////////////////////////////////////////////////////////////////

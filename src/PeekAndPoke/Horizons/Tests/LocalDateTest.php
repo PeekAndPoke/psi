@@ -76,19 +76,22 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
      */
     public function testRaw($raw, $expectedTimeZone, $expectedString)
     {
-        $localDate = LocalDate::raw($raw);
+        $subject = LocalDate::raw($raw);
 
         $this->assertEquals(
             $expectedString,
-            $localDate->format(),
+            $subject->format(),
             'A date created from a raw date must be formatted correctly'
         );
 
         $this->assertEquals(
             $expectedTimeZone,
-            $localDate->getTimezone()->getName(),
+            $subject->getTimezone()->getName(),
             'A date created from a raw date must have the correct timezone'
         );
+
+        $this->assertEquals($subject->getTimezone()->getName(), $expectedTimeZone, 'The timezone must be set correctly');
+        $this->assertEquals($subject->getDate()->getTimezone()->getName(), $expectedTimeZone, 'The timezone of the inner date must be set correctly');
     }
 
     /**
@@ -162,6 +165,9 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
             $subject->format(),
             'A date constructed from timestamp must be formatted correctly'
         );
+
+        $this->assertEquals($subject->getTimezone()->getName(), $timezoneStr, 'The timezone must be set correctly');
+        $this->assertEquals($subject->getDate()->getTimezone()->getName(), $timezoneStr, 'The timezone of the inner date must be set correctly');
     }
 
     /**
@@ -212,8 +218,11 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
            ['1978-12-18T12:00:00+01:00', 'Europe/Berlin',   '1978-12-18T12:00:00+01:00'],
            ['1978-12-18T12:00:00+01:00', 'America/Chicago', '1978-12-18T05:00:00-06:00'],
 
+           [new \DateTime('1978-12-18T12:00:00+0100',  $etc), 'Etc/UTC',         '1978-12-18T11:00:00+00:00'],
            [new \DateTime('1978-12-18T12:00:00+01:00', $etc), 'Etc/UTC',         '1978-12-18T11:00:00+00:00'],
+           [new \DateTime('1978-12-18T12:00:00+0100',  $etc), 'Europe/Berlin',   '1978-12-18T12:00:00+01:00'],
            [new \DateTime('1978-12-18T12:00:00+01:00', $etc), 'Europe/Berlin',   '1978-12-18T12:00:00+01:00'],
+           [new \DateTime('1978-12-18T12:00:00+0100',  $etc), 'America/Chicago', '1978-12-18T05:00:00-06:00'],
            [new \DateTime('1978-12-18T12:00:00+01:00', $etc), 'America/Chicago', '1978-12-18T05:00:00-06:00'],
 
            ['1978-12-18T12:00:00-01:00', 'Etc/UTC',         '1978-12-18T13:00:00+00:00'],
@@ -527,17 +536,21 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // Test summer to winter time shift in London
-            ['2015-10-24T10:00:00+01:00',  'Europe/London', 'P1D', '2015-10-25T09:00:00+00:00', '2015-10-23T10:00:00+01:00'],
-            ['2015-10-25T10:00:00+00:00',  'Europe/London', 'P1D', '2015-10-26T10:00:00+00:00', '2015-10-24T11:00:00+01:00'],
+            ['2015-10-24T10:00:00+01:00',  'Europe/London', 'P1D',   '2015-10-25T10:00:00+00:00', '2015-10-23T10:00:00+01:00'],
+            ['2015-10-24T10:00:00+01:00',  'Europe/London', 'PT24H', '2015-10-25T09:00:00+00:00', '2015-10-23T10:00:00+01:00'],
+            ['2015-10-25T10:00:00+00:00',  'Europe/London', 'P1D',   '2015-10-26T10:00:00+00:00', '2015-10-24T10:00:00+01:00'],
+            ['2015-10-25T10:00:00+00:00',  'Europe/London', 'PT24H', '2015-10-26T10:00:00+00:00', '2015-10-24T11:00:00+01:00'],
 
             // Test summer to winter time shift in Berlin
-            ['2015-10-24T10:00:00+02:00',  'Europe/Berlin', 'P1D', '2015-10-25T09:00:00+01:00', '2015-10-23T10:00:00+02:00'],
-            ['2015-10-25T10:00:00+01:00',  'Europe/Berlin', 'P1D', '2015-10-26T10:00:00+01:00', '2015-10-24T11:00:00+02:00'],
+            ['2015-10-24T10:00:00+02:00',  'Europe/Berlin', 'P1D',   '2015-10-25T10:00:00+01:00', '2015-10-23T10:00:00+02:00'],
+            ['2015-10-24T10:00:00+02:00',  'Europe/Berlin', 'PT24H', '2015-10-25T09:00:00+01:00', '2015-10-23T10:00:00+02:00'],
+            ['2015-10-25T10:00:00+01:00',  'Europe/Berlin', 'P1D',   '2015-10-26T10:00:00+01:00', '2015-10-24T10:00:00+02:00'],
+            ['2015-10-25T10:00:00+01:00',  'Europe/Berlin', 'PT24H', '2015-10-26T10:00:00+01:00', '2015-10-24T11:00:00+02:00'],
 
             // Test winter to summer time shift in London
-            ['2015-03-28T10:00:00+00:00',  'Europe/London', 'P1D', '2015-03-29T11:00:00+01:00', '2015-03-27T10:00:00+00:00'],
+            ['2015-03-28T10:00:00+00:00',  'Europe/London', 'P1D', '2015-03-29T10:00:00+01:00', '2015-03-27T10:00:00+00:00'],
             // Test winter to summer time shift in Berlin
-            ['2015-03-28T10:00:00+01:00',  'Europe/Berlin', 'P1D', '2015-03-29T11:00:00+02:00', '2015-03-27T10:00:00+01:00'],
+            ['2015-03-28T10:00:00+01:00',  'Europe/Berlin', 'P1D', '2015-03-29T10:00:00+02:00', '2015-03-27T10:00:00+01:00'],
 
             // TODO: more granular tests
 
@@ -765,7 +778,7 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
     public function testGetWeekDay()
     {
         $subject = new LocalDate('2016-02-07', 'Europe/Berlin');
-        $this->assertSame(7, $subject->getWeekday());
+        $this->assertSame(0, $subject->getWeekday());
 
         $subject = new LocalDate('2016-02-08', 'Europe/Berlin');
         $this->assertSame(1, $subject->getWeekday());
@@ -786,7 +799,7 @@ class LocalDateTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(6, $subject->getWeekday());
 
         $subject = new LocalDate('2016-02-14', 'Europe/Berlin');
-        $this->assertSame(7, $subject->getWeekday());
+        $this->assertSame(0, $subject->getWeekday());
 
         $subject = new LocalDate('2016-02-15', 'Europe/Berlin');
         $this->assertSame(1, $subject->getWeekday());
