@@ -346,6 +346,30 @@ class LocalDate
     }
 
     /**
+     * @param int $numDays
+     *
+     * @return LocalDate
+     */
+    public function modifyByDaysDaylightSavingAware($numDays)
+    {
+        $numDays   = (int) $numDays;
+        $timestamp = $this->getTimestamp() + (86400 * $numDays);
+
+        $newDate = LocalDate::fromTimestamp($timestamp, $this->timezone);
+
+        // calculate the datetime savings offsets
+        $timezoneInitialDateOffset = $this->timezone->getOffset($this->date);
+        $timezoneNewDateOffset = $this->timezone->getOffset($newDate->date);
+
+        // fix the new date if it's needed
+        if ($timezoneInitialDateOffset !== $timezoneNewDateOffset) {
+            $newDate = LocalDate::fromTimestamp($timestamp + ($timezoneInitialDateOffset - $timezoneNewDateOffset), $this->timezone);
+        }
+
+        return $newDate;
+    }
+
+    /**
      * @param \DateInterval|string $interval
      *
      * @deprecated use addInterval or subInterval
