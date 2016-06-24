@@ -9,19 +9,17 @@ namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
 
 /**
- * CollectToArrayOperation
+ * CollectToKeyValueArrayOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class CollectToArrayOperation implements TerminalOperationInterface
+class CollectToKeyValueArrayOperation implements TerminalOperationInterface
 {
     /**
      * {@inheritdoc}
      */
     public function apply(\Iterator $set)
     {
-        return array_values(
-            iterator_to_array($set)
-        );
+        return iterator_to_array($set);
     }
 }

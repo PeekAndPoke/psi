@@ -33,6 +33,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPre
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToKeyValueArrayOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToMapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CountOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
@@ -41,6 +42,7 @@ use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\SumOperation;
 
+/** @noinspection SingletonFactoryPatternViolationInspection */
 /**
  * Psi the Php Streams Api Implementation (inspired by Java Streams Api)
  *
@@ -52,11 +54,11 @@ class Psi
     private $inputs;
 
     /** @var \ArrayIterator */
-    private $operationChain = null;
+    private $operationChain;
     /** @var PsiFactoryInterface */
-    private $factory = null;
+    private $factory;
 
-    private $options = null;
+    private $options;
 
     /**
      * @param mixed $_ Everything that can be iterated, Provide as many params as you want (from 1 to n)
@@ -342,11 +344,31 @@ class Psi
     }
 
     /**
+     * Terminal operation that will collect a "real" array with numeric keys 0, 1, 2, ...
+     *
+     * The original keys will be lost. If you need the original keys please use toKeyValueArray()
+     *
+     * @see Psi::toKeyValueArray()
+     *
      * @return array
      */
     public function toArray()
     {
         return $this->solveOperationsAndApplyTerminal(new CollectToArrayOperation());
+    }
+
+    /**
+     * Terminal operation that will collect a php array while keeping the keys.
+     *
+     * Use this over toArray() if keeping the keys is necessary
+     *
+     * @see Psi::toArray()
+     *
+     * @return array
+     */
+    public function toKeyValueArray()
+    {
+        return $this->solveOperationsAndApplyTerminal(new CollectToKeyValueArrayOperation());
     }
 
     /**
@@ -436,7 +458,7 @@ class Psi
     {
         // When we have not a single operation in the chain we add a dummy one, in order to map down multiple input
         // living inside the \AppendIterator (in case we have multiple inputs)
-        if (count($this->operationChain) == 0) {
+        if (count($this->operationChain) === 0) {
             $this->operationChain->append(new EmptyIntermediateOp());
         }
 

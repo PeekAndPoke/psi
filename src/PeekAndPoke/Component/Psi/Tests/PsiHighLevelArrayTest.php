@@ -106,7 +106,7 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $input    = ['z' => 1, 'a' => 2];
         $expected = ['a' => 2, 'z' => 1];
 
-        $result = Psi::it($input)->ksort()->toArray();
+        $result = Psi::it($input)->ksort()->toKeyValueArray();
 
         $this->assertSame($expected, $result);
     }
@@ -116,7 +116,7 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $input    = ['a' => 1, 'z' => 2];
         $expected = ['z' => 2, 'a' => 1];
 
-        $result = Psi::it($input)->krsort()->toArray();
+        $result = Psi::it($input)->krsort()->toKeyValueArray();
 
         $this->assertSame($expected, $result);
     }
@@ -126,7 +126,7 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $input    = ['z' => 1, 'a' => 2];
         $expected = ['a' => 2, 'z' => 1];
 
-        $result = Psi::it($input)->uksort(function ($a, $b) { return $a > $b; })->toArray();
+        $result = Psi::it($input)->uksort(function ($a, $b) { return $a > $b; })->toKeyValueArray();
 
         $this->assertSame($expected, $result);
     }
