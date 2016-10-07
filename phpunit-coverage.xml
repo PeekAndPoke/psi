@@ -11,6 +11,7 @@
             <directory suffix=".php">./src/*/Tests</directory>
             <directory suffix=".php">./src/*/*/Tests</directory>
             <directory suffix=".php">./src/*/*/*/Tests</directory>
+            <directory suffix=".php">./src/*/*/*/*/Tests</directory>
         </testsuite>
 
     </testsuites>
