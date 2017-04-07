@@ -6,22 +6,39 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
+use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+
 /**
  * UniqueOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UniqueOperation extends AbstractSortingOperation
+class UniqueOperation implements FullSetOperationInterface
 {
+    /** @var bool */
+    protected $strict;
+
+    /**
+     * @param bool $strict
+     */
+    public function __construct($strict)
+    {
+        $this->strict = (bool) $strict;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function apply(\Iterator $set)
     {
-        $data = iterator_to_array($set);
+        $result = [];
 
-        $reversed = array_unique($data, $this->sortFlags);
+        foreach ($set as $item) {
+            if (! in_array($item, $result, $this->strict)) {
+                $result[] = $item;
+            }
+        }
 
-        return new \ArrayIterator($reversed);
+        return new \ArrayIterator($result);
     }
 }

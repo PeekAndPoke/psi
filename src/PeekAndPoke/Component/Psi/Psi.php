@@ -300,13 +300,13 @@ class Psi
     }
 
     /**
-     * @param int|null $sortFlags
+     * @param bool $compareStrict
      *
      * @return $this
      */
-    public function unique($sortFlags = null)
+    public function unique($compareStrict = true)
     {
-        $this->operationChain->append(new UniqueOperation($sortFlags));
+        $this->operationChain->append(new UniqueOperation($compareStrict));
 
         return $this;
     }

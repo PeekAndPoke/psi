@@ -30,7 +30,7 @@ class EqualToNotEqualToTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new EqualTo($subjectArgument);
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
@@ -48,7 +48,7 @@ class EqualToNotEqualToTest extends \PHPUnit_Framework_TestCase
 
         $subject = new NotEqualTo($subjectArgument);
 
-        $result = $subject->__invoke($psiValue);
+        $result = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);
     }
