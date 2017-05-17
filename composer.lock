@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e6ed5e00884e288249c1d340ecfe2f5",
+    "content-hash": "1891cf45c2f8000933b314f3b77a2f59",
     "packages": [
         {
             "name": "peekandpoke/php-types",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PeekAndPoke/php-types.git",
-                "reference": "98755ecb0ae6742fbefddaac722bb457b055a1ab"
+                "reference": "68e022ffa3231a03e2e2087104dff0cd090b5d84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PeekAndPoke/php-types/zipball/98755ecb0ae6742fbefddaac722bb457b055a1ab",
-                "reference": "98755ecb0ae6742fbefddaac722bb457b055a1ab",
+                "url": "https://api.github.com/repos/PeekAndPoke/php-types/zipball/68e022ffa3231a03e2e2087104dff0cd090b5d84",
+                "reference": "68e022ffa3231a03e2e2087104dff0cd090b5d84",
                 "shasum": ""
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.1"
+                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "autoload": {
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "Basic types for PHP like Enums, LocalDate etc...",
-            "time": "2017-05-16T04:31:05+00:00"
+            "time": "2017-05-17T20:03:55+00:00"
         }
     ],
     "packages-dev": [
