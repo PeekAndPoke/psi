@@ -9,6 +9,8 @@ filter:
   paths:
     - src/*
   excluded_paths:
+    - src/Psi.php
+    - app/*
     - tests/*
 
 checks:
