@@ -1,9 +1,15 @@
-/.idea/
-/.vagrant/
-/vendor
-/build
-/cache
-/docs/build
-/tmp
+# ignore IntelliJ project files the are not user specific
+/*.iml
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/misc.xml
+dataSources.ids
+datasources.xml
 
-*.iml
+# vagrant
+/.vagrant/
+
+# project
+/build/
+/tmp/
+/vendor/

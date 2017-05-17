@@ -4,36 +4,36 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\EqualTo;
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\GreaterThan;
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsInstanceOf;
-use PeekAndPoke\Component\Psi\Functions\Unary\Comparison\IsNotInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\EqualTo;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\GreaterThan;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsInstanceOf;
+use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsNotInstanceOf;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsNotObject;
 use PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck\IsObject;
 use PeekAndPoke\Component\Psi\Psi;
 
-require_once(__DIR__ . '/bootstrap.php');
+require_once __DIR__ . '/bootstrap.php';
 
 $input1  = [1,2,3,4,3,4];
 $result = Psi::it($input1)
-    ->filterValueKey(function ($v, $k) { return $k > 2 || $v == 1; })
+    ->filterValueKey(function ($v, $k) { return $k > 2 || $v === 1; })
     ->map(function ($v, $k) { return $v * $k; })
     ->rsort()
 //    ->unique()
     ->reverse()
     ->join(', ');
-
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 
 $input2 = [5,6,7,8];
 $result = Psi::it($input1, $input2)->map(function ($i) { return $i * 2; })->join(', ');
-
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 $result = Psi::it($input1, $input2)->join(', ');
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
-
 
 $inputKv1 = [
     'a' => 'b',
@@ -47,9 +47,8 @@ $inputKv2 = [
 $result = Psi::it($inputKv1, $inputKv2)
     ->map(function($v, $k) { return $k . '#' . $v; })
     ->collect();
-
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
-
 
 $a = [
     1, 2,
@@ -60,9 +59,9 @@ $a = [
 
 $result = Psi::it($a)
     ->flatten()
-    ->anyMatch(function ($i) { return $i == 4; })
+    ->anyMatch(function ($i) { return $i === 4; })
     ->join(', ');
-
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 /**  */
@@ -91,34 +90,38 @@ class PlayB extends PlayA {}
 /**  */
 class PlayC extends PlayB {}
 
-$input = [0, "z", new \stdClass(), new PlayA(20), new PlayB(10), new PlayC(30)];
+$input = [0, 'z', new \stdClass(), new PlayA(20), new PlayB(10), new PlayC(30)];
 
 $result = Psi::it($input)->filter(new IsObject())->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 $result = Psi::it($input)->filter(new IsNotObject())->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
-$result = Psi::it($input)->filter(new IsInstanceOf("PlayB"))->toArray();
+$result = Psi::it($input)->filter(new IsInstanceOf(\PlayB::class))->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
-$result = Psi::it($input)->filter(new IsNotInstanceOf("PlayB"))->toArray();
+$result = Psi::it($input)->filter(new IsNotInstanceOf(\PlayB::class))->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
-$result = Psi::it($input)->filter(new EqualTo("PlayB"))->toArray();
+$result = Psi::it($input)->filter(new EqualTo(\PlayB::class))->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 $result = Psi::it($input)
-    ->filter(new IsInstanceOf("PlayA"))
+    ->filter(new IsInstanceOf(\PlayA::class))
     ->sortBy(function (PlayA $i) { return $i->getVal(); })
     ->toArray();
-var_dump("sortBy: ", $result);
-
-
+/** @noinspection ForgottenDebugOutputInspection */
+var_dump('sortBy: ', $result);
 
 $input = [0, 1, 2, 3];
-
 $result = Psi::it($input)->filter(new GreaterThan(1))->toArray();
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
 
 
@@ -128,5 +131,5 @@ $result = Psi::it(
 )
     ->unique()
     ->join(', ');
-
+/** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);
