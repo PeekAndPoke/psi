@@ -36,32 +36,54 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 
 ## todo
 
+### PRIO-I
+
+( ) remove "horizons" completely from this repo  
+--> LocalDate now lives in peekandpoke/php-types
+
 ### HHVM
 
-- thing like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
+- things like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
 
 ### FullSet manipulations
 
 -> have a look a lodash.js what do they do and how do they call the methods
 
 - Chunk [1,2,3,4] -> [[1,2], [3,4]]
-- GroupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
-
+(x) GroupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
+-> see Psi::group
 
 (x) sortBy (function ($i) { return $i->getY(); }
-  ( ) ASC / DESC 
+  (-) ASC / DESC -> use reverse 
 ( ) uniqueBy (function ($i) { return $i->getY(); }
 
 ### Unary filter functions for strings
 
 String-Mappers
-- ToLower
-- ToUpper
-- Camelize
+- Str::ToLower
+- Str::ToUpper
+- Str::Camelize
 - ... camel to dashes
-- UcFirst, LcFirst
-- Replace
-- RegexReplace
+- Str::UcFirst, Str::LcFirst
+- Str::Replace
+- Str::RegexReplace
+- Str::StartsWith
+- Str::EndsWith
+
+- Str::removeAccents
+
+        $translations = [
+            'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y'
+        ];
+
+        return strtr($subject, $translations);
+
+
+
 
 Matchers
 - EndsWith

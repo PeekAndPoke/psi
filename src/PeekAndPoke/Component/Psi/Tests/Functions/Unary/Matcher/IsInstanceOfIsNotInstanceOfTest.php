@@ -59,8 +59,8 @@ class IsInstanceOfIsNotInstanceOfTest extends \PHPUnit_Framework_TestCase
     {
         // for PHP 5.4 compatibility we cannot use ::class
 
-        $clsMockA = '\PeekAndPoke\Component\Psi\Tests\Mocks\MockA';
-        $clsMockB = '\PeekAndPoke\Component\Psi\Tests\Mocks\MockB';
+        $clsMockA = MockA::class;
+        $clsMockB = MockB::class;
 
         return [
             // positives - ensure substitution

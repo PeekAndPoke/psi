@@ -26,6 +26,8 @@ abstract class AbstractParameterisedUnaryFunction extends AbstractUnaryFunction
      */
     public function __construct($val, $val2 = null)
     {
+        parent::__construct();
+
         $this->val  = $val;
         $this->val2 = $val2;
     }

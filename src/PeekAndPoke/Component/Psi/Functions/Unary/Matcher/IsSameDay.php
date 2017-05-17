@@ -7,7 +7,7 @@
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
-use PeekAndPoke\Horizons\DateAndTime\LocalDate;
+use PeekAndPoke\Types\LocalDate;
 
 /**
  * IsSameDay

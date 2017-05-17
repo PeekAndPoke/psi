@@ -7,7 +7,7 @@
 namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Mapper;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Mapper\String2LocalDate;
-use PeekAndPoke\Horizons\DateAndTime\LocalDate;
+use PeekAndPoke\Types\LocalDate;
 
 /**
  * String2LocalDateTest

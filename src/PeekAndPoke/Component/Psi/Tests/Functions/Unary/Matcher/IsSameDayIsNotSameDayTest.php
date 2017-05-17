@@ -8,7 +8,7 @@ namespace PeekAndPoke\Component\Psi\Tests\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsNotSameDay;
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsSameDay;
-use PeekAndPoke\Horizons\DateAndTime\LocalDate;
+use PeekAndPoke\Types\LocalDate;
 
 /**
  * Test IsSameDayIsNotSameDayTest

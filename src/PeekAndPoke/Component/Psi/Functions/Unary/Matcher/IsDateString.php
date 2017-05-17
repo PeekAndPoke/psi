@@ -22,7 +22,7 @@ class IsDateString extends AbstractUnaryFunction
      */
     public function __invoke($input)
     {
-        return $this->isValidDateString($input);
+        return self::isValidDateString($input);
     }
 
     /**

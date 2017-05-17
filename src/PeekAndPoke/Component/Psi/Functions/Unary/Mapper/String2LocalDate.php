@@ -8,7 +8,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\Mapper;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
 use PeekAndPoke\Component\Psi\Interfaces\Functions\ValueHolderInterface;
-use PeekAndPoke\Horizons\DateAndTime\LocalDate;
+use PeekAndPoke\Types\LocalDate;
 
 /**
  * String2LocalDate

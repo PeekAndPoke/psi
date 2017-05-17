@@ -4,9 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e90486ad44cdaf8f68a2927e69a3e2e4",
-    "content-hash": "f6fe59253df925276696cb36c6a49ee6",
-    "packages": [],
+    "hash": "9e43762fe0792967f886593b719c2d78",
+    "content-hash": "598259f3ef05035bab686b864cad1bd9",
+    "packages": [
+        {
+            "name": "peekandpoke/php-types",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PeekAndPoke/php-types.git",
+                "reference": "98755ecb0ae6742fbefddaac722bb457b055a1ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PeekAndPoke/php-types/zipball/98755ecb0ae6742fbefddaac722bb457b055a1ab",
+                "reference": "98755ecb0ae6742fbefddaac722bb457b055a1ab",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PeekAndPoke\\Types\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "PeekAndPoke",
+                    "email": "karsten.john.gerber@googlemail.com"
+                }
+            ],
+            "description": "Basic types for PHP like Enums, LocalDate etc...",
+            "time": "2017-05-16 04:31:05"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
