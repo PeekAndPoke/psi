@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
 
 /**
  * NotSameAs does a type safe comparison "!=="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotSameAs extends AbstractParameterisedUnaryFunction
+class NotSameAs extends AbstractParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

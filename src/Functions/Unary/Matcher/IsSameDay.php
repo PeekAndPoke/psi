@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
 use PeekAndPoke\Types\LocalDate;
 
 /**
@@ -14,7 +14,7 @@ use PeekAndPoke\Types\LocalDate;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsSameDay extends AbstractParameterisedUnaryFunction
+class IsSameDay extends AbstractParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

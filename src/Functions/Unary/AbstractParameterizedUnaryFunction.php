@@ -4,25 +4,26 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\ValueHolderInterface;
+use PeekAndPoke\Types\ValueHolder;
 
 /**
  * AbstractParameterisedUnaryFunction
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractParameterisedUnaryFunction extends AbstractUnaryFunction
+abstract class AbstractParameterizedUnaryFunction extends AbstractUnaryFunction
 {
-    /** @var mixed|ValueHolderInterface */
+    /** @var mixed|ValueHolder */
     private $val;
-    /** @var mixed|ValueHolderInterface */
+    /** @var mixed|ValueHolder */
     private $val2;
 
     /**
-     * @param mixed|ValueHolderInterface $val
-     * @param mixed|ValueHolderInterface $val2
+     * @param mixed|ValueHolder $val
+     * @param mixed|ValueHolder $val2
      */
     public function __construct($val, $val2 = null)
     {
@@ -37,7 +38,7 @@ abstract class AbstractParameterisedUnaryFunction extends AbstractUnaryFunction
      */
     public function getValue()
     {
-        return $this->val instanceof ValueHolderInterface
+        return $this->val instanceof ValueHolder
             ? $this->val->getValue()
             : $this->val;
     }
@@ -47,7 +48,7 @@ abstract class AbstractParameterisedUnaryFunction extends AbstractUnaryFunction
      */
     public function getValue2()
     {
-        return $this->val2 instanceof ValueHolderInterface
+        return $this->val2 instanceof ValueHolder
             ? $this->val2->getValue()
             : $this->val2;
     }

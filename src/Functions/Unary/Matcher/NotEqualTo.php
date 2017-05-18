@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
 
 /**
  * NotEqualTo does a non type safe comparison "!="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotEqualTo extends AbstractParameterisedUnaryFunction
+class NotEqualTo extends AbstractParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

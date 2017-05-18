@@ -6,19 +6,19 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Mapper;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
-use PeekAndPoke\Component\Psi\Interfaces\Functions\ValueHolderInterface;
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
 use PeekAndPoke\Types\LocalDate;
+use PeekAndPoke\Types\ValueHolder;
 
 /**
  * String2LocalDate
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class String2LocalDate extends AbstractParameterisedUnaryFunction
+class String2LocalDate extends AbstractParameterizedUnaryFunction
 {
     /**
-     * @param string|\DateTimeZone|ValueHolderInterface $timezone
+     * @param string|\DateTimeZone|ValueHolder $timezone
      */
     public function __construct($timezone)
     {

@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterisedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
 
 /**
  * IsInstanceOf
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsInstanceOf extends AbstractParameterisedUnaryFunction
+class IsInstanceOf extends AbstractParameterizedUnaryFunction
 {
     /**
      * @param mixed $input
