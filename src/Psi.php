@@ -122,7 +122,7 @@ class Psi
     ////  INTERMEDIATE OPERATIONS - working on one item at a time  /////////////////////////////////////////////////////
 
     /**
-     * @param \Closure|UnaryFunctionInterface $unaryFunction
+     * @param callable|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
@@ -134,7 +134,7 @@ class Psi
     }
 
     /**
-     * @param \Closure|UnaryFunctionInterface $unaryFunction
+     * @param callable|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
@@ -146,7 +146,7 @@ class Psi
     }
 
     /**
-     * @param \Closure|BinaryFunctionInterface $biPredicate
+     * @param callable|BinaryFunctionInterface $biPredicate
      *
      * @return $this
      */
@@ -158,7 +158,7 @@ class Psi
     }
 
     /**
-     * @param \Closure|UnaryFunctionInterface $unaryFunction
+     * @param callable|UnaryFunctionInterface $unaryFunction
      *
      * @return $this
      */
@@ -170,7 +170,7 @@ class Psi
     }
 
     /**
-     * @param \Closure|BinaryFunctionInterface $biFunction
+     * @param callable|BinaryFunctionInterface $biFunction
      *
      * @return $this
      */
@@ -182,7 +182,7 @@ class Psi
     }
 
     /**
-     * @param \Closure|BinaryFunctionInterface $function
+     * @param callable|BinaryFunctionInterface $function
      *
      * @return $this
      */
@@ -210,7 +210,7 @@ class Psi
     }
 
     /**
-     * @param UnaryFunctionInterface|\Closure $function
+     * @param callable|UnaryFunctionInterface $function
      *
      * @return $this
      */
@@ -236,7 +236,7 @@ class Psi
     }
 
     /**
-     * @param UnaryFunctionInterface|\Closure $function Return the value used for comparison
+     * @param callable|UnaryFunctionInterface $function Return the value used for comparison
      *
      * @return $this
      */
@@ -288,7 +288,7 @@ class Psi
     }
 
     /**
-     * @param BinaryFunctionInterface|\Closure $biFunction
+     * @param callable|BinaryFunctionInterface $biFunction
      *
      * @return $this
      */
@@ -312,7 +312,7 @@ class Psi
     }
 
     /**
-     * @param BinaryFunctionInterface|\Closure $biFunction
+     * @param callable|BinaryFunctionInterface $biFunction
      *
      * @return $this
      */
