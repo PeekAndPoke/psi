@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1891cf45c2f8000933b314f3b77a2f59",
+    "content-hash": "7e000212f1263ddb5269bebbd9361357",
     "packages": [
         {
             "name": "peekandpoke/php-types",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PeekAndPoke/php-types.git",
-                "reference": "68e022ffa3231a03e2e2087104dff0cd090b5d84"
+                "reference": "b747614ab9f507aa9f1111d0b435f707798ade50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PeekAndPoke/php-types/zipball/68e022ffa3231a03e2e2087104dff0cd090b5d84",
-                "reference": "68e022ffa3231a03e2e2087104dff0cd090b5d84",
+                "url": "https://api.github.com/repos/PeekAndPoke/php-types/zipball/b747614ab9f507aa9f1111d0b435f707798ade50",
+                "reference": "b747614ab9f507aa9f1111d0b435f707798ade50",
                 "shasum": ""
             },
             "require-dev": {
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "Basic types for PHP like Enums, LocalDate etc...",
-            "time": "2017-05-17T20:03:55+00:00"
+            "time": "2017-05-18T20:47:51+00:00"
         }
     ],
     "packages-dev": [
