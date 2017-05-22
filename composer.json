@@ -13,7 +13,7 @@
 
   "require": {
     "php": ">=5.5.10",
-    "peekandpoke/php-types": "^1.1.1"
+    "peekandpoke/php-types": "^1.1.2"
   },
 
   "require-dev": {
