@@ -39,6 +39,7 @@ use PeekAndPoke\Component\Psi\Operation\Terminal\CountOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\MedianOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\SumOperation;
 
@@ -437,6 +438,14 @@ class Psi
     public function avg()
     {
         return $this->solveOperationsAndApplyTerminal(new AverageOperation());
+    }
+
+    /**
+     * @return float
+     */
+    public function median()
+    {
+        return $this->solveOperationsAndApplyTerminal(new MedianOperation());
     }
 
     /**
