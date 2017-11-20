@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 
 /**
  * FlattenOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class FlattenOperation implements FullSetOperationInterface
+class FlattenOperation implements FullSetOperation
 {
     /**
      * {@inheritdoc}
@@ -29,12 +29,13 @@ class FlattenOperation implements FullSetOperationInterface
 
     /**
      * @param \ArrayIterator $result
-     * @param mixed          $input
+     * @param mixed|mixed[]  $input
      */
     private function flatten(\ArrayIterator $result, $input)
     {
         if (is_array($input) || $input instanceof \Traversable) {
 
+            /** @noinspection ForeachSourceInspection */
             foreach ($input as $item) {
                 $this->flatten($result, $item);
             }

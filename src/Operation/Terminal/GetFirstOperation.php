@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
 
 /**
  * GetFirstOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class GetFirstOperation implements TerminalOperationInterface
+class GetFirstOperation implements TerminalOperation
 {
     /** @var */
     private $default;

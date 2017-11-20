@@ -4,22 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsNotNumericString check if the string contains an number
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotNumericString extends IsNumericString
+class IsNotNumericString extends \PeekAndPoke\Component\Psi\Psi\IsNotNumericString
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return ! parent::__invoke($input);
-    }
 }

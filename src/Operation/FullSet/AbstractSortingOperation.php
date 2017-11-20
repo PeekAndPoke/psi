@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 
 /**
  * AbstractSortingOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractSortingOperation implements FullSetOperationInterface
+abstract class AbstractSortingOperation implements FullSetOperation
 {
     /** @var int */
     protected $sortFlags;

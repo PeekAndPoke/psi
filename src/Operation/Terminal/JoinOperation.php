@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
 
 /**
  * JoinOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class JoinOperation implements TerminalOperationInterface
+class JoinOperation implements TerminalOperation
 {
     /** @var */
     private $delimiter;

@@ -4,35 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsInstanceOf
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsInstanceOf extends AbstractParameterizedUnaryFunction
+class IsInstanceOf extends \PeekAndPoke\Component\Psi\Psi\IsInstanceOf
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        $val = $this->getValue();
-
-        return $this->isApplicable($val) && ($input instanceof $val);
-    }
-
-    /**
-     * @param $val
-     * @return bool
-     */
-    private function isApplicable($val)
-    {
-        return is_string($val) || is_object($val);
-    }
 }

@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
 
 /**
  * EmptyIntermediateOp
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class EmptyIntermediateOp implements IntermediateOperationInterface
+class EmptyIntermediateOp implements IntermediateOperation
 {
     /**
      * {@inheritdoc}

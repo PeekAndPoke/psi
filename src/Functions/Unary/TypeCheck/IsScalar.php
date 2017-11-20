@@ -4,24 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsScalar
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsScalar extends AbstractUnaryFunction
+class IsScalar extends \PeekAndPoke\Component\Psi\Psi\IsScalar
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function __invoke($input)
-    {
-        return is_scalar($input);
-    }
 }

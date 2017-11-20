@@ -6,24 +6,24 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
 
 /**
  * CollectToMapOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class CollectToMapOperation implements TerminalOperationInterface
+class CollectToMapOperation implements TerminalOperation
 {
-    /** @var \Closure|BinaryFunctionInterface */
+    /** @var \Closure|BinaryFunction */
     private $keyMapper;
-    /** @var \Closure|BinaryFunctionInterface */
+    /** @var \Closure|BinaryFunction */
     private $valueMapper;
 
     /**
-     * @param \Closure|BinaryFunctionInterface $keyMapper
-     * @param \Closure|BinaryFunctionInterface $valueMapper
+     * @param \Closure|BinaryFunction $keyMapper
+     * @param \Closure|BinaryFunction $valueMapper
      */
     public function __construct($keyMapper, $valueMapper)
     {

@@ -4,22 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsNotInstanceOf
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotInstanceOf extends IsInstanceOf
+class IsNotInstanceOf extends \PeekAndPoke\Component\Psi\Psi\IsNotInstanceOf
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return ! parent::__invoke($input);
-    }
 }

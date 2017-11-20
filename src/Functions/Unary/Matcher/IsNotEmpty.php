@@ -4,22 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsNotEmpty
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotEmpty extends IsEmpty
+class IsNotEmpty extends \PeekAndPoke\Component\Psi\Psi\IsNotEmpty
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return ! parent::__invoke($input);
-    }
 }

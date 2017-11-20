@@ -7,11 +7,10 @@
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
-use PeekAndPoke\Component\Psi\Functions\Unary\Mapper\IdentityMapper;
-use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
-use PeekAndPoke\Component\Psi\Interfaces\PsiFactoryInterface;
+use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\PsiFactory;
+use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\GroupOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
@@ -43,9 +42,10 @@ use PeekAndPoke\Component\Psi\Operation\Terminal\MedianOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\SumOperation;
 
-/** @noinspection SingletonFactoryPatternViolationInspection */
 /**
  * Psi the Php Streams Api Implementation (inspired by Java Streams Api)
+ *
+ * @api
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
@@ -56,7 +56,7 @@ class Psi
 
     /** @var \ArrayIterator */
     private $operationChain;
-    /** @var PsiFactoryInterface */
+    /** @var PsiFactory */
     private $factory;
 
     private $options;
@@ -78,7 +78,7 @@ class Psi
     protected function __construct($inputs)
     {
         $this->operationChain = new \ArrayIterator();
-        $this->factory        = new PsiFactory();
+        $this->factory        = new PsiFactoryImpl();
         $this->options        = new PsiOptions();
 
         $this->inputs = $inputs;
@@ -87,11 +87,11 @@ class Psi
     ////  CONFIGURATION METHODS  ///////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param PsiFactoryInterface $factory
+     * @param PsiFactory $factory
      *
      * @return $this
      */
-    public function useFactory(PsiFactoryInterface $factory)
+    public function useFactory(PsiFactory $factory)
     {
         $this->factory = $factory;
 
@@ -123,7 +123,7 @@ class Psi
     ////  INTERMEDIATE OPERATIONS - working on one item at a time  /////////////////////////////////////////////////////
 
     /**
-     * @param callable|UnaryFunctionInterface $unaryFunction
+     * @param callable|UnaryFunction $unaryFunction
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class Psi
     }
 
     /**
-     * @param callable|UnaryFunctionInterface $unaryFunction
+     * @param callable|UnaryFunction $unaryFunction
      *
      * @return $this
      */
@@ -147,19 +147,19 @@ class Psi
     }
 
     /**
-     * @param callable|BinaryFunctionInterface $biPredicate
+     * @param callable|\Closure|BinaryFunction $binaryFunction
      *
      * @return $this
      */
-    public function filterValueKey($biPredicate)
+    public function filterValueKey($binaryFunction)
     {
-        $this->operationChain->append(new FilterValueKeyPredicate($biPredicate));
+        $this->operationChain->append(new FilterValueKeyPredicate($binaryFunction));
 
         return $this;
     }
 
     /**
-     * @param callable|UnaryFunctionInterface $unaryFunction
+     * @param callable|\Closure|UnaryFunction $unaryFunction
      *
      * @return $this
      */
@@ -171,25 +171,25 @@ class Psi
     }
 
     /**
-     * @param callable|BinaryFunctionInterface $biFunction
+     * @param callable|\Closure|BinaryFunction $binaryFunction
      *
      * @return $this
      */
-    public function each($biFunction)
+    public function each($binaryFunction)
     {
-        $this->operationChain->append(new EachOperation($biFunction));
+        $this->operationChain->append(new EachOperation($binaryFunction));
 
         return $this;
     }
 
     /**
-     * @param callable|BinaryFunctionInterface $function
+     * @param callable|\Closure|BinaryFunction $binaryFunction
      *
      * @return $this
      */
-    public function map($function)
+    public function map($binaryFunction)
     {
-        $this->operationChain->append(new MapOperation($function));
+        $this->operationChain->append(new MapOperation($binaryFunction));
 
         return $this;
     }
@@ -211,13 +211,13 @@ class Psi
     }
 
     /**
-     * @param callable|UnaryFunctionInterface $function
+     * @param callable|\Closure|UnaryFunction $unaryFunction
      *
      * @return $this
      */
-    public function group($function)
+    public function group($unaryFunction)
     {
-        $this->operationChain->append(new GroupOperation($function));
+        $this->operationChain->append(new GroupOperation($unaryFunction));
 
         return $this;
     }
@@ -237,13 +237,13 @@ class Psi
     }
 
     /**
-     * @param callable|UnaryFunctionInterface $function Return the value used for comparison
+     * @param callable|\Closure|UnaryFunction $unaryFunction Return the value used for comparison
      *
      * @return $this
      */
-    public function sortBy($function)
+    public function sortBy($unaryFunction)
     {
-        $this->operationChain->append(new SortByOperation($function));
+        $this->operationChain->append(new SortByOperation($unaryFunction));
 
         return $this;
     }
@@ -289,13 +289,13 @@ class Psi
     }
 
     /**
-     * @param callable|BinaryFunctionInterface $biFunction
+     * @param callable|\Closure|BinaryFunction $binaryFunction
      *
      * @return $this
      */
-    public function usort($biFunction)
+    public function usort($binaryFunction)
     {
-        $this->operationChain->append(new UserSortOperation($biFunction));
+        $this->operationChain->append(new UserSortOperation($binaryFunction));
 
         return $this;
     }
@@ -313,13 +313,13 @@ class Psi
     }
 
     /**
-     * @param callable|BinaryFunctionInterface $biFunction
+     * @param callable|\Closure|BinaryFunction $binaryFunction
      *
      * @return $this
      */
-    public function uksort($biFunction)
+    public function uksort($binaryFunction)
     {
-        $this->operationChain->append(new UserKeySortOperation($biFunction));
+        $this->operationChain->append(new UserKeySortOperation($binaryFunction));
 
         return $this;
     }
@@ -373,8 +373,8 @@ class Psi
     }
 
     /**
-     * @param BinaryFunctionInterface|Callable $keyMapper   Maps the value down to a string or number
-     * @param BinaryFunctionInterface|Callable $valueMapper If not given the value will not be changed
+     * @param BinaryFunction|Callable $keyMapper   Maps the value down to a string or number
+     * @param BinaryFunction|Callable $valueMapper If not given the value will not be changed
      *
      * @return array
      */
@@ -383,7 +383,7 @@ class Psi
         return $this->solveOperationsAndApplyTerminal(
             new CollectToMapOperation(
                 $keyMapper,
-                $valueMapper ? $valueMapper : new IdentityMapper()
+                $valueMapper ?: new Psi\Map\Identity()
             )
         );
     }
@@ -459,11 +459,11 @@ class Psi
     ////  PRIVATE METHODS  /////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param TerminalOperationInterface $terminal
+     * @param TerminalOperation $terminal
      *
      * @return mixed
      */
-    private function solveOperationsAndApplyTerminal(TerminalOperationInterface $terminal)
+    private function solveOperationsAndApplyTerminal(TerminalOperation $terminal)
     {
         // When we have not a single operation in the chain we add a dummy one, in order to map down multiple input
         // living inside the \AppendIterator (in case we have multiple inputs)

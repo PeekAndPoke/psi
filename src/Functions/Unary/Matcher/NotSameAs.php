@@ -6,22 +6,15 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Psi\IsNotSameAs;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * NotSameAs does a type safe comparison "!=="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotSameAs extends AbstractParameterizedUnaryFunction
+class NotSameAs extends IsNotSameAs
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return $input !== $this->getValue();
-    }
 }

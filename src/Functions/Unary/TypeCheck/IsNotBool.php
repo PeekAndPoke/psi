@@ -6,22 +6,13 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsBool
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotBool extends AbstractUnaryFunction
+class IsNotBool extends \PeekAndPoke\Component\Psi\Psi\IsNotBool
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function __invoke($input)
-    {
-        return ! is_bool($input);
-    }
 }

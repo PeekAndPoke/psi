@@ -1,8 +1,14 @@
 <component name="ProjectDictionaryState">
   <dictionary name="gerk">
     <words>
+      <w>iteratable</w>
+      <w>iteratables</w>
+      <w>keyless</w>
+      <w>krsort</w>
       <w>ksort</w>
       <w>rsort</w>
+      <w>uksort</w>
+      <w>usort</w>
     </words>
   </dictionary>
 </component>

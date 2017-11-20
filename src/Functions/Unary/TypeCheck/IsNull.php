@@ -4,24 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsNull
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNull extends AbstractUnaryFunction
+class IsNull extends \PeekAndPoke\Component\Psi\Psi\IsNull
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function __invoke($input)
-    {
-        return $input === null;
-    }
 }

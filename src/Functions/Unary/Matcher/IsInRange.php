@@ -6,22 +6,13 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * GreaterThanOrEqual does a non type safe comparison "=="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsInRange extends AbstractParameterizedUnaryFunction
+class IsInRange extends \PeekAndPoke\Component\Psi\Psi\IsInRange
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return $input >= $this->getValue() && $input <= $this->getValue2();
-    }
 }

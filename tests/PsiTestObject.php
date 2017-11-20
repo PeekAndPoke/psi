@@ -60,7 +60,7 @@ class PsiTestObject
      *
      * @return $this
      */
-    public function incAge($value = 1)
+    public function incAge($value)
     {
         $this->age += $value;
 

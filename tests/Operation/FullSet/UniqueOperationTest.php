@@ -2,7 +2,9 @@
 /**
  * Created by gerk on 07.04.17 09:48
  */
-use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueOperation;
+
+namespace PeekAndPoke\Component\Psi\Operation\FullSet;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,8 +31,8 @@ class UniqueOperationTest extends TestCase
 
     public static function provide()
     {
-        $obj1 = new stdClass();
-        $obj2 = new stdClass();
+        $obj1 = new \stdClass();
+        $obj2 = new \stdClass();
 
         return [
             [

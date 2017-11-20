@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 
 /**
  * ReverseOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ReverseOperation implements FullSetOperationInterface
+class ReverseOperation implements FullSetOperation
 {
     /**
      * {@inheritdoc}

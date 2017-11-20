@@ -6,16 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Solver;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
-use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
-use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolverInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
+use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
+use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolver;
 
 /**
  * DefaultOperationChainSolver
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class DefaultOperationChainSolver implements OperationChainSolverInterface
+class DefaultOperationChainSolver implements OperationChainSolver
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
         foreach ($operations as $operation) {
 
             // collect all unary operators
-            if ($operation instanceof IntermediateOperationInterface) {
+            if ($operation instanceof IntermediateOperation) {
                 $unaryChain->append($operation);
             } else {
                 // execute all the collected unary operations
@@ -40,7 +40,7 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
                 }
 
                 // execute full set operations (like sort)
-                if ($operation instanceof FullSetOperationInterface) {
+                if ($operation instanceof FullSetOperation) {
                     $tempResult = $operation->apply($tempResult);
                 }
             }
@@ -78,7 +78,7 @@ class DefaultOperationChainSolver implements OperationChainSolverInterface
 
             while ($operatorChain->valid() && $useResult) {
 
-                /** @var IntermediateOperationInterface $current */
+                /** @var IntermediateOperation $current */
                 $current = $operatorChain->current();
                 // apply intermediate operations
                 $result  = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);

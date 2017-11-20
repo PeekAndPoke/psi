@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 
 /**
  * UniqueOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UniqueOperation implements FullSetOperationInterface
+class UniqueOperation implements FullSetOperation
 {
     /** @var bool */
     protected $strict;

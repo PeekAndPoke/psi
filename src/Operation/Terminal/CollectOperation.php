@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\TerminalOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
 
 /**
  * CollectOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class CollectOperation implements TerminalOperationInterface
+class CollectOperation implements TerminalOperation
 {
     /**
      * {@inheritdoc}

@@ -7,7 +7,7 @@
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
 
 /**
@@ -15,7 +15,7 @@ use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class SortByOperation extends AbstractUnaryFunctionOperation implements FullSetOperationInterface
+class SortByOperation extends AbstractUnaryFunctionOperation implements FullSetOperation
 {
     /**
      * @param \Iterator $set

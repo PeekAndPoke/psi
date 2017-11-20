@@ -7,19 +7,12 @@
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsNotIntegerString check if the string contains an integer
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotIntegerString extends IsIntegerString
+class IsNotIntegerString extends \PeekAndPoke\Component\Psi\Psi\IsNotIntegerString
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return ! parent::__invoke($input);
-    }
 }

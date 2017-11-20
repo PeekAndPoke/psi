@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
  * AbstractUnaryFunctionOperation
@@ -15,19 +15,14 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
  */
 abstract class AbstractUnaryFunctionOperation
 {
-    /** @var callable */
+    /** @var callable|\Closure|UnaryFunction */
     protected $function;
 
     /**
-     * @param \Closure|UnaryFunctionInterface $function
+     * @param callable|\Closure|UnaryFunction $function
      */
     public function __construct($function)
     {
-        if ($function instanceof UnaryFunctionInterface) {
-            $this->function = $function;
-        } else {
-            // TODO: add a check that this is a \Closure and that is has the correct number of parameters
-            $this->function = $function;
-        }
+        $this->function = $function;
     }
 }

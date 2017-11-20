@@ -60,15 +60,13 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 ### Unary filter functions for strings
 
 String-Mappers
-- Str::ToLower
-- Str::ToUpper
-- Str::Camelize
-- ... camel to dashes
+- Str::Camelize (StrToCamelCase)
+- ... camel to dashes (StrToSlug)
 - Str::UcFirst, Str::LcFirst
-- Str::Replace
-- Str::RegexReplace
-- Str::StartsWith
-- Str::EndsWith
+- Str::StrReplace
+- Str::StrMbReplace
+- Str::StrRegexReplace
+- Str::StrMbRegexReplace
 
 - Str::removeAccents
 
@@ -81,9 +79,6 @@ String-Mappers
         ];
 
         return strtr($subject, $translations);
-
-
-
 
 Matchers
 - EndsWith

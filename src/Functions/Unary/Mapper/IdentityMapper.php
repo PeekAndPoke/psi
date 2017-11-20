@@ -4,24 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Mapper;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Psi\Map\Identity;
 
 /**
- * IdentityMap
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IdentityMapper implements UnaryFunctionInterface
+class IdentityMapper extends Identity
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function __invoke($input)
-    {
-        return $input;
-    }
 }

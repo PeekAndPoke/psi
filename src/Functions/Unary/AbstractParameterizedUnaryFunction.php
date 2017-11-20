@@ -10,8 +10,6 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary;
 use PeekAndPoke\Types\ValueHolder;
 
 /**
- * AbstractParameterisedUnaryFunction
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 abstract class AbstractParameterizedUnaryFunction extends AbstractUnaryFunction

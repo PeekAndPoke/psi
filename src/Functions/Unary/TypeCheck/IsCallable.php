@@ -6,22 +6,13 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
-
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * IsCallable
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallable extends AbstractUnaryFunction
+class IsCallable extends \PeekAndPoke\Component\Psi\Psi\IsCallable
 {
-    /**
-     * @param mixed $input
-     *
-     * @return mixed
-     */
-    public function __invoke($input)
-    {
-        return is_callable($input);
-    }
 }

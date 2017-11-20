@@ -4,24 +4,18 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Psi\IsGreaterThanOrEqual;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * GreaterThanOrEqual does a non type safe comparison "=="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class GreaterThanOrEqual extends AbstractParameterizedUnaryFunction
+class GreaterThanOrEqual extends IsGreaterThanOrEqual
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return $input >= $this->getValue();
-    }
 }

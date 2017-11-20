@@ -4,11 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Iterator;
 
 /**
- * KeylessAppendIterator
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class KeylessAppendIterator extends \AppendIterator

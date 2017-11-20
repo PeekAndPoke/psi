@@ -4,34 +4,18 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Mapper;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
-use PeekAndPoke\Types\LocalDate;
-use PeekAndPoke\Types\ValueHolder;
+use PeekAndPoke\Component\Psi\Psi\Str\ToLocalDate;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\Map\StrToLocalDate instead
+ *
  * String2LocalDate
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class String2LocalDate extends AbstractParameterizedUnaryFunction
+class String2LocalDate extends ToLocalDate
 {
-    /**
-     * @param string|\DateTimeZone|ValueHolder $timezone
-     */
-    public function __construct($timezone)
-    {
-        parent::__construct($timezone);
-    }
-
-    /**
-     * @param mixed $input
-     *
-     * @return LocalDate
-     */
-    public function __invoke($input)
-    {
-        return new LocalDate($input, $this->getValue());
-    }
 }

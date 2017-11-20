@@ -6,22 +6,15 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Psi\IsGreaterThan;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * GreaterThan does a non type safe comparison "=="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class GreaterThan extends AbstractParameterizedUnaryFunction
+class GreaterThan extends IsGreaterThan
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return $input > $this->getValue();
-    }
 }

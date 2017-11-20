@@ -6,14 +6,14 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\UnaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
  * AbstractUnaryFunctionOperation
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractUnaryFunction implements UnaryFunctionInterface
+abstract class AbstractUnaryFunction implements UnaryFunction
 {
     /**
      * c'tor

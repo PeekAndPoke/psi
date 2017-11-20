@@ -7,18 +7,16 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
 /**
- * FilterPredicate
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class FilterPredicate extends AbstractUnaryPredicateOperation
+class FilterPredicate extends AbstractPredicateOperation
 {
     /**
      * {@inheritdoc}
      */
     public function apply($input, $index, &$useItem, &$canContinue)
     {
-        $useItem     = $this->predicate->test($input);
+        $useItem     = $this->test($input, $index);
         $canContinue = true;
 
         return $input;

@@ -7,11 +7,9 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
 /**
- * AnyMatchPredicate
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class AnyMatchPredicate extends AbstractUnaryPredicateOperation
+class AnyMatchPredicate extends AbstractPredicateOperation
 {
     /**
      * {@inheritdoc}
@@ -19,7 +17,7 @@ class AnyMatchPredicate extends AbstractUnaryPredicateOperation
     public function apply($input, $index, &$useItem, &$canContinue)
     {
         $useItem     = true;
-        $canContinue = ! $this->predicate->test($input);
+        $canContinue = ! $this->test($input, $index);
 
         return $input;
     }

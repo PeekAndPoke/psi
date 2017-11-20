@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\FullSetOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**
@@ -14,7 +14,7 @@ use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class UserSortOperation extends AbstractBinaryFunctionOperation implements FullSetOperationInterface
+class UserSortOperation extends AbstractBinaryFunctionOperation implements FullSetOperation
 {
     /**
      * {@inheritdoc}
@@ -23,7 +23,7 @@ class UserSortOperation extends AbstractBinaryFunctionOperation implements FullS
     {
         $data = iterator_to_array($set);
 
-        usort($data, $this->biFunction);
+        usort($data, $this->function);
 
         return new \ArrayIterator($data);
     }

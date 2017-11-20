@@ -6,22 +6,15 @@
  */
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Psi\IsLessThan;
 
 /**
+ * @deprecated will be removed in v1.0.0 use equivalent in Psi\... instead
+ *
  * LessThan does a non type safe comparison "=="
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class LessThan extends AbstractParameterizedUnaryFunction
+class LessThan extends IsLessThan
 {
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input)
-    {
-        return $input < $this->getValue();
-    }
 }

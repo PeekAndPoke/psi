@@ -6,7 +6,7 @@
  */
 namespace PeekAndPoke\Component\Psi\Operation;
 
-use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
+use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
 
 /**
  * AbstractBinaryFunctionOperation
@@ -15,19 +15,14 @@ use PeekAndPoke\Component\Psi\Interfaces\Functions\BinaryFunctionInterface;
  */
 abstract class AbstractBinaryFunctionOperation
 {
-    /** @var \Closure|BinaryFunctionInterface */
-    protected $biFunction;
+    /** @var callable|\Closure|BinaryFunction */
+    protected $function;
 
     /**
-     * @param \Closure|BinaryFunctionInterface $biFunction
+     * @param callable|\Closure|BinaryFunction $function
      */
-    public function __construct($biFunction)
+    public function __construct($function)
     {
-        if ($biFunction instanceof BinaryFunctionInterface) {
-            $this->biFunction = $biFunction;
-        } else {
-            // TODO: add a check that this is a \Closure and that is has the correct number of parameters
-            $this->biFunction = $biFunction;
-        }
+        $this->function = $function;
     }
 }

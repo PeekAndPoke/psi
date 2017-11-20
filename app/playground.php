@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\EqualTo;
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\GreaterThan;
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\IsInstanceOf;
@@ -130,6 +131,17 @@ $result = Psi::it(
     [0 => 'd', 1 => 'e', 2 => 'f']
 )
     ->unique()
+    ->join(', ');
+/** @noinspection ForgottenDebugOutputInspection */
+var_dump($result);
+
+
+$result = Psi::it(
+    [0 => 'a', 1 => 'b', 2 => 'c', 'x', 'y', 'abz'],
+    [0 => 'd', 1 => 'e', 2 => 'f']
+)
+    ->unique()
+    ->map(new Psi\Str\ToUpper())
     ->join(', ');
 /** @noinspection ForgottenDebugOutputInspection */
 var_dump($result);

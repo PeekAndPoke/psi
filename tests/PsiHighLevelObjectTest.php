@@ -129,7 +129,7 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
         ];
 
         Psi::it($input)
-            ->each(function (PsiTestObject $a) { $a->incAge(); })
+            ->each(function (PsiTestObject $a) { $a->incAge(1); })
             ->collect();
 
         $this->assertEquals(50 + 1, $karl->getAge());

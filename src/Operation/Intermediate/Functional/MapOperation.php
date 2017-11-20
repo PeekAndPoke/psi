@@ -4,17 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Interfaces\Operation\IntermediateOperationInterface;
+use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**
- * MapOperation
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class MapOperation extends AbstractBinaryFunctionOperation implements IntermediateOperationInterface
+class MapOperation extends AbstractBinaryFunctionOperation implements IntermediateOperation
 {
     /**
      * {@inheritdoc}
@@ -24,6 +23,8 @@ class MapOperation extends AbstractBinaryFunctionOperation implements Intermedia
         $useItem     = true;
         $canContinue = true;
 
-        return $this->biFunction->__invoke($input, $index);
+        $func = $this->function;
+
+        return $func($input, $index);
     }
 }
