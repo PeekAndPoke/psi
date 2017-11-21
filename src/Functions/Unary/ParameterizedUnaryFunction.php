@@ -7,12 +7,13 @@
 
 namespace PeekAndPoke\Component\Psi\Functions\Unary;
 
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 use PeekAndPoke\Types\ValueHolder;
 
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-abstract class AbstractParameterizedUnaryFunction extends AbstractUnaryFunction
+class ParameterizedUnaryFunction implements UnaryFunction
 {
     /** @var mixed|ValueHolder */
     private $val;
@@ -25,8 +26,6 @@ abstract class AbstractParameterizedUnaryFunction extends AbstractUnaryFunction
      */
     public function __construct($val, $val2 = null)
     {
-        parent::__construct();
-
         $this->val  = $val;
         $this->val2 = $val2;
     }
@@ -49,5 +48,15 @@ abstract class AbstractParameterizedUnaryFunction extends AbstractUnaryFunction
         return $this->val2 instanceof ValueHolder
             ? $this->val2->getValue()
             : $this->val2;
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return null
+     */
+    public function __invoke($input)
+    {
+        return null;
     }
 }

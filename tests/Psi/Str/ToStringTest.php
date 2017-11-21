@@ -1,8 +1,6 @@
 <?php
 /**
- * File was created 08.02.2016 22:31
- *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * Created by gerk on 20.11.17 17:34
  */
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
@@ -11,9 +9,11 @@ use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
 use PHPUnit\Framework\TestCase;
 
 /**
+ *
+ *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToLowerTest extends TestCase
+class ToStringTest extends TestCase
 {
     /**
      * @param mixed       $input
@@ -23,7 +23,7 @@ class ToLowerTest extends TestCase
      */
     public function testSubject($input, $expected)
     {
-        $subject = new ToLower();
+        $subject = new ToString();
 
         $this->assertSame($expected, $subject->__invoke($input));
     }
@@ -36,10 +36,12 @@ class ToLowerTest extends TestCase
             [new \DateTime(), ''],
             [0, '0'],
             [1, '1'],
+            ['', ''],
+            [' ', ' '],
             ['a', 'a'],
-            ['B', 'b'],
-            ['wOrLd-Wide', 'world-wide'],
-            [new ToStringMock('wOrLd-Wide'), 'world-wide'],
+            ['B', 'B'],
+            ['wOrLd-Wide', 'wOrLd-Wide'],
+            [new ToStringMock('wOrLd-Wide'), 'wOrLd-Wide'],
         ];
     }
 }

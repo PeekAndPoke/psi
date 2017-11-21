@@ -5,14 +5,12 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
-
 /**
  *
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToUpper implements UnaryFunction
+class ToUpper extends ToString
 {
     /**
      * @param mixed $input
@@ -21,10 +19,8 @@ class ToUpper implements UnaryFunction
      */
     public function __invoke($input)
     {
-        if (! is_scalar($input)) {
-            return null;
-        }
-
-        return strtoupper($input);
+        return strtoupper(
+            parent::__invoke($input)
+        );
     }
 }

@@ -61,9 +61,10 @@ $a = [
 $result = Psi::it($a)
     ->flatten()
     ->anyMatch(function ($i) { return $i === 4; })
+    ->map(function ($i) { return $i * 11; })
     ->join(', ');
 /** @noinspection ForgottenDebugOutputInspection */
-var_dump($result);
+var_dump('Psi::anyMatch() : ' . $result);
 
 /**  */
 class PlayA

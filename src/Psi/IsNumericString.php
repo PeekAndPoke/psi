@@ -4,16 +4,19 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
  * IsNumericString check if the string contains an number
  *
+ * @see    IsNumericStringIsNotNumericStringTest
+ *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNumericString extends AbstractUnaryFunction
+class IsNumericString implements UnaryFunction
 {
     /**
      * @param mixed $input

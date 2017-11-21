@@ -69,7 +69,10 @@ class IsFloatIsNotFloatTest extends TestCase
             // positives
             [(float) 0,             true],
             [(float) 'Z',           true],
-            [(double) 0.0,          true],  // there seems to be no difference between float and double
+            [(double) 1.0,          true],  // there seems to be NO difference between float and double
+            [(double) 1.1,          true],  // there seems to be NO difference between float and double
+            [(real) 1.1,            true],  // there seems to be NO difference between float and real
+            [(float) 1.1,           true],
             [0.0,                   true],
 
             // negatives

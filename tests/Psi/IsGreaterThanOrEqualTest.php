@@ -4,9 +4,11 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\GreaterThanOrEqual;
+use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,22 +40,39 @@ class IsGreaterThanOrEqualTest extends TestCase
     }
 
     /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testGreaterThanOrEqualWithValueHolder($subjectArgument, $psiValue, $expectedResult)
+    {
+        $subject = new IsGreaterThanOrEqual(
+            new GenericHolder($subjectArgument)
+        );
+        $result  = $subject->__invoke($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
      * @return array
      */
     public static function provide()
     {
         return [
             // positives
-            [0,             1,              true],
-            ['a',           'b',            true],
-            [11,            '100',          true],
-            [0,             0,              true],
-            ['a',           'a',            true],
+            [0, 1, true],
+            ['a', 'b', true],
+            [11, '100', true],
+            [0, 0, true],
+            ['a', 'a', true],
 
             // negatives
-            [1,             0,              false],
-            ['b',           'a',            false],
-            ['100',         11,             false],
+            [1, 0, false],
+            ['b', 'a', false],
+            ['100', 11, false],
         ];
     }
 }

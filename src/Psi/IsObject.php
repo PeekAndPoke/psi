@@ -4,21 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsObject
+ * IsObject checks if the given value is an object
+ *
+ * @see    IsObjectIsNotObjectTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsObject extends AbstractUnaryFunction
+class IsObject implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

@@ -66,9 +66,9 @@ class DefaultOperationChainSolver implements OperationChainSolver
 
         $input->rewind();
 
-        $continueWIthNextItem = true;
+        $continueWithNextItem = true;
 
-        while ($input->valid() && $continueWIthNextItem) {
+        while ($continueWithNextItem && $input->valid()) {
 
             $result    = $input->current();
             $useResult = true;
@@ -76,14 +76,14 @@ class DefaultOperationChainSolver implements OperationChainSolver
             // do the whole intermediate operation chain for the current input
             $operatorChain->rewind();
 
-            while ($operatorChain->valid() && $useResult) {
+            while ($useResult && $operatorChain->valid()) {
 
                 /** @var IntermediateOperation $current */
                 $current = $operatorChain->current();
                 // apply intermediate operations
                 $result  = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
                 // track the continuation flags
-                $continueWIthNextItem = $continueWIthNextItem && $returnedCanContinue;
+                $continueWithNextItem = $continueWithNextItem && $returnedCanContinue;
 
                 // iterate
                 $operatorChain->next();

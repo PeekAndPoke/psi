@@ -6,19 +6,27 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsCallable
+ * IsCallable checks if the given value is a callable.
+ *
+ * This is true when the value is:
+ *
+ * - a Closure
+ * - an anonymous function
+ * - a class that implements the __invoke function
+ *
+ * @see IsCallableIsNotCallableTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsCallable extends AbstractUnaryFunction
+class IsCallable implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

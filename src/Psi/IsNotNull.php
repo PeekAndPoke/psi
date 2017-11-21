@@ -4,21 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsNotNull
+ * IsNotNull checks if the given value is NOT null
+ *
+ * @see    IsNullIsNotNullTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotNull extends AbstractUnaryFunction
+class IsNotNull implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

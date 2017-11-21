@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * LessThanOrEqual does a non type safe comparison "=="
+ * LessThanOrEqual checks if a value is less than or equal to the given parameter
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsLessThanOrEqualTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsLessThanOrEqual extends AbstractParameterizedUnaryFunction
+class IsLessThanOrEqual extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * LessThan does a non type safe comparison "=="
+ * LessThan is a value is less than the given parameter
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsLessThanTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsLessThan extends AbstractParameterizedUnaryFunction
+class IsLessThan extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

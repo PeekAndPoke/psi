@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * GreaterThanOrEqual does a non type safe comparison "=="
+ * IsInRange checks if a value is within a certain range, including the boundaries
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsInRangeIsNotInRangeTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsInRange extends AbstractParameterizedUnaryFunction
+class IsInRange extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

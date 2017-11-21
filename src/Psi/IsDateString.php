@@ -6,14 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsDateString
+ * IsDateString checks whether the given string is a valid ISO_8601 date string
+ *
+ * @see IsDateStringTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsDateString extends AbstractUnaryFunction
+class IsDateString implements UnaryFunction
 {
     /**
      * @param mixed $input

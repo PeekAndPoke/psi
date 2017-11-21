@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * IsInstanceOf
+ * IsInstanceOf checks if the input is of a certain type.
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsInstanceOfIsNotInstanceOfTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsInstanceOf extends AbstractParameterizedUnaryFunction
+class IsInstanceOf extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

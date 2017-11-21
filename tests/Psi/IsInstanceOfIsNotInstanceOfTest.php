@@ -4,10 +4,12 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Mocks\MockA;
 use PeekAndPoke\Component\Psi\Mocks\MockB;
+use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +24,7 @@ class IsInstanceOfIsNotInstanceOfTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testEqualTo($subjectArgument, $psiValue, $expectedResult)
+    public function testIsInstanceOf($subjectArgument, $psiValue, $expectedResult)
     {
         $subject = new IsInstanceOf($subjectArgument);
         $result  = $subject->__invoke($psiValue);
@@ -45,9 +47,26 @@ class IsInstanceOfIsNotInstanceOfTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testNotEqualTo($subjectArgument, $psiValue, $expectedResult)
+    public function testIsInstanceOfWithValueHolder($subjectArgument, $psiValue, $expectedResult)
     {
-        $expectedResult = !$expectedResult;
+        $subject = new IsInstanceOf(
+            new GenericHolder($subjectArgument)
+        );
+        $result  = $subject->__invoke($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testIsNotInstanceOf($subjectArgument, $psiValue, $expectedResult)
+    {
+        $expectedResult = ! $expectedResult;
 
         $subject = new IsNotInstanceOf($subjectArgument);
         $result  = $subject->__invoke($psiValue);
@@ -64,6 +83,25 @@ class IsInstanceOfIsNotInstanceOfTest extends TestCase
     }
 
     /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testIsNotInstanceOfWithValueHolder($subjectArgument, $psiValue, $expectedResult)
+    {
+        $expectedResult = ! $expectedResult;
+
+        $subject = new IsNotInstanceOf(
+            new GenericHolder($subjectArgument)
+        );
+        $result  = $subject->__invoke($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
      * @return array
      */
     public static function provide()
@@ -74,20 +112,22 @@ class IsInstanceOfIsNotInstanceOfTest extends TestCase
         $clsMockB = MockB::class;
 
         return [
-            // positives - ensure substitution
-
-            [new MockA(),   new MockA(),    true],
-            [$clsMockA,     new MockA(),    true],
-            [$clsMockA,     new MockB(),    true],
-            [$clsMockB,     new MockB(),    true],
+            // positives - with a real object in the instance of clause
+            [new MockA(), new MockA(), true],
+            [new MockA(), new MockB(), true],
+            [new MockB(), new MockB(), true],
+            // positives - with a fqcn in the instance of clause
+            [$clsMockA, new MockA(), true],
+            [$clsMockA, new MockB(), true],
+            [$clsMockB, new MockB(), true],
 
             // negatives
-            [1,             1,              false],
-            [0,             new MockA(),    false],
-            [new MockA(),   0,              false],
-            [new MockA(),   $clsMockA,      false],
-            [$clsMockB,     new MockA(),    false],
-            [new MockB(),   new MockA(),    false],
+            [1, 1, false],
+            [0, new MockA(), false],
+            [new MockA(), 0, false],
+            [new MockA(), $clsMockA, false],
+            [$clsMockB, new MockA(), false],
+            [new MockB(), new MockA(), false],
         ];
     }
 }

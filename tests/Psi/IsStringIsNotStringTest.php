@@ -68,16 +68,18 @@ class IsStringIsNotStringTest extends TestCase
     {
         return [
             // positives
-            ['',                    true],
-            ['a',                   true],
+            ['',  true],
+            ['a', true],
 
             // negatives
-            [null,                  false],
-            [0,                     false],
-            [true,                  false],
-            [false,                 false],
-            [new MockA(),           false],
-            [new ToStringMock('a'), false],
+            [null,        false],
+            [0,           false],
+            [1,           false],
+            [1.1,         false],
+            [true,        false],
+            [false,       false],
+            [new MockA(), false],
+            [new ToStringMock('a'), false], // even if an object implements the __toString function is it not a string
         ];
     }
 }

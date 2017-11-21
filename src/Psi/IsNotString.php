@@ -4,21 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsNotString
+ * IsNotString checks if the given value is NOT a strings
+ *
+ * @see    IsStringIsNotStringTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotString extends AbstractUnaryFunction
+class IsNotString implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

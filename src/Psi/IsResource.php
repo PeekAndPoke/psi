@@ -4,21 +4,24 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsResource
+ * IsResource checks if the given value is a resource
+ *
+ * @see    IsResourceIsNotResourceTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsResource extends AbstractUnaryFunction
+class IsResource implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

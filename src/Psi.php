@@ -159,6 +159,10 @@ class Psi
     }
 
     /**
+     * Get items until the condition is met (including the last item)
+     *
+     * TODO: This needs a better name, e.g. until() and a better definition (should we really include the last one?)
+     *
      * @param callable|\Closure|UnaryFunction $unaryFunction
      *
      * @return $this

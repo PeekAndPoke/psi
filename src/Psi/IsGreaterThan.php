@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * GreaterThan does a non type safe comparison "=="
+ * GreaterThan checks if a value is greater than the given parameter
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsGreaterThanTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsGreaterThan extends AbstractParameterizedUnaryFunction
+class IsGreaterThan extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

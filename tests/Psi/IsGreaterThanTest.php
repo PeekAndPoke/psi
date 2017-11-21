@@ -7,6 +7,7 @@
 namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\GreaterThan;
+use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,12 +39,34 @@ class IsGreaterThanTest extends TestCase
     }
 
     /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testGreaterThanWithValueHolder($subjectArgument, $psiValue, $expectedResult)
+    {
+        $subject = new IsGreaterThan(
+            new GenericHolder($subjectArgument)
+        );
+        $result  = $subject->__invoke($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
      * @return array
      */
     public static function provide()
     {
         return [
             // positives
+            [0,             1,              true],
+            ['a',           'b',            true],
+            [11,            '100',          true],
+
+            // value holder positives
             [0,             1,              true],
             ['a',           'b',            true],
             [11,            '100',          true],

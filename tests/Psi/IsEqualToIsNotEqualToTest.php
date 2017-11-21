@@ -11,6 +11,7 @@ use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\NotEqualTo;
 use PeekAndPoke\Component\Psi\Mocks\MockA;
 use PeekAndPoke\Component\Psi\Mocks\MockB;
 use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -47,6 +48,23 @@ class IsEqualToIsNotEqualToTest extends TestCase
      *
      * @dataProvider provide
      */
+    public function testIsEqualToWithValueHolder($subjectArgument, $psiValue, $expectedResult)
+    {
+        $subject = new IsEqualTo(
+            new GenericHolder($subjectArgument)
+        );
+        $result  = $subject($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
     public function testNotEqualTo($subjectArgument, $psiValue, $expectedResult)
     {
         $expectedResult = !$expectedResult;
@@ -60,6 +78,25 @@ class IsEqualToIsNotEqualToTest extends TestCase
         // deprecated
         /** @noinspection PhpDeprecationInspection */
         $subject = new NotEqualTo($subjectArgument);
+        $result  = $subject($psiValue);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @param $subjectArgument
+     * @param $psiValue
+     * @param $expectedResult
+     *
+     * @dataProvider provide
+     */
+    public function testNotEqualToWithValueHolder($subjectArgument, $psiValue, $expectedResult)
+    {
+        $expectedResult = ! $expectedResult;
+
+        $subject = new IsNotEqualTo(
+            new GenericHolder($subjectArgument)
+        );
         $result  = $subject($psiValue);
 
         $this->assertSame($expectedResult, $result);

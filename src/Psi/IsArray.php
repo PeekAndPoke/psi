@@ -6,19 +6,21 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsArray
+ * IsArray checks if the given value is an array
+ *
+ * @see IsArrayIsNotArrayTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsArray extends AbstractUnaryFunction
+class IsArray implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

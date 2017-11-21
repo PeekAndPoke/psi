@@ -6,19 +6,21 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsFloat
+ * IsFloat checks if the given value is a float, real or double
+ *
+ * @see IsFloatIsNotFloatTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsFloat extends AbstractUnaryFunction
+class IsFloat implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

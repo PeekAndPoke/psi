@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * NotEqualTo does a non type safe comparison "!="
+ * IsNotEqualTo checks if a value is not equal to the given parameter doing a non type safe compate "=="
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsEqualToIsNotEqualToTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsNotEqualTo extends AbstractParameterizedUnaryFunction
+class IsNotEqualTo extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

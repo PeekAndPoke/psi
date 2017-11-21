@@ -6,19 +6,21 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsBool
+ * IsBool if the given value is of type bool
+ *
+ * @see IsBoolIsNotBoolTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsBool extends AbstractUnaryFunction
+class IsBool implements UnaryFunction
 {
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return bool
      */
     public function __invoke($input)
     {

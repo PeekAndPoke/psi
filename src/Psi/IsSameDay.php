@@ -6,15 +6,20 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 use PeekAndPoke\Types\LocalDate;
 
 /**
- * IsSameDay
+ * IsSameDay checks if a LocalDate is on the same day as the given parameter
+ *
+ * TODO: implement for normal \DateTime as well
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsSameDayIsNotSameDayTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsSameDay extends AbstractParameterizedUnaryFunction
+class IsSameDay extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input

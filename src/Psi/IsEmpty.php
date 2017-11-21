@@ -6,14 +6,16 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsEmpty
+ * IsEmpty checks if the given value is empty bu using empty(...)
+ *
+ * @see IsEmptyIsNotEmptyTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsEmpty extends AbstractUnaryFunction
+class IsEmpty implements UnaryFunction
 {
     /**
      * @param mixed $input

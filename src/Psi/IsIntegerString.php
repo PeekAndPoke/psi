@@ -7,14 +7,16 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractUnaryFunction;
+use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 
 /**
- * IsIntegerString check if the string contains an integer
+ * IsIntegerString check if the given value is an integer encoded as a string
+ *
+ * @see    IsIntegerStringIsNotIntegerStringTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsIntegerString extends AbstractUnaryFunction
+class IsIntegerString implements UnaryFunction
 {
     /**
      * @param mixed $input

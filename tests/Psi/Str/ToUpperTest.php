@@ -7,6 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
+use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,9 +31,9 @@ class ToUpperTest extends TestCase
     public function provideTestSubject()
     {
         return [
-            [null, null],
-            [new \stdClass(), null],
-            [new \DateTime(), null],
+            [null, ''],
+            [new \stdClass(), ''],
+            [new \DateTime(), ''],
             [0, '0'],
             [1, '1'],
             ['', ''],
@@ -40,6 +41,7 @@ class ToUpperTest extends TestCase
             ['a', 'A'],
             ['B', 'B'],
             ['wOrLd-Wide', 'WORLD-WIDE'],
+            [new ToStringMock('wOrLd-Wide'), 'WORLD-WIDE'],
         ];
     }
 }

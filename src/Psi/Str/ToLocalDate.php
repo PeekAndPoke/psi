@@ -6,16 +6,19 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 use PeekAndPoke\Types\LocalDate;
 use PeekAndPoke\Types\ValueHolder;
 
 /**
- * ToLocalDate maps a string to a LocalDate object
+ * ToLocalDate maps a string to a LocalDate object using the given parameter as the timezone
+ *
+ * @see ParameterizedUnaryFunction
+ * @see ToLocalDateTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToLocalDate extends AbstractParameterizedUnaryFunction
+class ToLocalDate extends ParameterizedUnaryFunction
 {
     /**
      * @param string|\DateTimeZone|ValueHolder $timezone

@@ -6,14 +6,17 @@
  */
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\AbstractParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * SameAs does a type safe comparison "==="
+ * IsSameAs does a type safe comparison "==="
+ *
+ * @see ParameterizedUnaryFunction
+ * @see IsSameAsIsNotSameAsTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class IsSameAs extends AbstractParameterizedUnaryFunction
+class IsSameAs extends ParameterizedUnaryFunction
 {
     /**
      * @param mixed $input
