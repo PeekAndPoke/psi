@@ -9,7 +9,7 @@ namespace PeekAndPoke\Component\Psi\Psi;
 use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
 
 /**
- * IsNotEqualTo checks if a value is not equal to the given parameter doing a non type safe compate "=="
+ * IsNotEqualTo checks if a value is not equal to the given parameter doing a non type safe compare "=="
  *
  * @see ParameterizedUnaryFunction
  * @see IsEqualToIsNotEqualToTest
