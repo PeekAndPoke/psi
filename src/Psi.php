@@ -487,8 +487,6 @@ class Psi
      * @param TerminalOperation $terminal
      *
      * @return mixed
-     *
-     * @throws PsiException
      */
     private function solveOperationsAndApplyTerminal(TerminalOperation $terminal)
     {
@@ -498,11 +496,11 @@ class Psi
             $this->operationChain->append(new EmptyIntermediateOp());
         }
 
-        $factory  = $this->options->getFactory();
+        $factory = $this->options->getFactory();
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $iterator = $factory->createIterator($this->inputs, $this->options);
         $solver   = $factory->createSolver();
-
-        $result = $solver->solve($this->operationChain, $iterator);
+        $result   = $solver->solve($this->operationChain, $iterator);
 
         return $terminal->apply($result);
     }

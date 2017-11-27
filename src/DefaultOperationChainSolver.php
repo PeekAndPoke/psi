@@ -5,14 +5,10 @@
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 
-namespace PeekAndPoke\Component\Psi\Solver;
-
-use PeekAndPoke\Component\Psi\FullSetOperation;
-use PeekAndPoke\Component\Psi\IntermediateOperation;
-use PeekAndPoke\Component\Psi\OperationChainSolver;
+namespace PeekAndPoke\Component\Psi;
 
 /**
- * DefaultOperationChainSolver
+ * @api
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

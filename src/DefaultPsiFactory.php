@@ -9,7 +9,6 @@ namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
 use PeekAndPoke\Component\Psi\Iterator\KeylessAppendIterator;
-use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
 
 /**
  * PsiFactory
@@ -38,28 +37,37 @@ class DefaultPsiFactory implements PsiFactory
         }
 
         if ($count > 1) {
-
-            // when we have multiple inputs we need an option to decide on how to deal with colliding keys
-            if ($options->isPreserveKeysOfMultipleInputs()) {
-                // this iterator return the original keys of each child iterator
-                // -> this leads to conflicts OR means we preserve keys
-                $iterator = new \AppendIterator();
-            } else {
-                // this iterator will create numeric keys from 0 .. n
-                $iterator = new KeylessAppendIterator();
-            }
-
-            foreach ($iteratables as $iteratable) {
-
-                $iterator->append(
-                    $this->createSingleIterator($iteratable)
-                );
-            }
-
-            return $iterator;
+            return $this->createIteratorForMultipleInputs($iteratables, $options);
         }
 
         return new \ArrayIterator();
+    }
+
+    /**
+     * @param array      $iteratables
+     * @param PsiOptions $options
+     *
+     * @return \AppendIterator|KeylessAppendIterator
+     *
+     * @throws PsiException
+     */
+    protected function createIteratorForMultipleInputs(array $iteratables, PsiOptions $options)
+    {
+        // when we have multiple inputs we need an option to decide on how to deal with colliding keys
+        if ($options->isPreserveKeysOfMultipleInputs()) {
+            // this iterator return the original keys of each child iterator
+            // -> this leads to conflicts OR means we preserve keys
+            $iterator = new \AppendIterator();
+        } else {
+            // this iterator will create numeric keys from 0 .. n
+            $iterator = new KeylessAppendIterator();
+        }
+
+        foreach ($iteratables as $iteratable) {
+            $iterator->append($this->createSingleIterator($iteratable));
+        }
+
+        return $iterator;
     }
 
     /**
@@ -69,7 +77,7 @@ class DefaultPsiFactory implements PsiFactory
      *
      * @throws PsiException
      */
-    private function createSingleIterator($iteratable)
+    protected function createSingleIterator($iteratable)
     {
         if ($iteratable === null) {
             return new \ArrayIterator();

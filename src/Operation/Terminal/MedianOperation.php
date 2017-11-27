@@ -40,10 +40,6 @@ class MedianOperation implements TerminalOperation
         $leftVal  = $data[$left];
         $rightVal = $data[$right];
 
-        if (! is_scalar($leftVal) || ! is_scalar($rightVal)) {
-            return 0;
-        }
-
-        return ($data[$left] + $data[$right]) / 2;
+        return is_scalar($leftVal) && is_scalar($rightVal) ? ($data[$left] + $data[$right]) / 2 : 0;
     }
 }

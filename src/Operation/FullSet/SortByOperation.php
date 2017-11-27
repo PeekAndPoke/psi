@@ -7,7 +7,6 @@
 
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-
 use PeekAndPoke\Component\Psi\FullSetOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
 
@@ -26,25 +25,20 @@ class SortByOperation extends AbstractUnaryFunctionOperation implements FullSetO
     public function apply(\Iterator $set)
     {
         $func = $this->function;
-
         $data = iterator_to_array($set);
 
-        usort(
-            $data,
-            function ($i1, $i2) use ($func) {
+        usort($data, function ($i1, $i2) use ($func) {
 
-                $val1 = $func($i1);
-                $val2 = $func($i2);
+            $val1 = $func($i1);
+            $val2 = $func($i2);
 
-                if ($val1 === $val2) {
-                    return null;
-                }
-
-                return $val1 > $val2 ? 1 : -1;
+            if ($val1 === $val2) {
+                return 0;
             }
-        );
+
+            return $val1 > $val2 ? 1 : -1;
+        });
 
         return new \ArrayIterator($data);
-
     }
 }

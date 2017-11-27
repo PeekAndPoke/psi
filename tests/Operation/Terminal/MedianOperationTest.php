@@ -48,6 +48,7 @@ class MedianOperationTest extends TestCase
             // invalid input
             [[['z']], 0],
             [[[1, 'z']], 0],
+            [[[1, 'z'], 2, 2, [10]], 0],
         ];
     }
 }
