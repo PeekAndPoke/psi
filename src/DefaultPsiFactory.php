@@ -75,8 +75,12 @@ class DefaultPsiFactory implements PsiFactory
             return new \ArrayIterator();
         }
 
-        if ($iteratable instanceof \Traversable) {
+        if ($iteratable instanceof \Iterator) {
             return $iteratable;
+        }
+
+        if ($iteratable instanceof \Traversable) {
+            return new \IteratorIterator($iteratable);
         }
 
         if (is_array($iteratable)) {
