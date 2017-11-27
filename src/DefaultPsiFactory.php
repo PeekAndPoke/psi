@@ -65,7 +65,7 @@ class DefaultPsiFactory implements PsiFactory
     /**
      * @param mixed $iteratable
      *
-     * @return \Iterator
+     * @return \Iterator|\Traversable
      *
      * @throws PsiException
      */
@@ -75,7 +75,7 @@ class DefaultPsiFactory implements PsiFactory
             return new \ArrayIterator();
         }
 
-        if ($iteratable instanceof \Iterator) {
+        if ($iteratable instanceof \Traversable) {
             return $iteratable;
         }
 
