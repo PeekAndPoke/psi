@@ -7,7 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
-use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
+use PeekAndPoke\Component\Psi\IntermediateOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**

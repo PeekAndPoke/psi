@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi\Map;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Mapper\IdentityMapper;

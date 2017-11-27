@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation;
 
-use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
+use PeekAndPoke\Component\Psi\BinaryFunction;
 
 /**
  * AbstractBinaryFunctionOperation

@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Psi\IsGreaterThan;
@@ -13,7 +14,7 @@ use PeekAndPoke\Component\Psi\Psi\IsGreaterThan;
  *
  * GreaterThan does a non type safe comparison "=="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class GreaterThan extends IsGreaterThan
 {

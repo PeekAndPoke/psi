@@ -7,12 +7,12 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsNotResource checks if the given value is NOT a resource
  *
- * @see IsResourceIsNotResourceTest
+ * @see    IsResourceIsNotResourceTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

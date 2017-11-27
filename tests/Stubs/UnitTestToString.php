@@ -4,16 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Mocks;
+
+namespace PeekAndPoke\Component\Psi\Stubs;
 
 /**
- * INTERNAL test class, not for any other use
- *
  * @visibility \PeekAndPoke\Component\Psi
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToStringMock
+class UnitTestToString
 {
     /**
      * @var string
@@ -26,6 +25,14 @@ class ToStringMock
     public function __construct($string)
     {
         $this->string = $string;
+    }
+
+    /**
+     * @return string
+     */
+    public function getString()
+    {
+        return $this->string;
     }
 
     /**

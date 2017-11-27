@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsCallable checks if the given value is a callable.
@@ -17,7 +18,7 @@ use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
  * - an anonymous function
  * - a class that implements the __invoke function
  *
- * @see IsCallableIsNotCallableTest
+ * @see    IsCallableIsNotCallableTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

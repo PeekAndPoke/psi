@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * AbstractUnaryFunctionOperation

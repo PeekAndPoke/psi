@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -67,23 +68,23 @@ class IsNumericIsNotNumericTest extends TestCase
     {
         return [
             // positives
-            [0,                     true],
-            [1.0,                   true],
-            [(int) 1.0,             true],
-            [1.0,                   true],
-            ['0',                   true],
-            ['1.0',                 true],
-            ['123',                 true],
+            [0, true],
+            [1.0, true],
+            [(int) 1.0, true],
+            [1.0, true],
+            ['0', true],
+            ['1.0', true],
+            ['123', true],
 
             // negatives
-            [null,                  false],
-            ['z0',                  false],
-            ['0z',                  false],
-            [new \ArrayIterator(),  false],
-            [true,                  false],
-            [false,                 false],
-            ['Z',                   false],
-            [new ToStringMock(1),   false],
+            [null, false],
+            ['z0', false],
+            ['0z', false],
+            [new \ArrayIterator(), false],
+            [true, false],
+            [false, false],
+            ['Z', false],
+            [new UnitTestToString(1), false],
         ];
     }
 }

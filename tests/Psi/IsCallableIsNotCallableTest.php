@@ -7,8 +7,8 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\CallableMock;
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestCallable;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -68,7 +68,7 @@ class IsCallableIsNotCallableTest extends TestCase
         return [
             // positives
             [function () { }, true],
-            [new CallableMock(), true],
+            [new UnitTestCallable(), true],
 
             // negatives
             [new \ArrayIterator(), false],
@@ -76,7 +76,7 @@ class IsCallableIsNotCallableTest extends TestCase
             [null, false],
             [0, false],
             ['Z', false],
-            [new MockA(), false],
+            [new UnitTestMockA(), false],
         ];
     }
 }

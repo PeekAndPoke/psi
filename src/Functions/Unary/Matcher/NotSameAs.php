@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 use PeekAndPoke\Component\Psi\Psi\IsNotSameAs;
@@ -13,7 +14,7 @@ use PeekAndPoke\Component\Psi\Psi\IsNotSameAs;
  *
  * NotSameAs does a type safe comparison "!=="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class NotSameAs extends IsNotSameAs
 {

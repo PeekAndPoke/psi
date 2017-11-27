@@ -4,7 +4,8 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Mocks;
+
+namespace PeekAndPoke\Component\Psi\Stubs;
 
 /**
  * INTERNAL test class, not for any other use
@@ -13,6 +14,6 @@ namespace PeekAndPoke\Component\Psi\Mocks;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class MockA
+class UnitTestMockA
 {
 }

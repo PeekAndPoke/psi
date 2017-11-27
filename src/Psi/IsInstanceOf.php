@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * IsInstanceOf checks if the input is of a certain type.
  *
- * @see ParameterizedUnaryFunction
- * @see IsInstanceOfIsNotInstanceOfTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsInstanceOfIsNotInstanceOfTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
@@ -32,6 +33,7 @@ class IsInstanceOf extends ParameterizedUnaryFunction
 
     /**
      * @param $val
+     *
      * @return bool
      */
     private function isApplicable($val)

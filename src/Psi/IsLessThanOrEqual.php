@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * LessThanOrEqual checks if a value is less than or equal to the given parameter
  *
- * @see ParameterizedUnaryFunction
- * @see IsLessThanOrEqualTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsLessThanOrEqualTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

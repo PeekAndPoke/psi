@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * IsSameAs does a type safe comparison "==="
  *
- * @see ParameterizedUnaryFunction
- * @see IsSameAsIsNotSameAsTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsSameAsIsNotSameAsTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

@@ -5,9 +5,9 @@
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 
-namespace PeekAndPoke\Component\Psi\Functions\Unary;
+namespace PeekAndPoke\Component\Psi\Functions;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 use PeekAndPoke\Types\ValueHolder;
 
 /**

@@ -4,14 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsBool if the given value is of type bool
  *
- * @see IsBoolIsNotBoolTest
+ * @see    IsBoolIsNotBoolTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

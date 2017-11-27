@@ -4,10 +4,11 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
 
-use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
+use PeekAndPoke\Component\Psi\FullSetOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
 
 /**
@@ -38,6 +39,7 @@ class SortByOperation extends AbstractUnaryFunctionOperation implements FullSetO
                 if ($val1 === $val2) {
                     return null;
                 }
+
                 return $val1 > $val2 ? 1 : -1;
             }
         );

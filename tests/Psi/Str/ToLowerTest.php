@@ -7,7 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
-use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,7 +39,7 @@ class ToLowerTest extends TestCase
             ['a', 'a'],
             ['B', 'b'],
             ['wOrLd-Wide', 'world-wide'],
-            [new ToStringMock('wOrLd-Wide'), 'world-wide'],
+            [new UnitTestToString('wOrLd-Wide'), 'world-wide'],
         ];
     }
 }

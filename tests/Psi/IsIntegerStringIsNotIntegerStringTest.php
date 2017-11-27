@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -67,36 +68,36 @@ class IsIntegerStringIsNotIntegerStringTest extends TestCase
     {
         return [
             // positives
-            ['0',                   true],
-            ['1',                   true],
-            ['01',                  true],
-            ['10',                  true],
-            ['123',                 true],
-            ['-0',                  true],
-            ['-1',                  true],
-            ['-01',                 true],
-            ['-10',                 true],
-            ['-123',                true],
+            ['0', true],
+            ['1', true],
+            ['01', true],
+            ['10', true],
+            ['123', true],
+            ['-0', true],
+            ['-1', true],
+            ['-01', true],
+            ['-10', true],
+            ['-123', true],
 
             // TODO: do we really accept the .0 ones ?
-            ['0.0',                 true],
-            ['1.0',                 true],
-            ['-0.0',                 true],
-            ['-1.0',                 true],
+            ['0.0', true],
+            ['1.0', true],
+            ['-0.0', true],
+            ['-1.0', true],
 
             // negatives
-            [0,                     false],
-            [0.0,                   false],
-            ['1a',                  false],
-            ['a1',                  false],
-            ['0.1',                 false],
-            ['1.01',                false],
-            [new \ArrayIterator(),  false],
-            [[],                    false],
-            [true,                  false],
-            [false,                 false],
-            ['Z',                   false],
-            [new MockA(),           false],
+            [0, false],
+            [0.0, false],
+            ['1a', false],
+            ['a1', false],
+            ['0.1', false],
+            ['1.01', false],
+            [new \ArrayIterator(), false],
+            [[], false],
+            [true, false],
+            [false, false],
+            ['Z', false],
+            [new UnitTestMockA(), false],
         ];
     }
 }

@@ -7,9 +7,9 @@
 
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
-use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
-use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\BinaryFunction;
+use PeekAndPoke\Component\Psi\IntermediateOperation;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>

@@ -14,7 +14,7 @@ use PeekAndPoke\Component\Psi\Psi\IsLessThanOrEqual;
  *
  * LessThanOrEqual does a non type safe comparison "=="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class LessThanOrEqual extends IsLessThanOrEqual
 {

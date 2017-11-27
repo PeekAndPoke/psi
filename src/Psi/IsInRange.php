@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * IsInRange checks if a value is within a certain range, including the boundaries
  *
- * @see ParameterizedUnaryFunction
- * @see IsInRangeIsNotInRangeTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsInRangeIsNotInRangeTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

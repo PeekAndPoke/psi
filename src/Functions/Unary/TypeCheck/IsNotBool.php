@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
 /**
@@ -11,7 +12,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
  *
  * IsBool
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class IsNotBool extends \PeekAndPoke\Component\Psi\Psi\IsNotBool
 {

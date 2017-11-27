@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
 /**
@@ -11,7 +12,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
  *
  * IsNotIntegerString check if the string contains an integer
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class IsNotIntegerString extends \PeekAndPoke\Component\Psi\Psi\IsNotIntegerString
 {

@@ -1,20 +1,21 @@
 <?php
 /**
- * File was created 06.05.2015 21:01
+ * File was created 06.05.2015 16:24
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Interfaces;
+
+namespace PeekAndPoke\Component\Psi;
 
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-interface UnaryFunction
+interface TerminalOperation
 {
     /**
-     * @param mixed $input
+     * @param \Iterator $set
      *
      * @return mixed
      */
-    public function __invoke($input);
+    public function apply(\Iterator $set);
 }

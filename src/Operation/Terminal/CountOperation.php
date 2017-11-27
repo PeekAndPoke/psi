@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
+use PeekAndPoke\Component\Psi\TerminalOperation;
 
 /**
  * CountOperation

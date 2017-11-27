@@ -4,14 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsDateString checks whether the given string is a valid ISO_8601 date string
  *
- * @see IsDateStringTest
+ * @see    IsDateStringTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
@@ -28,13 +29,13 @@ class IsDateString implements UnaryFunction
     }
 
     /**
-     * @param string    $str
+     * @param string $str
      *
      * @return bool
      */
     public static function isValidDateString($str)
     {
-        if (!is_string($str)) {
+        if (! is_string($str)) {
             return false;
         }
 
@@ -44,7 +45,7 @@ class IsDateString implements UnaryFunction
 
         $stamp = strtotime($str);
 
-        if (!is_numeric($stamp)) {
+        if (! is_numeric($stamp)) {
             return false;
         }
 

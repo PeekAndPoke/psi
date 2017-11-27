@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * LessThan is a value is less than the given parameter
  *
- * @see ParameterizedUnaryFunction
- * @see IsLessThanTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsLessThanTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

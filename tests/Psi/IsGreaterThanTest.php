@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\GreaterThan;
@@ -62,22 +63,22 @@ class IsGreaterThanTest extends TestCase
     {
         return [
             // positives
-            [0,             1,              true],
-            ['a',           'b',            true],
-            [11,            '100',          true],
+            [0, 1, true],
+            ['a', 'b', true],
+            [11, '100', true],
 
             // value holder positives
-            [0,             1,              true],
-            ['a',           'b',            true],
-            [11,            '100',          true],
+            [0, 1, true],
+            ['a', 'b', true],
+            [11, '100', true],
 
             // negatives
-            [1,             0,              false],
-            ['b',           'a',            false],
-            ['100',         11,             false],
+            [1, 0, false],
+            ['b', 'a', false],
+            ['100', 11, false],
 
-            [0,             0,              false],
-            ['a',           'a',            false],
+            [0, 0, false],
+            ['a', 'a', false],
         ];
     }
 }

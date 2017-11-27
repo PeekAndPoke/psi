@@ -7,7 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
+use PeekAndPoke\Component\Psi\TerminalOperation;
 
 /**
  * MedianOperation
@@ -37,10 +37,10 @@ class MedianOperation implements TerminalOperation
         $left   = (int) floor($middle);
         $right  = (int) ceil($middle);
 
-        $leftVal = $data[$left];
+        $leftVal  = $data[$left];
         $rightVal = $data[$right];
 
-        if (!is_scalar($leftVal) || !is_scalar($rightVal)) {
+        if (! is_scalar($leftVal) || ! is_scalar($rightVal)) {
             return 0;
         }
 

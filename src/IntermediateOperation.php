@@ -4,7 +4,8 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Interfaces;
+
+namespace PeekAndPoke\Component\Psi;
 
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>

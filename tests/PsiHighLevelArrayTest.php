@@ -4,14 +4,17 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * PsiHighLevelArrayTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiHighLevelArrayTest extends AbstractPsiTest
+class PsiHighLevelArrayTest extends TestCase
 {
     /**
      * @param array $input
@@ -24,12 +27,12 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
      */
     public function testWithNoOperation($input, $expectedOutput, $expectMatch)
     {
-        $result = Psi::it($input)->collect();
+        $result = Psi::it($input)->toArray();
 
         if ($expectMatch) {
-            $this->assertPsiCollectOutputMatches($expectedOutput, $result);
+            $this->assertSame($expectedOutput, $result);
         } else {
-            $this->assertPsiCollectOutputDoesNotMatches($expectedOutput, $result);
+            $this->assertNotSame($expectedOutput, $result);
         }
     }
 
@@ -40,19 +43,29 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
     {
         return [
             [
-                [],                 [],             true
+                [],
+                [],
+                true,
             ],
             [
-                [1],                [1],            true
+                [1],
+                [1],
+                true,
             ],
             [
-                [0],                [1],            false
+                [0],
+                [1],
+                false,
             ],
             [
-                [1, 2],             [1, 2],         true
+                [1, 2],
+                [1, 2],
+                true,
             ],
             [
-                [1, 2],             [2, 1],         false
+                [1, 2],
+                [2, 1],
+                false,
             ],
         ];
     }
@@ -66,35 +79,40 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
 
         $result = Psi::it($input)
             ->map(function ($v, $k) { return $v * $k; })
-            ->collect();
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     ////  TEST FULL SET OPERATIONS  ////////////////////////////////////////////////////////////////////////////////////
 
     public function testFlattenOperation()
     {
-        $input = [
+        $input    = [
             [
                 [
-                    1, 2, 3
+                    1,
+                    2,
+                    3,
                 ],
                 [
                     'y' => 4,
                     5,
-                    1 => [
-                        6, 7
-                    ]
+                    1   => [
+                        6,
+                        7,
+                    ],
                 ],
-                8
-            ]
+                8,
+            ],
         ];
         $expected = [1, 2, 3, 4, 5, 6, 7, 8];
 
-        $result = Psi::it($input)->flatten()->collect();
+        $result = Psi::it($input)
+            ->flatten()
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     // TODO: test value-sort operations
@@ -139,79 +157,6 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $this->assertSame($expected, $result);
     }
 
-    ////  TERMINAL OPERATIONS  /////////////////////////////////////////////////////////////////////////////////////////
-
-    public function testMinTerminalOperation()
-    {
-        $input = [2, 1, 2, 3, 2, 1, 2];
-        $expected = 1;
-
-        $result = Psi::it($input)->min();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testMaxTerminalOperation()
-    {
-        $input = [2, 1, 2, 3, 2, 1, 2];
-        $expected = 3;
-
-        $result = Psi::it($input)->max();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testSumTerminalOperation()
-    {
-        $input = [1, 2, 3];
-        $expected = 6;
-
-        $result = Psi::it($input)->sum();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testAvgTerminalOperation()
-    {
-        $input = [1, 2, 3];
-        $expected = 2;
-
-        $result = Psi::it($input)->avg();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testCountTerminalOperation()
-    {
-        $input = [1, 2, 3];
-        $expected = 3;
-
-        $result = Psi::it($input)->count();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testJoinOperation()
-    {
-        $input = [1, 2, 3];
-        $expected = '1,2,3';
-
-        $result = Psi::it($input)->join(',');
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testToArrayOperation()
-    {
-        $input = [1, 2, 3];
-        $expected = [2, 4, 6];
-
-        $result = Psi::it($input)->map(function ($i) { return $i * 2; })->toArray();
-
-        $this->assertTrue(is_array($result));
-        $this->assertEquals($expected, $result);
-    }
-
     ////  TEST SCENARIOS  //////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -224,9 +169,9 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
 
         $result = Psi::it($input)
             ->filter(function ($i) { return $i % 2; })
-            ->collect();
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -238,10 +183,10 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [1, 9, 3, 7, 5];
 
         $result = Psi::it($input)
-                     ->filter(function ($i) { return $i % 2; })
-                     ->collect();
+            ->filter(function ($i) { return $i % 2; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
 
@@ -254,10 +199,10 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [10, 40, 70];
 
         $result = Psi::it($input)
-                     ->filterKey(function ($k) { return $k % 3 === 0; })
-                     ->collect();
+            ->filterKey(function ($k) { return $k % 3 === 0; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -269,10 +214,25 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [40, 70];
 
         $result = Psi::it($input)
-                     ->filterValueKey(function ($v, $k) { return $k % 3 === 0 && $v > 30; })
-                     ->collect();
+            ->filterValueKey(function ($v, $k) { return $k % 3 === 0 && $v > 30; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * Test that combining multiple inputs works
+     */
+    public function testScenario005()
+    {
+        $input    = [10, 20];
+        $input2   = [30, 40];
+        $expected = [10, 20, 30, 40];
+
+        $result = Psi::it($input, $input2)
+            ->toArray();
+
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -284,12 +244,12 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [11, 91, 31, 71, 51];
 
         $result = Psi::it($input)
-            ->map(function ($i)    { return $i * 10; })
+            ->map(function ($i) { return $i * 10; })
             ->filter(function ($i) { return $i % 20; })
-            ->map(function ($i)    { return $i + 1;  })
-            ->collect();
+            ->map(function ($i) { return $i + 1; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -301,12 +261,12 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [11, 19, 13, 17, 15];
 
         $result = Psi::it($input)
-                     ->map(function ($i)    { return $i * 1; })
-                     ->filter(function ($i) { return $i % 2; })
-                     ->map(function ($i)    { return $i + 10;  })
-                     ->collect();
+            ->map(function ($i) { return $i * 1; })
+            ->filter(function ($i) { return $i % 2; })
+            ->map(function ($i) { return $i + 10; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -318,11 +278,11 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [2, 20];
 
         $result = Psi::it($input)
-            ->map(function ($i)      { return $i * 2;  })
+            ->map(function ($i) { return $i * 2; })
             ->anyMatch(function ($i) { return $i >= 20; })
-            ->collect();
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -335,12 +295,12 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
 
         $result = Psi::it($input)
             ->anyMatch(function ($i) { return $i >= 10; })
-            ->map(function ($i)      { return $i * 2;   })
-            ->collect();
+            ->map(function ($i) { return $i * 2; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
-
+        $this->assertSame($expected, $result);
     }
+
     /**
      * Test the combination of intermediate and full set operators and their execution order
      */
@@ -350,14 +310,14 @@ class PsiHighLevelArrayTest extends AbstractPsiTest
         $expected = [10, 1];
 
         $result = Psi::it($input)
-            ->anyMatch(function ($i) { return $i >= 15; })  // removes the last two [3, 3]
-            ->map(function ($i)      { return $i * 2;   })  // multiple all by 2
+            ->anyMatch(function ($i) { return $i >= 15; })// removes the last two [3, 3]
+            ->map(function ($i) { return $i * 2; })// multiple all by 2
             ->unique()
-            ->anyMatch(function ($i) { return $i >= 15; })  // removes all after [10 * 2, 10 * 2]
-            ->map(function ($i)      { return $i / 2;   })  // divide by 2
+            ->anyMatch(function ($i) { return $i >= 15; })// removes all after [10 * 2, 10 * 2]
+            ->map(function ($i) { return $i / 2; })// divide by 2
             ->rsort()
-            ->collect();
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 }

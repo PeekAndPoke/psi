@@ -4,14 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsFloat checks if the given value is a float, real or double
  *
- * @see IsFloatIsNotFloatTest
+ * @see    IsFloatIsNotFloatTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

@@ -4,14 +4,18 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi;
+
+use PeekAndPoke\Component\Psi\Stubs\UnitTestPsiObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PsiHighLevelObjectTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiHighLevelObjectTest extends AbstractPsiTest
+class PsiHighLevelObjectTest extends TestCase
 {
     /**
      * @param array $input
@@ -24,12 +28,12 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
      */
     public function testWithNoOperation($input, $expectedOutput, $expectMatch)
     {
-        $result = Psi::it($input)->collect();
+        $result = Psi::it($input)->toArray();
 
         if ($expectMatch) {
-            $this->assertPsiCollectOutputMatches($expectedOutput, $result);
+            $this->assertSame($expectedOutput, $result);
         } else {
-            $this->assertPsiCollectOutputDoesNotMatches($expectedOutput, $result);
+            $this->assertNotSame($expectedOutput, $result);
         }
     }
 
@@ -40,19 +44,29 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     {
         return [
             [
-                [],                 [],             true
+                [],
+                [],
+                true,
             ],
             [
-                [1],                [1],            true
+                [1],
+                [1],
+                true,
             ],
             [
-                [0],                [1],            false
+                [0],
+                [1],
+                false,
             ],
             [
-                [1, 2],             [1, 2],         true
+                [1, 2],
+                [1, 2],
+                true,
             ],
             [
-                [1, 2],             [2, 1],         false
+                [1, 2],
+                [2, 1],
+                false,
             ],
         ];
     }
@@ -62,14 +76,14 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testGetYoungestPersonsName()
     {
         $input = [
-            new PsiTestObject('Karl', 50),
-            new PsiTestObject($expected = 'Edgar', 10),
-            new PsiTestObject('Heidi', 52),
+            new UnitTestPsiObject('Karl', 50),
+            new UnitTestPsiObject($expected = 'Edgar', 10),
+            new UnitTestPsiObject('Heidi', 52),
         ];
 
         $result = Psi::it($input)
-            ->usort(function (PsiTestObject $a, PsiTestObject $b) { return $a->getAge() > $b->getAge(); })
-            ->map(function (PsiTestObject $a) { return $a->getName(); })
+            ->usort(function (UnitTestPsiObject $a, UnitTestPsiObject $b) { return $a->getAge() > $b->getAge(); })
+            ->map(function (UnitTestPsiObject $a) { return $a->getName(); })
             ->getFirst();
 
         $this->assertSame($expected, $result);
@@ -78,13 +92,13 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testGetOldestPerson()
     {
         $input = [
-            new PsiTestObject('Karl', 50),
-            new PsiTestObject('Edgar', 10),
-            $expected = new PsiTestObject('Heidi', 52),
+            new UnitTestPsiObject('Karl', 50),
+            new UnitTestPsiObject('Edgar', 10),
+            $expected = new UnitTestPsiObject('Heidi', 52),
         ];
 
         $result = Psi::it($input)
-            ->usort(function (PsiTestObject $a, PsiTestObject $b) { return $a->getAge() < $b->getAge(); })
+            ->usort(function (UnitTestPsiObject $a, UnitTestPsiObject $b) { return $a->getAge() < $b->getAge(); })
             ->getFirst();
 
         $this->assertSame($expected, $result);
@@ -93,13 +107,13 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testGetSummedUpPersonAges()
     {
         $input = [
-            new PsiTestObject('Karl', 50),
-            new PsiTestObject('Edgar', 10),
-            new PsiTestObject('Heidi', 52),
+            new UnitTestPsiObject('Karl', 50),
+            new UnitTestPsiObject('Edgar', 10),
+            new UnitTestPsiObject('Heidi', 52),
         ];
 
         $result = Psi::it($input)
-            ->map(function (PsiTestObject $a) { return $a->getAge(); })
+            ->map(function (UnitTestPsiObject $a) { return $a->getAge(); })
             ->sum();
 
         $this->assertSame(50 + 10 + 52, $result);
@@ -108,13 +122,13 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testGetAverageAge()
     {
         $input = [
-            new PsiTestObject('Karl', 50),
-            new PsiTestObject('Edgar', 10),
-            new PsiTestObject('Heidi', 52),
+            new UnitTestPsiObject('Karl', 50),
+            new UnitTestPsiObject('Edgar', 10),
+            new UnitTestPsiObject('Heidi', 52),
         ];
 
         $result = Psi::it($input)
-            ->map(function (PsiTestObject $a) { return $a->getAge(); })
+            ->map(function (UnitTestPsiObject $a) { return $a->getAge(); })
             ->avg();
 
         $this->assertSame((50 + 10 + 52) / 3, $result);
@@ -123,13 +137,13 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testManipulateEachPerson()
     {
         $input = [
-            $karl  = new PsiTestObject('Karl', 50),
-            $edgar = new PsiTestObject('Edgar', 10),
-            $heidi = new PsiTestObject('Heidi', 52),
+            $karl = new UnitTestPsiObject('Karl', 50),
+            $edgar = new UnitTestPsiObject('Edgar', 10),
+            $heidi = new UnitTestPsiObject('Heidi', 52),
         ];
 
         Psi::it($input)
-            ->each(function (PsiTestObject $a) { $a->incAge(1); })
+            ->each(function (UnitTestPsiObject $a) { $a->incAge(1); })
             ->collect();
 
         $this->assertEquals(50 + 1, $karl->getAge());
@@ -140,13 +154,13 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testManipulateEachPersonWithIndex()
     {
         $input = [
-            $karl  = new PsiTestObject('Karl', 50),
-            $edgar = new PsiTestObject('Edgar', 10),
-            $heidi = new PsiTestObject('Heidi', 52),
+            $karl = new UnitTestPsiObject('Karl', 50),
+            $edgar = new UnitTestPsiObject('Edgar', 10),
+            $heidi = new UnitTestPsiObject('Heidi', 52),
         ];
 
         Psi::it($input)
-            ->each(function (PsiTestObject $a, $idx) { $a->incAge($idx); })
+            ->each(function (UnitTestPsiObject $a, $idx) { $a->incAge($idx); })
             ->collect();
 
         $this->assertEquals(50 + 0, $karl->getAge());
@@ -162,18 +176,18 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testScenario001()
     {
         $input = [
-            $karl  = new PsiTestObject('Karl', 50),
-            $edgar = new PsiTestObject('Edgar', 10),
-            $heidi = new PsiTestObject('Heidi', 52),
+            $karl = new UnitTestPsiObject('Karl', 50),
+            $edgar = new UnitTestPsiObject('Edgar', 10),
+            $heidi = new UnitTestPsiObject('Heidi', 52),
         ];
 
         $expected = [$heidi];
 
         $result = Psi::it($input)
-            ->filter(function (PsiTestObject $i) { return $i->getAge() > 50; })
-            ->collect();
+            ->filter(function (UnitTestPsiObject $i) { return $i->getAge() > 50; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
 
@@ -183,18 +197,18 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testScenario002()
     {
         $input = [
-            $karl  = new PsiTestObject('Karl', 50),
-            $edgar = new PsiTestObject('Edgar', 10),
-            $heidi = new PsiTestObject('Heidi', 52),
+            $karl = new UnitTestPsiObject('Karl', 50),
+            $edgar = new UnitTestPsiObject('Edgar', 10),
+            $heidi = new UnitTestPsiObject('Heidi', 52),
         ];
 
         $expected = [$karl];
 
         $result = Psi::it($input)
-                     ->filterKey(function ($k) { return $k === 0; })
-                     ->collect();
+            ->filterKey(function ($k) { return $k === 0; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     /**
@@ -203,103 +217,17 @@ class PsiHighLevelObjectTest extends AbstractPsiTest
     public function testScenario004()
     {
         $input = [
-            $karl  = new PsiTestObject('Karl', 50),
-            $edgar = new PsiTestObject('Edgar', 10),
-            $heidi = new PsiTestObject('Heidi', 52),
+            $karl = new UnitTestPsiObject('Karl', 50),
+            $edgar = new UnitTestPsiObject('Edgar', 10),
+            $heidi = new UnitTestPsiObject('Heidi', 52),
         ];
 
         $expected = [$karl, $heidi];
 
         $result = Psi::it($input)
-                     ->filterValueKey(function (PsiTestObject $v, $k) { return $v->getName() === 'Karl' || $k > 1; })
-                     ->collect();
+            ->filterValueKey(function (UnitTestPsiObject $v, $k) { return $v->getName() === 'Karl' || $k > 1; })
+            ->toArray();
 
-        $this->assertPsiCollectOutputMatches($expected, $result);
+        $this->assertSame($expected, $result);
     }
-//
-//    /**
-//     * Test the combination of multiple intermediate operators and their execution order
-//     */
-//    public function testScenario100()
-//    {
-//        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-//        $expected = [11, 91, 31, 71, 51];
-//
-//        $result = Psi::it($input)
-//            ->map(function ($i)    { return $i * 10; })
-//            ->filter(function ($i) { return $i % 20; })
-//            ->map(function ($i)    { return $i + 1;  })
-//            ->collect();
-//
-//        $this->assertPsiCollectOutputMatches($expected, $result);
-//    }
-//
-//    /**
-//     * Test the combination of multiple intermediate operators and their execution order once more
-//     */
-//    public function testScenario101()
-//    {
-//        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-//        $expected = [11, 19, 13, 17, 15];
-//
-//        $result = Psi::it($input)
-//                     ->map(function ($i)    { return $i * 1; })
-//                     ->filter(function ($i) { return $i % 2; })
-//                     ->map(function ($i)    { return $i + 10;  })
-//                     ->collect();
-//
-//        $this->assertPsiCollectOutputMatches($expected, $result);
-//    }
-//
-//    /**
-//     * Test continuation after intermediate operation
-//     */
-//    public function testScenario102()
-//    {
-//        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-//        $expected = [2, 20];
-//
-//        $result = Psi::it($input)
-//            ->map(function ($i)      { return $i * 2;  })
-//            ->anyMatch(function ($i) { return $i >= 20; })
-//            ->collect();
-//
-//        $this->assertPsiCollectOutputMatches($expected, $result);
-//    }
-//
-//    /**
-//     * Test continuation after intermediate operation with different execution order
-//     */
-//    public function testScenario103()
-//    {
-//        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-//        $expected = [2, 20];
-//
-//        $result = Psi::it($input)
-//            ->anyMatch(function ($i) { return $i >= 10; })
-//            ->map(function ($i)      { return $i * 2;   })
-//            ->collect();
-//
-//        $this->assertPsiCollectOutputMatches($expected, $result);
-//
-//    }
-//    /**
-//     * Test the combination of intermediate and full set operators and their execution order
-//     */
-//    public function testScenario104()
-//    {
-//        $input    = [1, 1, 10, 10, 2, 2, 9, 9, 15, 3, 3];
-//        $expected = [10, 1];
-//
-//        $result = Psi::it($input)
-//            ->anyMatch(function ($i) { return $i >= 15; })  // removes the last two [3, 3]
-//            ->map(function ($i)      { return $i * 2;   })  // multiple all by 2
-//            ->unique()
-//            ->anyMatch(function ($i) { return $i >= 15; })  // removes all after [10 * 2, 10 * 2]
-//            ->map(function ($i)      { return $i / 2;   })  // divide by 2
-//            ->rsort()
-//            ->collect();
-//
-//        $this->assertPsiCollectOutputMatches($expected, $result);
-//    }
 }

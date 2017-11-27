@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -67,16 +68,16 @@ class IsScalarIsNotScalarTest extends TestCase
     {
         return [
             // positives
-            [0,                     true],
-            [0.0,                   true],
-            [(float) 0,             true],
-            ['',                    true],
-            [true,                  true],
-            [false,                 true],
+            [0, true],
+            [0.0, true],
+            [(float) 0, true],
+            ['', true],
+            [true, true],
+            [false, true],
 
             // negatives
-            [null,                  false],
-            [new MockA(),           false],
+            [null, false],
+            [new UnitTestMockA(), false],
         ];
     }
 }

@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -67,17 +68,17 @@ class IsObjectIsNotObjectTest extends TestCase
     {
         return [
             // positives
-            [new \ArrayIterator(),  true],
-            [new MockA(),           true],
-            [new \stdClass(),       true],
+            [new \ArrayIterator(), true],
+            [new UnitTestMockA(), true],
+            [new \stdClass(), true],
 
             // negatives
-            [null,                  false],
-            [0,                     false],
-            ['2',                   false],
-            ['z',                   false],
-            [true,                  false],
-            [false,                 false],
+            [null, false],
+            [0, false],
+            ['2', false],
+            ['z', false],
+            [true, false],
+            [false, false],
         ];
     }
 }

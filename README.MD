@@ -34,12 +34,7 @@ sorts them by age descending.
 
 Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
 
-## todo
-
-### PRIO-I
-
-( ) remove "horizons" completely from this repo  
---> LocalDate now lives in peekandpoke/php-types
+## Todos
 
 ### HHVM
 

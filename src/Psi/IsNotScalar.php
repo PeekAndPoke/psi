@@ -7,12 +7,12 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsNotScalar checks if the given value is NOT scalar
  *
- * @see IsScalarIsNotScalarTest
+ * @see    IsScalarIsNotScalarTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

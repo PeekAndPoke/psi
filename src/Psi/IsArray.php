@@ -4,14 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsArray checks if the given value is an array
  *
- * @see IsArrayIsNotArrayTest
+ * @see    IsArrayIsNotArrayTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

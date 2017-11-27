@@ -4,10 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
-use PeekAndPoke\Component\Psi\Interfaces\PsiFactory;
 use PeekAndPoke\Component\Psi\Iterator\KeylessAppendIterator;
 use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
 
@@ -16,7 +16,7 @@ use PeekAndPoke\Component\Psi\Solver\DefaultOperationChainSolver;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiFactoryImpl implements PsiFactory
+class DefaultPsiFactory implements PsiFactory
 {
     /**
      * {@inheritdoc}
@@ -38,6 +38,7 @@ class PsiFactoryImpl implements PsiFactory
         }
 
         if ($count > 1) {
+
             // when we have multiple inputs we need an option to decide on how to deal with colliding keys
             if ($options->isPreserveKeysOfMultipleInputs()) {
                 // this iterator return the original keys of each child iterator
@@ -63,6 +64,7 @@ class PsiFactoryImpl implements PsiFactory
 
     /**
      * @param mixed $iteratable
+     *
      * @return \Iterator
      *
      * @throws PsiException
@@ -77,16 +79,9 @@ class PsiFactoryImpl implements PsiFactory
             return $iteratable;
         }
 
-        if ($iteratable instanceof \Traversable) {
-            // TODO: figure out if that is correct
-            return new \IteratorIterator($iteratable);
-        }
-
         if (is_array($iteratable)) {
             return new \ArrayIterator($iteratable);
         }
-
-        // TODO: what about classes implementing \ArrayAccess and/or \Countable?
 
         throw new PsiException('Invalid input, not an array or an Iterator or a Traversable');
     }

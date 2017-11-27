@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
+use PeekAndPoke\Component\Psi\FullSetOperation;
 
 /**
  * AbstractSortingOperation
@@ -24,13 +25,5 @@ abstract class AbstractSortingOperation implements FullSetOperation
     public function __construct($sortFlags)
     {
         $this->sortFlags = $sortFlags;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSortFlags()
-    {
-        return $this->sortFlags;
     }
 }

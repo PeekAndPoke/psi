@@ -4,14 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 
 /**
  * EqualTo does a non type safe comparison "=="
  *
- * @see IsEqualToIsNotEqualToTest
+ * @see    IsEqualToIsNotEqualToTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

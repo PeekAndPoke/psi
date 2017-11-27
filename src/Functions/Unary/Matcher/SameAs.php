@@ -14,7 +14,7 @@ use PeekAndPoke\Component\Psi\Psi\IsSameAs;
  *
  * SameAs does a type safe comparison "==="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class SameAs extends IsSameAs
 {

@@ -12,7 +12,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
  *
  * IsNumeric
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class IsNumeric extends \PeekAndPoke\Component\Psi\Psi\IsNumeric
 {

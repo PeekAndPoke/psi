@@ -7,8 +7,8 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
-use PeekAndPoke\Component\Psi\Mocks\MockB;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockB;
 use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
@@ -108,26 +108,26 @@ class IsInstanceOfIsNotInstanceOfTest extends TestCase
     {
         // for PHP 5.4 compatibility we cannot use ::class
 
-        $clsMockA = MockA::class;
-        $clsMockB = MockB::class;
+        $clsMockA = UnitTestMockA::class;
+        $clsMockB = UnitTestMockB::class;
 
         return [
             // positives - with a real object in the instance of clause
-            [new MockA(), new MockA(), true],
-            [new MockA(), new MockB(), true],
-            [new MockB(), new MockB(), true],
+            [new UnitTestMockA(), new UnitTestMockA(), true],
+            [new UnitTestMockA(), new UnitTestMockB(), true],
+            [new UnitTestMockB(), new UnitTestMockB(), true],
             // positives - with a fqcn in the instance of clause
-            [$clsMockA, new MockA(), true],
-            [$clsMockA, new MockB(), true],
-            [$clsMockB, new MockB(), true],
+            [$clsMockA, new UnitTestMockA(), true],
+            [$clsMockA, new UnitTestMockB(), true],
+            [$clsMockB, new UnitTestMockB(), true],
 
             // negatives
             [1, 1, false],
-            [0, new MockA(), false],
-            [new MockA(), 0, false],
-            [new MockA(), $clsMockA, false],
-            [$clsMockB, new MockA(), false],
-            [new MockB(), new MockA(), false],
+            [0, new UnitTestMockA(), false],
+            [new UnitTestMockA(), 0, false],
+            [new UnitTestMockA(), $clsMockA, false],
+            [$clsMockB, new UnitTestMockA(), false],
+            [new UnitTestMockB(), new UnitTestMockA(), false],
         ];
     }
 }

@@ -4,15 +4,12 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
-use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
-use PeekAndPoke\Component\Psi\Interfaces\PsiFactory;
-use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
-use PeekAndPoke\Component\Psi\Operation\FullSet\GroupOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\GroupByOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
@@ -53,12 +50,9 @@ class Psi
 {
     /** @var array */
     private $inputs;
-
     /** @var \ArrayIterator */
     private $operationChain;
-    /** @var PsiFactory */
-    private $factory;
-
+    /** @var PsiOptions */
     private $options;
 
     /**
@@ -77,11 +71,9 @@ class Psi
      */
     protected function __construct($inputs)
     {
+        $this->inputs         = $inputs;
         $this->operationChain = new \ArrayIterator();
-        $this->factory        = new PsiFactoryImpl();
         $this->options        = new PsiOptions();
-
-        $this->inputs = $inputs;
     }
 
     ////  CONFIGURATION METHODS  ///////////////////////////////////////////////////////////////////////////////////////
@@ -93,9 +85,17 @@ class Psi
      */
     public function useFactory(PsiFactory $factory)
     {
-        $this->factory = $factory;
+        $this->options->setFactory($factory);
 
         return $this;
+    }
+
+    /**
+     * @return PsiOptions
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**
@@ -215,13 +215,39 @@ class Psi
     }
 
     /**
+     * @deprecated method was renamed. Please use groupBy() instead
+     *
      * @param callable|\Closure|UnaryFunction $unaryFunction
      *
      * @return $this
      */
     public function group($unaryFunction)
     {
-        $this->operationChain->append(new GroupOperation($unaryFunction));
+        return $this->groupBy($unaryFunction);
+    }
+
+    /**
+     * Groups the input buckets defined by the return value of the given function.
+     *
+     * Example:
+     *
+     * <code>
+     *
+     * Psi::it(['adam', 'alexa', 'bruno'])
+     *   ->groupBy(function ($v) { return $v[0]; }
+     *   ->toKeyValueArray();
+     *
+     * >> ['a' => ['adam', 'alexa'], 'b' => 'bruno']
+     *
+     * </code>
+     *
+     * @param callable|\Closure|UnaryFunction $unaryFunction
+     *
+     * @return $this
+     */
+    public function groupBy($unaryFunction)
+    {
+        $this->operationChain->append(new GroupByOperation($unaryFunction));
 
         return $this;
     }
@@ -384,12 +410,7 @@ class Psi
      */
     public function toMap($keyMapper, $valueMapper = null)
     {
-        return $this->solveOperationsAndApplyTerminal(
-            new CollectToMapOperation(
-                $keyMapper,
-                $valueMapper ?: new Psi\Map\Identity()
-            )
-        );
+        return $this->solveOperationsAndApplyTerminal(new CollectToMapOperation($keyMapper, $valueMapper));
     }
 
     /**
@@ -466,6 +487,8 @@ class Psi
      * @param TerminalOperation $terminal
      *
      * @return mixed
+     *
+     * @throws PsiException
      */
     private function solveOperationsAndApplyTerminal(TerminalOperation $terminal)
     {
@@ -475,8 +498,9 @@ class Psi
             $this->operationChain->append(new EmptyIntermediateOp());
         }
 
-        $iterator = $this->factory->createIterator($this->inputs, $this->options);
-        $solver   = $this->factory->createSolver();
+        $factory  = $this->options->getFactory();
+        $iterator = $factory->createIterator($this->inputs, $this->options);
+        $solver   = $factory->createSolver();
 
         $result = $solver->solve($this->operationChain, $iterator);
 

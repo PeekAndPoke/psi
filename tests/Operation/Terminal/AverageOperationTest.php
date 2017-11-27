@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
 use PHPUnit\Framework\TestCase;
@@ -34,12 +35,12 @@ class AverageOperationTest extends TestCase
     public static function provide()
     {
         return [
-            [new \ArrayIterator([]),                0],
-            [new \ArrayIterator([1]),               1],
-            [new \ArrayIterator([1,1]),             1],
-            [new \ArrayIterator([1,3]),             2],
-            [new \ArrayIterator([['z']]),           0],
-            [new \ArrayIterator([[1,'z']]),         0],
+            [new \ArrayIterator([]), 0],
+            [new \ArrayIterator([1]), 1],
+            [new \ArrayIterator([1, 1]), 1],
+            [new \ArrayIterator([1, 3]), 2],
+            [new \ArrayIterator([['z']]), 0],
+            [new \ArrayIterator([[1, 'z']]), 0],
         ];
     }
 }

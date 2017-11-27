@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
 
 /**
@@ -11,7 +12,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\Matcher;
  *
  * GreaterThanOrEqual does a non type safe comparison "=="
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class IsInRange extends \PeekAndPoke\Component\Psi\Psi\IsInRange
 {

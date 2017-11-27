@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,7 @@ class IsEmptyIsNotEmptyTest extends TestCase
      */
     public function testNotEqualTo($psiValue, $expectedResult)
     {
-        $expectedResult = !$expectedResult;
+        $expectedResult = ! $expectedResult;
 
         $subject = new IsNotEmpty();
 
@@ -52,22 +53,22 @@ class IsEmptyIsNotEmptyTest extends TestCase
     {
         return [
             // positives - ensure substitution
-            [0,     true],
-            [0.0,   true],
-            ['',    true],
-            ['0',   true],
-            [null,  true],
+            [0, true],
+            [0.0, true],
+            ['', true],
+            ['0', true],
+            [null, true],
             [false, true],
-            [[],    true],
+            [[], true],
 
             // positives
-            [1,               false],
-            [0.1,             false],
-            [' ',             false],
-            ['1',             false],
+            [1, false],
+            [0.1, false],
+            [' ', false],
+            ['1', false],
             [new \stdClass(), false],
-            [true,            false],
-            [[1],             false],
+            [true, false],
+            [[1], false],
         ];
     }
 }

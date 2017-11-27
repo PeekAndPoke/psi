@@ -4,10 +4,13 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
-use PeekAndPoke\Component\Psi\Interfaces\BinaryFunction;
-use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
+use PeekAndPoke\Component\Psi\BinaryFunction;
+use PeekAndPoke\Component\Psi\Psi\Map\Identity;
+use PeekAndPoke\Component\Psi\TerminalOperation;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * CollectToMapOperation
@@ -16,21 +19,19 @@ use PeekAndPoke\Component\Psi\Interfaces\TerminalOperation;
  */
 class CollectToMapOperation implements TerminalOperation
 {
-    /** @var \Closure|BinaryFunction */
+    /** @var \Closure|UnaryFunction|BinaryFunction */
     private $keyMapper;
-    /** @var \Closure|BinaryFunction */
+    /** @var \Closure|UnaryFunction|BinaryFunction */
     private $valueMapper;
 
     /**
-     * @param \Closure|BinaryFunction $keyMapper
-     * @param \Closure|BinaryFunction $valueMapper
+     * @param \Closure|UnaryFunction|BinaryFunction $keyMapper
+     * @param \Closure|UnaryFunction|BinaryFunction $valueMapper
      */
-    public function __construct($keyMapper, $valueMapper)
+    public function __construct($keyMapper, $valueMapper = null)
     {
-        // todo type-check on $keyMapper
         $this->keyMapper   = $keyMapper;
-        // todo type-check on $valueMapper
-        $this->valueMapper = $valueMapper;
+        $this->valueMapper = $valueMapper ?: new Identity();
     }
 
     /**

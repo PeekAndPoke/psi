@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Functions\Unary\ParameterizedUnaryFunction;
+use PeekAndPoke\Component\Psi\Functions\ParameterizedUnaryFunction;
 use PeekAndPoke\Types\LocalDate;
 
 /**
@@ -14,8 +15,8 @@ use PeekAndPoke\Types\LocalDate;
  *
  * TODO: implement for normal \DateTime as well
  *
- * @see ParameterizedUnaryFunction
- * @see IsSameDayIsNotSameDayTest
+ * @see    ParameterizedUnaryFunction
+ * @see    IsSameDayIsNotSameDayTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
@@ -30,7 +31,7 @@ class IsSameDay extends ParameterizedUnaryFunction
     {
         $val = $this->getValue();
 
-        if (!$val instanceof LocalDate || !$input instanceof LocalDate) {
+        if (! $val instanceof LocalDate || ! $input instanceof LocalDate) {
             return false;
         }
 

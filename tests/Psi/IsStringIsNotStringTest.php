@@ -4,10 +4,11 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
-use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -68,18 +69,18 @@ class IsStringIsNotStringTest extends TestCase
     {
         return [
             // positives
-            ['',  true],
+            ['', true],
             ['a', true],
 
             // negatives
-            [null,        false],
-            [0,           false],
-            [1,           false],
-            [1.1,         false],
-            [true,        false],
-            [false,       false],
-            [new MockA(), false],
-            [new ToStringMock('a'), false], // even if an object implements the __toString function is it not a string
+            [null, false],
+            [0, false],
+            [1, false],
+            [1.1, false],
+            [true, false],
+            [false, false],
+            [new UnitTestMockA(), false],
+            [new UnitTestToString('a'), false], // even if an object implements the __toString function is it not a string
         ];
     }
 }

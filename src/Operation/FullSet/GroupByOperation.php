@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
-use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
+use PeekAndPoke\Component\Psi\FullSetOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
 
 /**
@@ -14,7 +15,7 @@ use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class GroupOperation extends AbstractUnaryFunctionOperation implements FullSetOperation
+class GroupByOperation extends AbstractUnaryFunctionOperation implements FullSetOperation
 {
     /**
      * {@inheritdoc}

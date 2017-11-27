@@ -5,7 +5,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  *

@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
 use PHPUnit\Framework\TestCase;
@@ -34,19 +35,19 @@ class MedianOperationTest extends TestCase
     public static function provide()
     {
         return [
-            [[],                0],
-            [[1],               1],
-            [[1,1],             1],
-            [[1,1,2],           1],
-            [[1,1,2,2],       1.5],
-            [[2,2,1,1],       1.5],
-            [[1,2,1,2],       1.5],
-            [[2,1,1,2],       1.5],
-            [[1,10,20,1000],   15],
+            [[], 0],
+            [[1], 1],
+            [[1, 1], 1],
+            [[1, 1, 2], 1],
+            [[1, 1, 2, 2], 1.5],
+            [[2, 2, 1, 1], 1.5],
+            [[1, 2, 1, 2], 1.5],
+            [[2, 1, 1, 2], 1.5],
+            [[1, 10, 20, 1000], 15],
 
             // invalid input
-            [[['z']],           0],
-            [[[1,'z']],         0],
+            [[['z']], 0],
+            [[[1, 'z']], 0],
         ];
     }
 }

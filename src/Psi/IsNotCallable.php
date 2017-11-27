@@ -4,15 +4,16 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Interfaces\UnaryFunction;
+use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
  * IsNotCallable checks if the given value is NOT a callable
  *
- * @see IsCallable
- * @see IsCallableIsNotCallableTest
+ * @see    IsCallable
+ * @see    IsCallableIsNotCallableTest
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */

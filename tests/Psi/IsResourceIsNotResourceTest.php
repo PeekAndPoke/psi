@@ -4,10 +4,11 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
-use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -66,7 +67,7 @@ class IsResourceIsNotResourceTest extends TestCase
      */
     public static function provide()
     {
-        $reflect = new \ReflectionClass(new MockA());
+        $reflect = new \ReflectionClass(new UnitTestMockA());
 
         $openFile = fopen($reflect->getFileName(), 'rb');
 
@@ -75,16 +76,16 @@ class IsResourceIsNotResourceTest extends TestCase
 
         return [
             // positives
-            [$openFile,             true],
+            [$openFile, true],
 
             // negatives
-            [$closedFile,           false],
-            [null,                  false],
-            [0,                     false],
-            [true,                  false],
-            [false,                 false],
-            [new MockA(),           false],
-            [new ToStringMock('a'), false],
+            [$closedFile, false],
+            [null, false],
+            [0, false],
+            [true, false],
+            [false, false],
+            [new UnitTestMockA(), false],
+            [new UnitTestToString('a'), false],
         ];
     }
 }

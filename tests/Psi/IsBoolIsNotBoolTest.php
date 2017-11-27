@@ -7,7 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -74,7 +74,7 @@ class IsBoolIsNotBoolTest extends TestCase
             [null, false],
             [0, false],
             ['Z', false],
-            [new MockA(), false],
+            [new UnitTestMockA(), false],
         ];
     }
 }

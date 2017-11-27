@@ -4,9 +4,10 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\Mocks\MockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -66,15 +67,15 @@ class IsNullIsNotNullTest extends TestCase
     {
         return [
             // positives
-            [null,                  true],
+            [null, true],
 
             // negatives
-            [0,                     false],
-            ['0',                   false],
-            [new \ArrayIterator(),  false],
-            [true,                  false],
-            ['Z',                   false],
-            [new MockA(),           false],
+            [0, false],
+            ['0', false],
+            [new \ArrayIterator(), false],
+            [true, false],
+            ['Z', false],
+            [new UnitTestMockA(), false],
         ];
     }
 }

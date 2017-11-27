@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
 
 /**
@@ -11,7 +12,7 @@ namespace PeekAndPoke\Component\Psi\Functions\Unary\TypeCheck;
  *
  * IsNumericString check if the string contains an number
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 class IsNumericString extends \PeekAndPoke\Component\Psi\Psi\IsNumericString
 {

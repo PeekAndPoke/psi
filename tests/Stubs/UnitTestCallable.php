@@ -4,17 +4,15 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi\Mocks;
+
+namespace PeekAndPoke\Component\Psi\Stubs;
 
 /**
- * CallableMock
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class CallableMock
+class UnitTestCallable
 {
     public function __invoke()
     {
-
     }
 }

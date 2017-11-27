@@ -4,14 +4,13 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-namespace PeekAndPoke\Component\Psi;
+
+namespace PeekAndPoke\Component\Psi\Stubs;
 
 /**
- * PsiTestObject
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiTestObject
+class UnitTestPsiObject
 {
     /** @var string */
     private $name;
@@ -25,7 +24,7 @@ class PsiTestObject
     public function __construct($name, $age)
     {
         $this->name = $name;
-        $this->age = $age;
+        $this->age  = $age;
     }
 
     /**
@@ -52,6 +51,7 @@ class PsiTestObject
     public function setAge($age)
     {
         $this->age = $age;
+
         return $this;
     }
 

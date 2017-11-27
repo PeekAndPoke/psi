@@ -9,9 +9,9 @@ namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\NotSameAs;
 use PeekAndPoke\Component\Psi\Functions\Unary\Matcher\SameAs;
-use PeekAndPoke\Component\Psi\Mocks\MockA;
-use PeekAndPoke\Component\Psi\Mocks\MockB;
-use PeekAndPoke\Component\Psi\Mocks\ToStringMock;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockA;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestMockB;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
@@ -109,7 +109,7 @@ class IsSameAsIsNotSameAsTest extends TestCase
      */
     public static function provide()
     {
-        $mock = new MockA();
+        $mock = new UnitTestMockA();
 
         return [
             // positives
@@ -130,10 +130,10 @@ class IsSameAsIsNotSameAsTest extends TestCase
             [0, '0', false],
             [0, 0.0, false],
             [(int) 1.0, 1.0, false],
-            [new MockA(), new MockB(), false],
+            [new UnitTestMockA(), new UnitTestMockB(), false],
 
             // test magic __toString is NOT invoked when comparing with "==="
-            ['A', new ToStringMock('A'), false],
+            ['A', new UnitTestToString('A'), false],
         ];
     }
 }

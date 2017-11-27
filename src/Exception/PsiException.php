@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Exception;
 
 /**
@@ -11,6 +12,6 @@ namespace PeekAndPoke\Component\Psi\Exception;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class PsiException extends \Exception
+class PsiException extends \RuntimeException
 {
 }

@@ -4,11 +4,12 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Solver;
 
-use PeekAndPoke\Component\Psi\Interfaces\FullSetOperation;
-use PeekAndPoke\Component\Psi\Interfaces\IntermediateOperation;
-use PeekAndPoke\Component\Psi\Interfaces\OperationChainSolver;
+use PeekAndPoke\Component\Psi\FullSetOperation;
+use PeekAndPoke\Component\Psi\IntermediateOperation;
+use PeekAndPoke\Component\Psi\OperationChainSolver;
 
 /**
  * DefaultOperationChainSolver
@@ -81,7 +82,7 @@ class DefaultOperationChainSolver implements OperationChainSolver
                 /** @var IntermediateOperation $current */
                 $current = $operatorChain->current();
                 // apply intermediate operations
-                $result  = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
+                $result = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
                 // track the continuation flags
                 $continueWithNextItem = $continueWithNextItem && $returnedCanContinue;
 
@@ -90,7 +91,7 @@ class DefaultOperationChainSolver implements OperationChainSolver
             }
 
             if ($useResult) {
-                $results->append($result);
+                $results->offsetSet($input->key(), $result);
             }
 
             // goto next item

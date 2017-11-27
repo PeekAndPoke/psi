@@ -4,6 +4,7 @@
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
+
 namespace PeekAndPoke\Component\Psi\Operation\Terminal;
 
 use PHPUnit\Framework\TestCase;
@@ -37,15 +38,15 @@ class CollectToKeyValueArrayOperationTest extends TestCase
     public static function provide()
     {
         return [
-            [[],                []],
-            [[1],               [0 => 1]],
-            [[1,1],             [0 => 1, 1 => 1]],
-            [[1,3],             [0 => 1, 1 => 3]],
-            [[['z']],           [0 => ['z']]],
-            [[1,'z'],           [0 => 1, 1 => 'z']],
+            [[], []],
+            [[1], [0 => 1]],
+            [[1, 1], [0 => 1, 1 => 1]],
+            [[1, 3], [0 => 1, 1 => 3]],
+            [[['z']], [0 => ['z']]],
+            [[1, 'z'], [0 => 1, 1 => 'z']],
 
             // The keys must stay as they are
-            [[0 => 1, 5 => 2],   [0 => 1, 5 => 2]]
+            [[0 => 1, 5 => 2], [0 => 1, 5 => 2]],
         ];
     }
 }
