@@ -6,6 +6,7 @@
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Stubs\UnitTestIterator;
+use PeekAndPoke\Component\Psi\Stubs\UnitTestTraversable;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -65,21 +66,24 @@ class DefaultPsiFactoryTest extends TestCase
                 [1, 2],
                 new \ArrayIterator([3, 4]),
                 new UnitTestIterator([5, 6]),
+                new UnitTestTraversable([7, 8]),
             ],
             new PsiOptions()
         );
 
         $this->assertInstanceOf(\AppendIterator::class, $result);
         // number of data elements must be correct
-        $this->assertCount(6, $result);
+        $this->assertCount(8, $result);
 
         // number of child-iterators must be correct
         $childIterators = $result->getArrayIterator();
-        $this->assertCount(3, $childIterators);
+        $this->assertCount(4, $childIterators);
+
         // check that each child iterator has the correct type
         $this->assertInstanceOf(\ArrayIterator::class, $childIterators[0]);
         $this->assertInstanceOf(\ArrayIterator::class, $childIterators[1]);
         $this->assertInstanceOf(UnitTestIterator::class, $childIterators[2]);
+        $this->assertInstanceOf(\IteratorIterator::class, $childIterators[3]);
     }
 
     /**
