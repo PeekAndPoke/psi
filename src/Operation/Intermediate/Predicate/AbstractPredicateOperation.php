@@ -20,11 +20,11 @@ abstract class AbstractPredicateOperation implements IntermediateOperation
     protected $function;
 
     /**
-     * @param callable|\Closure|UnaryFunction|BinaryFunction $binaryFunction
+     * @param callable|\Closure|UnaryFunction|BinaryFunction $condition
      */
-    public function __construct($binaryFunction)
+    public function __construct($condition)
     {
-        $this->function = $binaryFunction;
+        $this->function = $condition;
     }
 
     /**

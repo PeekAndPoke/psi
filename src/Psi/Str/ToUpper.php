@@ -5,6 +5,8 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
+use PeekAndPoke\Component\Psi\Psi\ToString;
+
 /**
  *
  *

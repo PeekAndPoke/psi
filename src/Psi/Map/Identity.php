@@ -22,7 +22,7 @@ class Identity implements BinaryFunction
      *
      * @return mixed
      */
-    public function __invoke($input, $key)
+    public function __invoke($input = null, $key = null)
     {
         return $input;
     }

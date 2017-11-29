@@ -29,6 +29,112 @@ sorts them by age descending.
 
 Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
 
+## new in v0.6.3
+
+(x) Psi::filterBy()
+
+In order to by able to use all other matchers on nested property / values of input objects, the 
+method Psi::filterBy() was added
+
+```php
+$result = Psi::it($persons)
+  ->filterBy(
+    function (Person $p) { return $p->getAge(); },
+    new IsLessThan(18)
+  )
+  ->toArray()
+``` 
+
+(x) uniqueBy 
+
+Finds unique elements by first passing them through a mapper.
+
+```php
+$result = Psi::it($persons)
+  ->uniqueBy(
+    function (Person $p) { return $person->getName(); }
+  )
+  ->toArray();
+```
+
+(x) ToFloat
+
+Maps inputs to floats.
+
+```php
+$result = Psi::it($values)
+  ->map(new Psi\ToFloat())
+  ->toArray();
+```
+
+(x) ToInteger
+
+Maps inputs to integers.
+
+```php
+$result = Psi::it($values)
+  ->map(new Psi\ToInteger())
+  ->toArray();
+```
+
+(x) ToString
+
+Maps inputs to strings.
+
+```php
+$result = Psi::it($values)
+  ->map(new Psi\ToString())
+  ->toArray();
+```
+
+(x) Str::StartingWith and Str::NotStartingWith - with or with case
+
+Filters all string starting with the given needle. By default case-sensitive. 
+Pass false as the second parameter to be non-case-sensitive.
+
+```php
+$result = Psi::it($values)
+  ->filter(new Psi\Str\StartingWith('a', false))
+  ->toArray();
+
+$result = Psi::it($values)
+  ->filter(new Psi\Str\NotStartingWith('a', false))
+  ->toArray();
+```
+
+(x) Str::EndingWith and Str::NotEndingWith - with or without case
+
+Filters all string ending with the given needle. By default case-sensitive. 
+Pass false as the second parameter to be non-case-sensitive.
+
+```php
+$result = Psi::it($values)
+  ->filter(new Psi\Str\EndingWith('a', false))
+  ->toArray();
+
+$result = Psi::it($values)
+  ->filter(new Psi\Str\NotEndingWith('a', false))
+  ->toArray();
+```
+
+## new in v0.6.0 to v0.6.2
+
+The internal folder structure was changed:
+
+- public interface live now on the root level
+- some over-engineering was removed (some classes removed)
+- interface no longer have names like "UnaryFunctionInterface" but "UnaryFunction"
+
+ 
+
+## new in v0.5.0
+
+(x) groupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
+
+(x) sortBy (function ($i) { return $i->getY(); }
+  (x) ASC / DESC -> use reverse 
+
+
 ## Todos
 
 ### HHVM
@@ -39,13 +145,7 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 
 -> have a look a lodash.js what do they do and how do they call the methods
 
-- Chunk [1,2,3,4] -> [[1,2], [3,4]]
-(x) GroupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
--> see Psi::group
-
-(x) sortBy (function ($i) { return $i->getY(); }
-  (-) ASC / DESC -> use reverse 
-( ) uniqueBy (function ($i) { return $i->getY(); }
+( ) Chunk [1,2,3,4] -> [[1,2], [3,4]]
 
 ### Unary filter functions for strings
 
@@ -71,12 +171,10 @@ String-Mappers
         return strtr($subject, $translations);
 
 Matchers
-- EndsWith
-- StartWith
 - ContainsString
 - Regex
 
-
+Number matchers
 - IsMultipleOf    ... isMultipleOf(3) will give true for 0, 3, 6, ...
 
 ### Terminal
@@ -84,8 +182,6 @@ Matchers
 (X) getFirst
 - getLast
 - getRandom
-
-
 
 ## How to doc
 

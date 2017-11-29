@@ -16,6 +16,7 @@ use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\ReverseSortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\SortByOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\SortOperation;
+use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueByOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UniqueOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserKeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserSortOperation;
@@ -23,6 +24,7 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\EmptyIntermediateOp;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\EachOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterByPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPredicate;
@@ -123,37 +125,69 @@ class Psi
     ////  INTERMEDIATE OPERATIONS - working on one item at a time  /////////////////////////////////////////////////////
 
     /**
-     * @param callable|UnaryFunction $unaryFunction
+     * Filters the input stream by passing each element to the condition
+     *
+     * @param callable|UnaryFunction|BinaryFunction $condition
      *
      * @return $this
      */
-    public function filter($unaryFunction)
+    public function filter($condition)
     {
-        $this->operationChain->append(new FilterPredicate($unaryFunction));
+        $this->operationChain->append(new FilterPredicate($condition));
 
         return $this;
     }
 
     /**
-     * @param callable|UnaryFunction $unaryFunction
+     * Filters the input stream by passing each element first through the mapper and the to the condition
+     *
+     * This is useful of one for example want to filter all items, that have a certain property starting with a certain string:
+     *
+     * <code>
+     *
+     * $result = Psi::it($input)
+     *   ->filterBy(
+     *     function (Person $p) { return $p->getName(); },
+     *     new Psi\Str\StartingWith('A')
+     *   )
+     *   ->toArray()
+     *
+     * </code>
+     *
+     * @param callable|UnaryFunction|BinaryFunction $mapper
+     * @param callable|UnaryFunction|BinaryFunction $condition
      *
      * @return $this
      */
-    public function filterKey($unaryFunction)
+    public function filterBy($mapper, $condition)
     {
-        $this->operationChain->append(new FilterKeyPredicate($unaryFunction));
+        $this->operationChain->append(new FilterByPredicate($mapper, $condition));
 
         return $this;
     }
 
     /**
-     * @param callable|\Closure|BinaryFunction $binaryFunction
+     * @param callable|UnaryFunction|BinaryFunction $condition
      *
      * @return $this
      */
-    public function filterValueKey($binaryFunction)
+    public function filterKey($condition)
     {
-        $this->operationChain->append(new FilterValueKeyPredicate($binaryFunction));
+        $this->operationChain->append(new FilterKeyPredicate($condition));
+
+        return $this;
+    }
+
+    /**
+     * Just like filter but swaps the key and the value when passing them to the predicate
+     *
+     * @param callable|\Closure|BinaryFunction $bpredicate
+     *
+     * @return $this
+     */
+    public function filterValueKey($bpredicate)
+    {
+        $this->operationChain->append(new FilterValueKeyPredicate($bpredicate));
 
         return $this;
     }
@@ -338,6 +372,19 @@ class Psi
     public function unique($compareStrict = true)
     {
         $this->operationChain->append(new UniqueOperation($compareStrict));
+
+        return $this;
+    }
+
+    /**
+     * @param callable|UnaryFunction|BinaryFunction $mapper        Input mapper function
+     * @param bool                                  $compareStrict Whether to do strict comparison
+     *
+     * @return $this
+     */
+    public function uniqueBy($mapper, $compareStrict = true)
+    {
+        $this->operationChain->append(new UniqueByOperation($mapper, $compareStrict));
 
         return $this;
     }

@@ -3,7 +3,7 @@
  * Created by gerk on 20.11.17 17:34
  */
 
-namespace PeekAndPoke\Component\Psi\Psi\Str;
+namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ class ToStringTest extends TestCase
      */
     public function testSubject($input, $expected)
     {
-        $subject = new ToString();
+        $subject = new ToString('n/a');
 
         $this->assertSame($expected, $subject->__invoke($input));
     }
@@ -31,9 +31,10 @@ class ToStringTest extends TestCase
     public function provideTestSubject()
     {
         return [
-            [null, ''],
-            [new \stdClass(), ''],
-            [new \DateTime(), ''],
+            [null, 'n/a'],
+            [[], 'n/a'],
+            [new \stdClass(), 'n/a'],
+            [new \DateTime(), 'n/a'],
             [0, '0'],
             [1, '1'],
             ['', ''],

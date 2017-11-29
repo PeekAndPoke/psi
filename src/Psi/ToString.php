@@ -3,7 +3,7 @@
  * Created by gerk on 20.11.17 17:34
  */
 
-namespace PeekAndPoke\Component\Psi\Psi\Str;
+namespace PeekAndPoke\Component\Psi\Psi;
 
 use PeekAndPoke\Component\Psi\UnaryFunction;
 
@@ -14,11 +14,21 @@ use PeekAndPoke\Component\Psi\UnaryFunction;
  */
 class ToString implements UnaryFunction
 {
+    /** @var string */
+    private $default;
+
+    /**
+     * @param string $default
+     */
+    public function __construct($default = '')
+    {
+        $this->default = (string) $default;
+    }
 
     /**
      * @param mixed $input
      *
-     * @return mixed
+     * @return string
      */
     public function __invoke($input)
     {
@@ -30,6 +40,6 @@ class ToString implements UnaryFunction
             return (string) $input;
         }
 
-        return '';
+        return $this->default;
     }
 }
