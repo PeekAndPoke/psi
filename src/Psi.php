@@ -181,13 +181,13 @@ class Psi
     /**
      * Just like filter but swaps the key and the value when passing them to the predicate
      *
-     * @param callable|\Closure|BinaryFunction $bpredicate
+     * @param callable|\Closure|BinaryFunction $condition
      *
      * @return $this
      */
-    public function filterValueKey($bpredicate)
+    public function filterValueKey($condition)
     {
-        $this->operationChain->append(new FilterValueKeyPredicate($bpredicate));
+        $this->operationChain->append(new FilterValueKeyPredicate($condition));
 
         return $this;
     }
@@ -197,37 +197,37 @@ class Psi
      *
      * TODO: This needs a better name, e.g. until() and a better definition (should we really include the last one?)
      *
-     * @param callable|\Closure|UnaryFunction $unaryFunction
+     * @param callable|\Closure|UnaryFunction $condition
      *
      * @return $this
      */
-    public function anyMatch($unaryFunction)
+    public function anyMatch($condition)
     {
-        $this->operationChain->append(new AnyMatchPredicate($unaryFunction));
+        $this->operationChain->append(new AnyMatchPredicate($condition));
 
         return $this;
     }
 
     /**
-     * @param callable|\Closure|BinaryFunction $binaryFunction
+     * @param callable|\Closure|BinaryFunction $visitor
      *
      * @return $this
      */
-    public function each($binaryFunction)
+    public function each($visitor)
     {
-        $this->operationChain->append(new EachOperation($binaryFunction));
+        $this->operationChain->append(new EachOperation($visitor));
 
         return $this;
     }
 
     /**
-     * @param callable|\Closure|BinaryFunction $binaryFunction
+     * @param callable|\Closure|BinaryFunction $mapper
      *
      * @return $this
      */
-    public function map($binaryFunction)
+    public function map($mapper)
     {
-        $this->operationChain->append(new MapOperation($binaryFunction));
+        $this->operationChain->append(new MapOperation($mapper));
 
         return $this;
     }
@@ -251,13 +251,13 @@ class Psi
     /**
      * @deprecated method was renamed. Please use groupBy() instead
      *
-     * @param callable|\Closure|UnaryFunction $unaryFunction
+     * @param callable|\Closure|UnaryFunction $mapper
      *
      * @return $this
      */
-    public function group($unaryFunction)
+    public function group($mapper)
     {
-        return $this->groupBy($unaryFunction);
+        return $this->groupBy($mapper);
     }
 
     /**
@@ -275,13 +275,13 @@ class Psi
      *
      * </code>
      *
-     * @param callable|\Closure|UnaryFunction $unaryFunction
+     * @param callable|\Closure|UnaryFunction $mapper
      *
      * @return $this
      */
-    public function groupBy($unaryFunction)
+    public function groupBy($mapper)
     {
-        $this->operationChain->append(new GroupByOperation($unaryFunction));
+        $this->operationChain->append(new GroupByOperation($mapper));
 
         return $this;
     }
