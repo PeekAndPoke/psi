@@ -20,7 +20,9 @@ class IsStartingWith extends AbstractStringMatch
      */
     public function match($needle, $haystack)
     {
+        $len = strlen($needle);
+
         /** @noinspection SubStrUsedAsStrPosInspection */
-        return substr($haystack, 0, strlen($needle)) === $needle;
+        return $len === 0 || substr($haystack, 0, $len) === $needle;
     }
 }
