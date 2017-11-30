@@ -47,32 +47,26 @@ class WithoutAccents implements UnaryFunction
      */
     public static function getUtf8Map()
     {
-        if (self::$utf8Map === null) {
-            self::setupUtf8Map();
-        }
+        self::setupUtf8Map();
 
         return self::$utf8Map;
     }
 
     private function seemsUtf8($string)
     {
-        return mb_detect_encoding($string, 'UTF-8', true);
+        return mb_detect_encoding($string, 'UTF-8', true) === 'UTF-8';
     }
 
     private function removeAccentsUtf8($input)
     {
-        if (self::$utf8Map === null) {
-            self::setupUtf8Map();
-        }
+        self::setupUtf8Map();
 
         return strtr($input, self::$utf8Map);
     }
 
     private function removeAccentsIso($string)
     {
-        if (self::$isoIn === null) {
-            self::setupIsoMap();
-        }
+        self::setupIsoMap();
 
         $string    = strtr($string, self::$isoIn, self::$isoOut);
         $doubleIn  = [chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254)];
@@ -81,8 +75,15 @@ class WithoutAccents implements UnaryFunction
         return str_replace($doubleIn, $doubleOut, $string);
     }
 
-    private static function setupIsoMap()
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function setupIsoMap()
     {
+        if (self::$isoIn !== null) {
+            return;
+        }
+
         self::$isoIn =
             chr(128) . chr(131) . chr(138) . chr(142) . chr(154) . chr(158)
             . chr(159) . chr(162) . chr(165) . chr(181) . chr(192) . chr(193) . chr(194)
@@ -98,8 +99,15 @@ class WithoutAccents implements UnaryFunction
         self::$isoOut = 'EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy';
     }
 
-    private static function setupUtf8Map()
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function setupUtf8Map()
     {
+        if (self::$utf8Map !== null) {
+            return;
+        }
+
         self::$utf8Map = [
             // Decompositions for Latin-1 Supplement
             chr(194) . chr(170)            => 'a',

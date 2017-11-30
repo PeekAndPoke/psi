@@ -7,6 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PeekAndPoke\Types\GenericHolder;
 use PHPUnit\Framework\TestCase;
 
@@ -87,6 +88,8 @@ class IsMatchingRegexIsNotMatchingRegexTest extends TestCase
             ['/^abc/i', ' ABC ', false],
             ['/^[0-9A-Z]+$/i', ' ABCabc123', false],
             ['/^[0-9A-Z]+$/i', 'ABC-abc123', false],
+
+            ['/^[0-9A-Z]+$/i', new UnitTestToString('ABC-abc123'), false],
         ];
     }
 }

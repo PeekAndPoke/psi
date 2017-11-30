@@ -5,6 +5,7 @@
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
+use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,6 +15,15 @@ use PHPUnit\Framework\TestCase;
  */
 class WithoutAccentsTest extends TestCase
 {
+    public function testWarmUp()
+    {
+        // this is just for the code coverage
+        WithoutAccents::setupUtf8Map();
+        WithoutAccents::setupIsoMap();
+
+        $this->assertNotEmpty(WithoutAccents::getUtf8Map());
+    }
+
     /**
      * @param $input
      * @param $expected
@@ -40,12 +50,18 @@ class WithoutAccentsTest extends TestCase
             ['Arm /-*(){}[]\\|', 'Arm /-*(){}[]\\|'],
             [' Arm /-*(){}[]\\| ', ' Arm /-*(){}[]\\| '],
 
-            // some manual cases
+            // some manual cases UTF-8
             ['Dragoş', 'Dragos'],
             ['Ärmel', 'Aermel'],
             ['Blüte', 'Bluete'],
             ['Straße', 'Strasse'],
             ['passé', 'passe'],
+
+            // at least one case in ISO
+            [chr(hexdec('c4')), 'A'],
+
+            // negative cases
+            [new UnitTestToString('passé'), null],
         ];
 
         // try all UTF-8 accents
