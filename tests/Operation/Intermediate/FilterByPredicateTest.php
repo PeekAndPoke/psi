@@ -6,7 +6,7 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate;
 
 use PeekAndPoke\Component\Psi\Psi;
-use PeekAndPoke\Component\Psi\Psi\Str\StartingWith;
+use PeekAndPoke\Component\Psi\Psi\Str\IsStartingWith;
 use PeekAndPoke\Component\Psi\Stubs\UnitTestPsiObject;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +29,7 @@ class FilterByPredicateTest extends TestCase
         $result = Psi::it($input)
             ->filterBy(
                 function (UnitTestPsiObject $o) { return $o->getName(); },
-                new StartingWith('K')
+                new IsStartingWith('K')
             )
             ->toArray();
 

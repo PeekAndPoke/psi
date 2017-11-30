@@ -31,7 +31,7 @@ Find out more and the full documentation at [http://psi.readthedocs.org](http://
 
 ## new in v0.6.3
 
-(x) Psi::filterBy()
+### Psi::filterBy()
 
 In order to by able to use all other matchers on nested property / values of input objects, the 
 method Psi::filterBy() was added
@@ -45,7 +45,7 @@ $result = Psi::it($persons)
   ->toArray()
 ``` 
 
-(x) uniqueBy 
+### uniqueBy 
 
 Finds unique elements by first passing them through a mapper.
 
@@ -57,7 +57,7 @@ $result = Psi::it($persons)
   ->toArray();
 ```
 
-(x) ToFloat
+### ToFloat
 
 Maps inputs to floats.
 
@@ -67,7 +67,7 @@ $result = Psi::it($values)
   ->toArray();
 ```
 
-(x) ToInteger
+### ToInteger
 
 Maps inputs to integers.
 
@@ -77,7 +77,7 @@ $result = Psi::it($values)
   ->toArray();
 ```
 
-(x) ToString
+### ToString
 
 Maps inputs to strings.
 
@@ -87,33 +87,84 @@ $result = Psi::it($values)
   ->toArray();
 ```
 
-(x) Str::StartingWith and Str::NotStartingWith - with or with case
+### Str::IsStartingWith and Str::IsNotStartingWith - with or with case
 
-Filters all string starting with the given needle. By default case-sensitive. 
+Filters all strings starting with the given needle. By default case-sensitive. 
 Pass false as the second parameter to be non-case-sensitive.
 
 ```php
 $result = Psi::it($values)
-  ->filter(new Psi\Str\StartingWith('a', false))
+  ->filter(new Psi\Str\IsStartingWith('a'))
   ->toArray();
 
 $result = Psi::it($values)
-  ->filter(new Psi\Str\NotStartingWith('a', false))
+  ->filter(new Psi\Str\IsNotStartingWith('a', false))
   ->toArray();
 ```
 
-(x) Str::EndingWith and Str::NotEndingWith - with or without case
+### Str::IsEndingWith and Str::IsNotEndingWith - with or without case
 
-Filters all string ending with the given needle. By default case-sensitive. 
+Filters all strings ending with the given needle. By default case-sensitive. 
 Pass false as the second parameter to be non-case-sensitive.
 
 ```php
 $result = Psi::it($values)
-  ->filter(new Psi\Str\EndingWith('a', false))
+  ->filter(new Psi\Str\IsEndingWith('a'))
   ->toArray();
 
 $result = Psi::it($values)
-  ->filter(new Psi\Str\NotEndingWith('a', false))
+  ->filter(new Psi\Str\IsNotEndingWith('a', false))
+  ->toArray();
+```
+
+### Str::IsContaining and Str::IsNotContaining - with or without case
+
+Filters all strings containing the given needle. By default case-sensitive. 
+Pass false as the second parameter to be non-case-sensitive.
+
+```php
+$result = Psi::it($values)
+  ->filter(new Psi\Str\IsContaining('a'))
+  ->toArray();
+
+$result = Psi::it($values)
+  ->filter(new Psi\Str\IsNotContaining('a', false))
+  ->toArray();
+```
+
+### Str::IsMatchingRegex and Str::IsNotMatchingRegex
+
+Filters all strings containing the given needle. By default case-sensitive. 
+Pass false as the second parameter to be non-case-sensitive.
+
+```php
+$result = Psi::it($values)
+  ->filter(new Psi\Str\IsMatchingRegex('/[0-9]{2,}'))
+  ->toArray();
+
+$result = Psi::it($values)
+  ->filter(new Psi\Str\IsNotMatchingRegex('/ABC/i'))
+  ->toArray();
+```
+
+
+### Str::WithoutAccents
+
+Modifies a string by replacing special characters with the "normal" form, e.g.
+
+```
+Dragoş  ->  Dragos
+
+Ärmel   ->  Aermel
+Blüte   ->  Bluete
+Straße  ->  Strasse
+
+passé   ->  passe
+```
+
+```php
+$result = Psi::it($values)
+  ->map(new Psi\Str\WithoutAccents())
   ->toArray();
 ```
 
@@ -158,20 +209,7 @@ String-Mappers
 - Str::StrRegexReplace
 - Str::StrMbRegexReplace
 
-- Str::removeAccents
-
-        $translations = [
-            'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y'
-        ];
-
-        return strtr($subject, $translations);
-
 Matchers
-- ContainsString
 - Regex
 
 Number matchers

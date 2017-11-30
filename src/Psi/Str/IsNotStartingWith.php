@@ -6,9 +6,11 @@
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
 /**
+ *
+ *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotEndingWith extends EndingWith
+class IsNotStartingWith extends IsStartingWith
 {
     public function __invoke($input)
     {

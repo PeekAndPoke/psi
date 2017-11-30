@@ -78,6 +78,19 @@ class Psi
         $this->options        = new PsiOptions();
     }
 
+    /**
+     * @param mixed $_ Everything that can be iterated, Provide as many params as you want (from 1 to n)
+     *
+     * @return Psi a copy of the Psi with different input values
+     */
+    public function withInputs($_ = null)
+    {
+        $clone = clone $this;
+        $clone->inputs = func_get_args();
+
+        return $clone;
+    }
+
     ////  CONFIGURATION METHODS  ///////////////////////////////////////////////////////////////////////////////////////
 
     /**

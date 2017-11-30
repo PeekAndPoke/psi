@@ -10,7 +10,7 @@ namespace PeekAndPoke\Component\Psi\Psi\Str;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class StartingWith extends AbstractStringMatch
+class IsStartingWith extends AbstractStringMatch
 {
     /**
      * @param string $needle

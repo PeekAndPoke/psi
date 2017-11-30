@@ -1,16 +1,14 @@
 <?php
 /**
- * Created by gerk on 29.11.17 07:01
+ * Created by gerk on 30.11.17 05:44
  */
 
 namespace PeekAndPoke\Component\Psi\Psi\Str;
 
 /**
- *
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class NotStartingWith extends StartingWith
+class IsNotContaining extends IsContaining
 {
     public function __invoke($input)
     {

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class EndingWithNotEndingWithTest extends TestCase
+class IsStartingWithIsNotStartingWithTest extends TestCase
 {
     /**
      * @param $search
@@ -24,9 +24,9 @@ class EndingWithNotEndingWithTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testEnding($search, $caseSensitive, $input, $expected)
+    public function testStarting($search, $caseSensitive, $input, $expected)
     {
-        $subject = new EndingWith($search, $caseSensitive);
+        $subject = new IsStartingWith($search, $caseSensitive);
 
         $this->assertSame($expected, $subject($input));
     }
@@ -39,9 +39,9 @@ class EndingWithNotEndingWithTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testEndingWithValueHolder($search, $caseSensitive, $input, $expected)
+    public function testStartingWithValueHolder($search, $caseSensitive, $input, $expected)
     {
-        $subject = new EndingWith(new GenericHolder($search), new GenericHolder($caseSensitive));
+        $subject = new IsStartingWith(new GenericHolder($search), new GenericHolder($caseSensitive));
 
         $this->assertSame($expected, $subject($input));
     }
@@ -54,9 +54,9 @@ class EndingWithNotEndingWithTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testNotEnding($search, $caseSensitive, $input, $expected)
+    public function testNotStarting($search, $caseSensitive, $input, $expected)
     {
-        $subject = new NotEndingWith($search, $caseSensitive);
+        $subject = new IsNotStartingWith($search, $caseSensitive);
 
         $this->assertSame(! $expected, $subject($input));
     }
@@ -69,9 +69,9 @@ class EndingWithNotEndingWithTest extends TestCase
      *
      * @dataProvider provide
      */
-    public function testNotEndingWithValueHolder($search, $caseSensitive, $input, $expected)
+    public function testNotStartingWithValueHolder($search, $caseSensitive, $input, $expected)
     {
-        $subject = new NotEndingWith(new GenericHolder($search), new GenericHolder($caseSensitive));
+        $subject = new IsNotStartingWith(new GenericHolder($search), new GenericHolder($caseSensitive));
 
         $this->assertSame(! $expected, $subject($input));
     }
@@ -81,25 +81,23 @@ class EndingWithNotEndingWithTest extends TestCase
         return [
             // positive cases
             ['abc', true, 'abc', true],
-            ['abc', true, ' abc', true],
-            ['abc', true, 'a abc', true],
+            ['abc', true, 'abc ', true],
+            ['abc', true, 'abc a', true],
 
-            // positive cases - not case sensitive
-            ['ABC', false, 'a abc', true],
-            ['abc', false, 'a ABC', true],
+            // positive cases - not case insensitive
+            ['ABC', false, 'abc ', true],
+            ['abc', false, 'ABC ', true],
 
             // positive cases - empty needle is allowed
             ['', true, '', true],
 
             // negative cases
-            ['abc', true, 'abc ', false],
-            ['ABC', true, 'abc', false],
-            ['ABC', true, 'abc ', false],
+            ['ABC', true, ' abc', false],
             ['a', true, '', false],
             ['a', true, null, false],
             ['a', true, new \stdClass(), false],
 
-            // negitive cases - input values must be string
+            // negative cases - input values must be string
             [null, true, '', false],
             [new \stdClass(), true, '', false],
             [new UnitTestToString('abc'), true, 'abc', false],

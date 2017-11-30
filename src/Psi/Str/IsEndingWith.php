@@ -10,7 +10,7 @@ namespace PeekAndPoke\Component\Psi\Psi\Str;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class EndingWith extends AbstractStringMatch
+class IsEndingWith extends AbstractStringMatch
 {
     /**
      * @param string $needle
@@ -20,6 +20,8 @@ class EndingWith extends AbstractStringMatch
      */
     public function match($needle, $haystack)
     {
-        return substr($haystack, -strlen($needle)) === $needle;
+        $len = strlen($needle);
+
+        return $len === 0 || substr($haystack, -$len) === $needle;
     }
 }
