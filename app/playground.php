@@ -17,7 +17,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 $input1  = [1,2,3,4,3,4];
 $result = Psi::it($input1)
-    ->filterValueKey(function ($v, $k) { return $k > 2 || $v === 1; })
+    ->filter(function ($v, $k) { return $k > 2 || $v === 1; })
     ->map(function ($v, $k) { return $v * $k; })
     ->rsort()
 //    ->unique()

@@ -8,6 +8,7 @@
 namespace PeekAndPoke\Component\Psi;
 
 use PeekAndPoke\Component\Psi\Exception\PsiException;
+use PeekAndPoke\Component\Psi\Operation\FullSet\ChunkOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\FlattenOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\GroupByOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\KeyReverseSortOperation;
@@ -22,12 +23,13 @@ use PeekAndPoke\Component\Psi\Operation\FullSet\UserKeySortOperation;
 use PeekAndPoke\Component\Psi\Operation\FullSet\UserSortOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\EmptyIntermediateOp;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\EachOperation;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\LimitOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\SkipOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterByPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterPredicate;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterValueKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
@@ -35,6 +37,7 @@ use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToKeyValueArrayOperation
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToMapOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CountOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\GetFirstOperation;
+use PeekAndPoke\Component\Psi\Operation\Terminal\GetRandomOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\JoinOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MaxOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\MedianOperation;
@@ -85,7 +88,7 @@ class Psi
      */
     public function withInputs($_ = null)
     {
-        $clone = clone $this;
+        $clone         = clone $this;
         $clone->inputs = func_get_args();
 
         return $clone;
@@ -138,6 +141,30 @@ class Psi
     ////  INTERMEDIATE OPERATIONS - working on one item at a time  /////////////////////////////////////////////////////
 
     /**
+     * @param int $limit
+     *
+     * @return $this
+     */
+    public function limit($limit)
+    {
+        $this->operationChain->append(new LimitOperation($limit));
+
+        return $this;
+    }
+
+    /**
+     * @param int $skip
+     *
+     * @return $this
+     */
+    public function skip($skip)
+    {
+        $this->operationChain->append(new SkipOperation($skip));
+
+        return $this;
+    }
+
+    /**
      * Filters the input stream by passing each element to the condition
      *
      * @param callable|UnaryFunction|BinaryFunction $condition
@@ -180,6 +207,8 @@ class Psi
     }
 
     /**
+     * Just like filter but swaps the key and the value when passing them to the predicate
+     *
      * @param callable|UnaryFunction|BinaryFunction $condition
      *
      * @return $this
@@ -187,20 +216,6 @@ class Psi
     public function filterKey($condition)
     {
         $this->operationChain->append(new FilterKeyPredicate($condition));
-
-        return $this;
-    }
-
-    /**
-     * Just like filter but swaps the key and the value when passing them to the predicate
-     *
-     * @param callable|\Closure|BinaryFunction $condition
-     *
-     * @return $this
-     */
-    public function filterValueKey($condition)
-    {
-        $this->operationChain->append(new FilterValueKeyPredicate($condition));
 
         return $this;
     }
@@ -248,6 +263,18 @@ class Psi
     ////  FULL SET OPERATIONS - working on all items at a time  ////////////////////////////////////////////////////////
 
     /**
+     * @param int $chunkSize
+     *
+     * @return $this|Psi
+     */
+    public function chunk($chunkSize)
+    {
+        $this->operationChain->append(new ChunkOperation($chunkSize));
+
+        return $this;
+    }
+
+    /**
      * Flattens the input recursively into a no longer nested iterator.
      *
      * Example: [1, [2, [3, 4], 5], 6] will become [1, 2, 3, 4, 5, 6]
@@ -288,7 +315,7 @@ class Psi
      *
      * </code>
      *
-     * @param callable|\Closure|UnaryFunction $mapper
+     * @param callable|\Closure|UnaryFunction|BinaryFunction $mapper
      *
      * @return $this
      */
@@ -491,6 +518,28 @@ class Psi
     public function getFirst($default = null)
     {
         return $this->solveOperationsAndApplyTerminal(new GetFirstOperation($default));
+    }
+
+    /**
+     * @param null $default
+     *
+     * @return mixed
+     */
+    public function getLast($default = null)
+    {
+        return $this->reverse()->getFirst($default);
+    }
+
+    /**
+     * Get a random element
+     *
+     * @param null $default
+     *
+     * @return mixed
+     */
+    public function getRandom($default = null)
+    {
+        return $this->solveOperationsAndApplyTerminal(new GetRandomOperation($default));
     }
 
     /**

@@ -29,6 +29,130 @@ sorts them by age descending.
 
 Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
 
+## new in v0.6.4
+
+### Psi::chunk
+
+Will split the stream into chunks of the given size.
+
+```php
+Psi::it(range(0, 10))
+  ->chunk(3)
+  ->toArray();
+```
+
+will result in
+
+``` 
+[
+  [0, 1, 2], 
+  [3, 4, 5], 
+  [6, 7, 8], 
+  [9, 10]
+]
+```
+
+### Psi::skip
+
+Skips the first n elements in the current stream
+
+```php
+Psi::it(range(0, 20))
+  ->filter(new IsMultipleOf(2))
+  ->skip(5)
+  ->toArray();
+```
+
+will result in 
+
+``` 
+[10, 12, 14, 16, 18, 20]
+```
+
+### Psi::limit
+
+Limits the result to the first n element in the current stream
+
+```php
+Psi::it(range(0, 20))
+  ->filter(new IsMultipleOf(2))
+  ->limit(5)
+  ->toArray();
+```
+
+will result in 
+
+``` 
+[0, 2, 4, 6, 8]
+```
+
+
+### Psi::getLast
+
+Get the last element of the stream.
+
+```php
+Psi::it([1, 2, 3])
+  ->filter(function ($i) { return $i < 3; })
+  ->getLast()
+```
+
+will result in
+
+```php
+2
+```
+
+### Psi::getRandom
+
+Will select a random element from the stream.
+
+```php
+Psi::it([1, 2, 3])
+  ->filter(function ($i) { return $i < 3; })
+  ->getRandom()
+```
+
+will result in
+
+```
+1 or 2
+```
+
+### Num::IsMultipleOf and Num::IsNotMultipleOf
+
+Filters all numbers that are a multiple of the given factor
+
+```php
+Psi::it([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  ->filter(new Psi\Num\IsMultipleOf(3))
+  ->toArray();
+```
+
+will result in
+
+```
+[0, 3, 6, 9] 
+```
+
+### Num::IsPrime and Num::IsNotPrime
+
+Filters all number that are prime number.
+
+CAUTION: do not use this impl for big numbers, a it can be very slow.
+
+```php
+Psi::it(range(0, 30))
+    ->filter(new Psi\Num\IsPrime())
+    ->toArray();
+```
+
+will result in
+
+``` 
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+```
+
 ## new in v0.6.3
 
 ### Psi::filterBy()
@@ -45,7 +169,7 @@ $result = Psi::it($persons)
   ->toArray()
 ``` 
 
-### uniqueBy 
+### Psi::uniqueBy 
 
 Finds unique elements by first passing them through a mapper.
 
@@ -180,10 +304,35 @@ The internal folder structure was changed:
 
 ## new in v0.5.0
 
-(x) groupBy [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ] would become ['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
+### Psi::groupBy 
 
-(x) sortBy (function ($i) { return $i->getY(); }
-  (x) ASC / DESC -> use reverse 
+```php
+Psi::it(
+  [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2], ['name' => 'b', 'val' => 1] ]
+)
+->groupBy(
+  function ($o) { return $o['name']; }
+)
+->toArray() 
+```
+would become 
+
+```php
+['a' => [ ['name' => 'a', 'val' => 1], ['name' => 'a', 'val' => 2] ], 'b' => ... ]  
+```
+
+### Psi::sortBy 
+
+Sort a list of objects by one of their properties, e.g. sorting persons by their age
+
+```
+$result = Psi::it($values)
+  ->filterBy(
+    function (Person $p) { return $p->getAge(); }
+  )
+  ->toArray()
+
+```
 
 
 ## Todos
@@ -192,11 +341,16 @@ The internal folder structure was changed:
 
 - things like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
 
+### conditional continuation
+
+- takeWhile() ... like filter and continue as long as the elements fit the filter
+- takeUntil() ... opposite of takeWhile() ... take until the first element fits the filter
+- skip
+- limit
+
 ### FullSet manipulations
 
 -> have a look a lodash.js what do they do and how do they call the methods
-
-( ) Chunk [1,2,3,4] -> [[1,2], [3,4]]
 
 ### Unary filter functions for strings
 
@@ -208,18 +362,6 @@ String-Mappers
 - Str::StrMbReplace
 - Str::StrRegexReplace
 - Str::StrMbRegexReplace
-
-Matchers
-- Regex
-
-Number matchers
-- IsMultipleOf    ... isMultipleOf(3) will give true for 0, 3, 6, ...
-
-### Terminal
-
-(X) getFirst
-- getLast
-- getRandom
 
 ## How to doc
 

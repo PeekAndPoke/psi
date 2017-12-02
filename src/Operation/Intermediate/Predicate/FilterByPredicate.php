@@ -8,6 +8,7 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate;
 
 use PeekAndPoke\Component\Psi\BinaryFunction;
+use PeekAndPoke\Component\Psi\Solver\IntermediateContext;
 use PeekAndPoke\Component\Psi\UnaryFunction;
 
 /**
@@ -33,12 +34,12 @@ class FilterByPredicate extends AbstractPredicateOperation
     /**
      * {@inheritdoc}
      */
-    public function apply($input, $index, &$useItem, &$canContinue)
+    public function apply($input, $index, IntermediateContext $context)
     {
         $mapper = $this->mapper;
 
-        $useItem     = $this->test($mapper($input), $index);
-        $canContinue = true;
+        $context->outUseItem     = $this->test($mapper($input), $index);
+        $context->outCanContinue = true;
 
         return $input;
     }

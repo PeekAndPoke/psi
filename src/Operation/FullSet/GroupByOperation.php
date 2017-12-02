@@ -8,14 +8,12 @@
 namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
 use PeekAndPoke\Component\Psi\FullSetOperation;
-use PeekAndPoke\Component\Psi\Operation\AbstractUnaryFunctionOperation;
+use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
 
 /**
- * GroupOperation
- *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class GroupByOperation extends AbstractUnaryFunctionOperation implements FullSetOperation
+class GroupByOperation extends AbstractBinaryFunctionOperation implements FullSetOperation
 {
     /**
      * {@inheritdoc}
@@ -25,8 +23,8 @@ class GroupByOperation extends AbstractUnaryFunctionOperation implements FullSet
         $ret  = [];
         $func = $this->function;
 
-        foreach ($set as $item) {
-            $group = $func($item);
+        foreach ($set as $key => $item) {
+            $group = $func($item, $key);
 
             $ret[$group][] = $item;
         }

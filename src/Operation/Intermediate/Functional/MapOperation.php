@@ -9,6 +9,7 @@ namespace PeekAndPoke\Component\Psi\Operation\Intermediate\Functional;
 
 use PeekAndPoke\Component\Psi\IntermediateOperation;
 use PeekAndPoke\Component\Psi\Operation\AbstractBinaryFunctionOperation;
+use PeekAndPoke\Component\Psi\Solver\IntermediateContext;
 
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
@@ -18,10 +19,10 @@ class MapOperation extends AbstractBinaryFunctionOperation implements Intermedia
     /**
      * {@inheritdoc}
      */
-    public function apply($input, $index, &$useItem, &$canContinue)
+    public function apply($input, $index, IntermediateContext $context)
     {
-        $useItem     = true;
-        $canContinue = true;
+        $context->outUseItem     = true;
+        $context->outCanContinue = true;
 
         $func = $this->function;
 

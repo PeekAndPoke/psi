@@ -89,6 +89,23 @@ class PsiHighLevelObjectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testGetYoungestPersonsNameReversed()
+    {
+        $input = [
+            new UnitTestPsiObject('Karl', 50),
+            new UnitTestPsiObject($expected = 'Edgar', 10),
+            new UnitTestPsiObject('Heidi', 52),
+        ];
+
+        $result = Psi::it($input)
+            ->usort(function (UnitTestPsiObject $a, UnitTestPsiObject $b) { return $a->getAge() > $b->getAge(); })
+            ->map(function (UnitTestPsiObject $a) { return $a->getName(); })
+            ->reverse()
+            ->getLast();
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testGetOldestPerson()
     {
         $input = [
@@ -225,7 +242,7 @@ class PsiHighLevelObjectTest extends TestCase
         $expected = [$karl, $heidi];
 
         $result = Psi::it($input)
-            ->filterValueKey(function (UnitTestPsiObject $v, $k) { return $v->getName() === 'Karl' || $k > 1; })
+            ->filter(function (UnitTestPsiObject $v, $k) { return $v->getName() === 'Karl' || $k > 1; })
             ->toArray();
 
         $this->assertSame($expected, $result);

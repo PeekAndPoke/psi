@@ -8,6 +8,7 @@
 namespace PeekAndPoke\Component\Psi\Operation\Intermediate;
 
 use PeekAndPoke\Component\Psi\IntermediateOperation;
+use PeekAndPoke\Component\Psi\Solver\IntermediateContext;
 
 /**
  * EmptyIntermediateOp
@@ -19,10 +20,10 @@ class EmptyIntermediateOp implements IntermediateOperation
     /**
      * {@inheritdoc}
      */
-    public function apply($input, $index, &$useItem, &$canContinue)
+    public function apply($input, $index, IntermediateContext $context)
     {
-        $useItem     = true;
-        $canContinue = true;
+        $context->outUseItem     = true;
+        $context->outCanContinue = true;
 
         // return the input unmodified
         return $input;

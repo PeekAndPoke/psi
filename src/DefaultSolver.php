@@ -12,7 +12,7 @@ namespace PeekAndPoke\Component\Psi;
  *
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class DefaultOperationChainSolver implements OperationChainSolver
+class DefaultSolver implements Solver
 {
     /**
      * {@inheritdoc}
@@ -63,30 +63,31 @@ class DefaultOperationChainSolver implements OperationChainSolver
 
         $input->rewind();
 
+        $context              = new Solver\IntermediateContext();
         $continueWithNextItem = true;
 
         while ($continueWithNextItem && $input->valid()) {
 
-            $result    = $input->current();
-            $useResult = true;
+            $result              = $input->current();
+            $context->outUseItem = true;
 
             // do the whole intermediate operation chain for the current input
             $operatorChain->rewind();
 
-            while ($useResult && $operatorChain->valid()) {
+            while ($context->outUseItem && $operatorChain->valid()) {
 
                 /** @var IntermediateOperation $current */
                 $current = $operatorChain->current();
                 // apply intermediate operations
-                $result = $current->apply($result, $input->key(), $useResult, $returnedCanContinue);
+                $result = $current->apply($result, $input->key(), $context);
                 // track the continuation flags
-                $continueWithNextItem = $continueWithNextItem && $returnedCanContinue;
+                $continueWithNextItem = $continueWithNextItem && $context->outCanContinue;
 
                 // iterate
                 $operatorChain->next();
             }
 
-            if ($useResult) {
+            if ($context->outUseItem) {
                 $results->offsetSet($input->key(), $result);
             }
 

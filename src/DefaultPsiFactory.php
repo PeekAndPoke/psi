@@ -22,7 +22,7 @@ class DefaultPsiFactory implements PsiFactory
      */
     public function createSolver()
     {
-        return new DefaultOperationChainSolver();
+        return new DefaultSolver();
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace PeekAndPoke\Component\Psi;
 
+use PeekAndPoke\Component\Psi\Psi\Num\IsMultipleOf;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -86,6 +87,18 @@ class PsiHighLevelArrayTest extends TestCase
 
     ////  TEST FULL SET OPERATIONS  ////////////////////////////////////////////////////////////////////////////////////
 
+    public function testChunkOperation()
+    {
+        $result = Psi::it(range(0, 10))
+            ->chunk(3)
+            ->toArray();
+
+        $this->assertSame(
+            [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10]],
+            $result
+        );
+    }
+
     public function testFlattenOperation()
     {
         $input    = [
@@ -157,6 +170,101 @@ class PsiHighLevelArrayTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testLimitOperation()
+    {
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->limit(0)
+            ->toArray();
+
+        $this->assertSame(
+            [],
+            $result
+        );
+
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->limit(5)
+            ->toArray();
+
+        $this->assertSame(
+            [0, 2, 4, 6, 8],
+            $result
+        );
+
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->limit(5)
+            ->limit(2)
+            ->toArray();
+
+        $this->assertSame(
+            [0, 2],
+            $result
+        );
+    }
+
+    public function testSkipOperation()
+    {
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->skip(0)
+            ->toArray();
+
+        $this->assertSame(
+            [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+            $result
+        );
+
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->skip(5)
+            ->toArray();
+
+        $this->assertSame(
+            [10, 12, 14, 16, 18, 20],
+            $result
+        );
+
+        $result = Psi::it(range(0, 30))
+            ->filter(new IsMultipleOf(2))
+            ->skip(5) // skips 0, 2, 4, 6, 8
+            ->filter(new IsMultipleOf(4))
+            ->skip(2) // skips 12, 16
+            ->toArray();
+
+        $this->assertSame(
+            [20, 24, 28],
+            $result
+        );
+    }
+
+    public function testSkipLimitCombination()
+    {
+        $result = Psi::it(range(0, 20))
+            ->filter(new IsMultipleOf(2))
+            ->skip(5)
+            ->limit(3)
+            ->toArray();
+
+        $this->assertSame(
+            [10, 12, 14],
+            $result
+        );
+
+        $result = Psi::it(range(0, 30))
+            ->filter(new IsMultipleOf(2))
+            ->skip(5) // skips 0, 2, 4, 6, 8
+            ->filter(new IsMultipleOf(4))
+            ->limit(3) // limits to 12, 16, 20
+            ->toArray();
+
+        $this->assertSame(
+            [12, 16, 20],
+            $result
+        );
+    }
+
     ////  TEST SCENARIOS  //////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -214,7 +322,7 @@ class PsiHighLevelArrayTest extends TestCase
         $expected = [40, 70];
 
         $result = Psi::it($input)
-            ->filterValueKey(function ($v, $k) { return $k % 3 === 0 && $v > 30; })
+            ->filter(function ($v, $k) { return $k % 3 === 0 && $v > 30; })
             ->toArray();
 
         $this->assertSame($expected, $result);

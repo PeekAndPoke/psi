@@ -10,7 +10,7 @@ namespace PeekAndPoke\Component\Psi;
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-interface OperationChainSolver
+interface Solver
 {
     /**
      * @param \Iterator $operations

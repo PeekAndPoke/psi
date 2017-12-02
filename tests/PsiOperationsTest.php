@@ -107,7 +107,7 @@ class PsiOperationsTest extends TestCase
         $expected = [];
 
         $result = Psi::it($input)
-            ->filterValueKey(function ($v, $k) { return $v > 2 && $k > 2; })
+            ->filter(function ($v, $k) { return $v > 2 && $k > 2; })
             ->toArray();
 
         $this->assertSame($expected, $result);
@@ -119,7 +119,7 @@ class PsiOperationsTest extends TestCase
         $expected = [3, 4];
 
         $result = Psi::it($input)
-            ->filterValueKey(function ($v, $k) { return $v === 4 || $k === 2; })
+            ->filter(function ($v, $k) { return $v === 4 || $k === 2; })
             ->toArray();
 
         $this->assertSame($expected, $result);
@@ -131,7 +131,7 @@ class PsiOperationsTest extends TestCase
         $expected = [2, 3];
 
         $result = Psi::it($input)
-            ->filterValueKey(function ($v, $k) { return $k === 'c' || $v === 2; })
+            ->filter(function ($v, $k) { return $k === 'c' || $v === 2; })
             ->toArray();
 
         $this->assertSame($expected, $result);

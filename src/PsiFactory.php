@@ -15,7 +15,7 @@ use PeekAndPoke\Component\Psi\Exception\PsiException;
 interface PsiFactory
 {
     /**
-     * @return OperationChainSolver
+     * @return Solver
      */
     public function createSolver();
 

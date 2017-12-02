@@ -7,18 +7,19 @@
 
 namespace PeekAndPoke\Component\Psi;
 
+use PeekAndPoke\Component\Psi\Solver\IntermediateContext;
+
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
 interface IntermediateOperation
 {
     /**
-     * @param mixed $input
-     * @param mixed $index       [IN]  The index in the input iterator
-     * @param bool  $useItem     [OUT] set to true when the current item can be used for the total result
-     * @param bool  $canContinue [OUT] set to true when processing can continue with next item
+     * @param mixed               $input   The element in the stream
+     * @param mixed               $index   The index in the input iterator
+     * @param IntermediateContext $context The solving context
      *
      * @return mixed
      */
-    public function apply($input, $index, &$useItem, &$canContinue);
+    public function apply($input, $index, IntermediateContext $context);
 }
