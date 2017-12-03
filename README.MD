@@ -87,6 +87,39 @@ will result in
 ```
 
 
+### Psi::takeWhile
+
+Take all elements of the input stream while the condition is met
+
+```php
+Psi::it(range(0, 20))
+  ->takeWhile(new Psi\IsLessThan(5))
+  ->toArray();
+```
+
+will result in
+
+``` 
+[0, 1, 2, 3, 4]
+```
+
+
+### Psi::takeUntil
+
+Take all elements of the input stream until the condition is met
+
+```php
+Psi::it(range(0, 20))
+  ->takeUntil(new Psi\IsGreaterThan(5))
+  ->toArray();
+``` 
+
+will result in
+
+``` 
+[0, 1, 2, 3, 4, 5]
+```
+
 ### Psi::getLast
 
 Get the last element of the stream.
@@ -335,18 +368,11 @@ $result = Psi::it($values)
 ```
 
 
-## Todos
+## Todos and ideas
 
 ### HHVM
 
 - things like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
-
-### conditional continuation
-
-- takeWhile() ... like filter and continue as long as the elements fit the filter
-- takeUntil() ... opposite of takeWhile() ... take until the first element fits the filter
-- skip
-- limit
 
 ### FullSet manipulations
 

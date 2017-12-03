@@ -137,56 +137,6 @@ class PsiOperationsTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    ////  anyMatch()  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public function testAnyMatchWithEmptyInput()
-    {
-        $input    = [];
-        $expected = [];
-
-        $result = Psi::it($input)
-            ->anyMatch(function ($v) { return $v > 2; })
-            ->toArray();
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testAnyMatchFitFirst()
-    {
-        $input    = [1, 2, 3];
-        $expected = [1];
-
-        $result = Psi::it($input)
-            ->anyMatch(function () { return true; })
-            ->toArray();
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testAnyMatchFitLast()
-    {
-        $input    = [1, 2, 3];
-        $expected = [1, 2, 3];
-
-        $result = Psi::it($input)
-            ->anyMatch(function ($v) { return $v === 3; })
-            ->toArray();
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testAnyMatchFitNone()
-    {
-        $input    = [1, 2, 3];
-        $expected = [1, 2, 3];
-
-        $result = Psi::it($input)
-            ->anyMatch(function () { return false; })
-            ->toArray();
-
-        $this->assertSame($expected, $result);
-    }
-
     ////  each()  //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public function testEachWithEmptyInput()

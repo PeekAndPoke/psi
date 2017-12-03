@@ -382,12 +382,12 @@ class PsiHighLevelArrayTest extends TestCase
      */
     public function testScenario102()
     {
-        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-        $expected = [2, 20];
+        $input    = [1, 2, 10, 2, 9, 3, 8, 4, 7, 5, 6];
+        $expected = [2, 4];
 
         $result = Psi::it($input)
             ->map(function ($i) { return $i * 2; })
-            ->anyMatch(function ($i) { return $i >= 20; })
+            ->takeUntil(function ($i) { return $i >= 20; })
             ->toArray();
 
         $this->assertSame($expected, $result);
@@ -398,11 +398,11 @@ class PsiHighLevelArrayTest extends TestCase
      */
     public function testScenario103()
     {
-        $input    = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
-        $expected = [2, 20];
+        $input    = [1, 2, 10, 2, 9, 3, 8, 4, 7, 5, 6];
+        $expected = [2, 4];
 
         $result = Psi::it($input)
-            ->anyMatch(function ($i) { return $i >= 10; })
+            ->takeUntil(function ($i) { return $i >= 10; })
             ->map(function ($i) { return $i * 2; })
             ->toArray();
 
@@ -414,14 +414,14 @@ class PsiHighLevelArrayTest extends TestCase
      */
     public function testScenario104()
     {
-        $input    = [1, 1, 10, 10, 2, 2, 9, 9, 15, 3, 3];
-        $expected = [10, 1];
+        $input    = [1, 1, 5, 10, 10, 2, 2, 9, 9, 15, 3, 3];
+        $expected = [5, 1];
 
         $result = Psi::it($input)
-            ->anyMatch(function ($i) { return $i >= 15; })// removes the last two [3, 3]
+            ->takeUntil(function ($i) { return $i >= 15; })// removes the last three [15, 3, 3]
             ->map(function ($i) { return $i * 2; })// multiple all by 2
             ->unique()
-            ->anyMatch(function ($i) { return $i >= 15; })// removes all after [10 * 2, 10 * 2]
+            ->takeUntil(function ($i) { return $i >= 15; })// removes all after and including [10 * 2]
             ->map(function ($i) { return $i / 2; })// divide by 2
             ->rsort()
             ->toArray();

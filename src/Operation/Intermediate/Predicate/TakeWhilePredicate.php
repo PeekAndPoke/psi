@@ -12,15 +12,17 @@ use PeekAndPoke\Component\Psi\Solver\IntermediateContext;
 /**
  * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class AnyMatchPredicate extends AbstractPredicateOperation
+class TakeWhilePredicate extends AbstractPredicateOperation
 {
     /**
      * {@inheritdoc}
      */
     public function apply($input, $index, IntermediateContext $context)
     {
-        $context->outUseItem     = true;
-        $context->outCanContinue = ! $this->test($input, $index);
+        $take = $this->test($input, $index);
+
+        $context->outUseItem     = $take;
+        $context->outCanContinue = $take;
 
         return $input;
     }

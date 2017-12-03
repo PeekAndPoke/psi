@@ -26,10 +26,11 @@ use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\EachOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\LimitOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\MapOperation;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Functional\SkipOperation;
-use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\AnyMatchPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterByPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterKeyPredicate;
 use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\FilterPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\TakeUntilPredicate;
+use PeekAndPoke\Component\Psi\Operation\Intermediate\Predicate\TakeWhilePredicate;
 use PeekAndPoke\Component\Psi\Operation\Terminal\AverageOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectOperation;
 use PeekAndPoke\Component\Psi\Operation\Terminal\CollectToArrayOperation;
@@ -221,17 +222,29 @@ class Psi
     }
 
     /**
-     * Get items until the condition is met (including the last item)
+     * Filter and take all elements in the stream as long as the condition is met
      *
-     * TODO: This needs a better name, e.g. until() and a better definition (should we really include the last one?)
-     *
-     * @param callable|\Closure|UnaryFunction $condition
+     * @param callable|UnaryFunction|BinaryFunction $condition
      *
      * @return $this
      */
-    public function anyMatch($condition)
+    public function takeWhile($condition)
     {
-        $this->operationChain->append(new AnyMatchPredicate($condition));
+        $this->operationChain->append(new TakeWhilePredicate($condition));
+
+        return $this;
+    }
+
+    /**
+     * Filter and take all elements in the stream until the condition is met
+     *
+     * @param callable|UnaryFunction|BinaryFunction $condition
+     *
+     * @return $this
+     */
+    public function takeUntil($condition)
+    {
+        $this->operationChain->append(new TakeUntilPredicate($condition));
 
         return $this;
     }
