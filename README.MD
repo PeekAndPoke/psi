@@ -389,6 +389,8 @@ String-Mappers
 - Str::StrRegexReplace
 - Str::StrMbRegexReplace
 
+... for PHP-Types ... LocalDate::isSameDay
+
 ## How to doc
 
 http://www.sitepoint.com/using-sphinx-for-php-project-documentation/
