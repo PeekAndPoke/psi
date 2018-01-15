@@ -3,7 +3,7 @@
  * Created by gerk on 20.11.17 17:34
  */
 
-namespace PeekAndPoke\Component\Psi\Psi;
+namespace PeekAndPoke\Component\Psi\Psi\Map;
 
 use PeekAndPoke\Component\Psi\Stubs\UnitTestToString;
 use PHPUnit\Framework\TestCase;

@@ -252,6 +252,34 @@ $result = Psi::(input)
     
 ```
 
+Let's get the last person that fits a certain condition (name starting with "A")
+
+```php
+/** @var Person|null $result */
+$result = Psi::(input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filterBy(
+    function(function (Person $p) { return $p->getName(); }),
+    new Psi\Str\IsStartingWith('A')
+  )
+  ->getLast()
+    
+```
+
+Let's get a person that fits a certain condition (name starting with "A")
+
+```php
+/** @var Person|null $result */
+$result = Psi::(input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filterBy(
+    function(function (Person $p) { return $p->getName(); }),
+    new Psi\Str\IsStartingWith('A')
+  )
+  ->getRandom()
+    
+```
+
 
 # Detailed Documentation
 
@@ -259,28 +287,31 @@ $result = Psi::(input)
 
 ### IsArray and IsNotArray
 
-Filters for Arrays
+Filters for Arrays using is_array()
 
 ```php
 $result = Psi($input)->filter(new Psi\IsArray())->toArray();
+
 $result = Psi($input)->filter(new Psi\IsNotArray())->toArray();
 ```
 
 ### IsBool and IsNotBool
 
-Filter for Booleans
+Filter for Booleans using is_bool()
 
 ```php
 $result = Psi($input)->filter(new Psi\IsBool())->toArray();
+
 $result = Psi($input)->filter(new Psi\IsNotBool())->toArray();
 ```
 
 ### IsCallable and IsNotCallable
 
-Filter for Callables
+Filter for Callables using is_callable()
 
 ```php
 $result = Psi($input)->filter(new Psi\IsCallable())->toArray();
+
 $result = Psi($input)->filter(new Psi\IsNotCallable())->toArray();
 ```
 
@@ -296,12 +327,92 @@ $result = Psi($input)->filter(new Psi\IsNotDateString())->toArray();
 
 ### IsEmpty and IsNotEmpty
 
-Filter for empty things
+Filter for empty things using empty()
 
 ```php
 $result = Psi($input)->filter(new Psi\IsEmpty())->toArray();
 
 $result = Psi($input)->filter(new Psi\IsNotEmpty())->toArray();
+```
+
+### IsInstanceOf and IsNotInstanceOf
+
+Filter for class instance
+
+```php
+$result = Psi($input)->filter(new Psi\IsInstanceOf())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotInstanceOf())->toArray();
+```
+
+### IsInteger and IsNotInteger
+
+Filter for integers using is_int()
+
+```php
+$result = Psi($input)->filter(new Psi\IsInteger())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotInteger())->toArray();
+```
+
+### IsIntegerString and IsNotIntegerString
+
+Filter for strings that contain an integer
+
+```php
+$result = Psi($input)->filter(new Psi\IsIntegerString())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotIntegerString())->toArray();
+```
+
+### IsNull and IsNotNull
+
+Filter for nulls
+
+```php
+$result = Psi($input)->filter(new Psi\IsNull())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
+```
+
+### IsNumeric and IsNotNumeric
+
+Filter for numeric values using is_numeric()
+
+```php
+$result = Psi($input)->filter(new Psi\IsNull())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
+```
+
+### IsObject and IsNotObject
+
+Filter for objects
+
+```php
+$result = Psi($input)->filter(new Psi\IsObject())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotObject())->toArray();
+```
+
+### IsResource and IsNotResource
+
+Filter for resources
+
+```php
+$result = Psi($input)->filter(new Psi\IsResource())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
+```
+
+### IsScalar and IsNotScalar
+
+Filter for scalar values using is_scalar()
+
+```php
+$result = Psi($input)->filter(new Psi\IsResource())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
 ```
 
 ## Filter - comparison
@@ -317,8 +428,28 @@ $result = Psi($input)->filter(new Psi\IsEqualTo("Summer"))->toArray();
 $result = Psi($input)->filter(new Psi\IsNotEqualTo("Winter"))->toArray();
 ```
 
+# UnitTest
+
+First install all dependencies
+
+```bash
+./composer install
+```
+
+Then run all tests
+
+```bash
+vendor/bin/phpunit
+```
+
 
 # Releases
+
+## new in v1.1.0
+
+Moved mapper ToFloat, ToInteger, ToString to Psi\Map\...
+
+Old versions are kept for compatibility and marked as deprecated.
 
 ## new in v0.6.4
 

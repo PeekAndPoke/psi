@@ -5,41 +5,13 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\UnaryFunction;
-
 /**
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @deprecated Will be removed in a future version. Use Map\ToInteger instead
+ *
+ * @see        Map\ToInteger
+ *
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToInteger implements UnaryFunction
+class ToInteger extends Map\ToInteger
 {
-    /** @var int */
-    private $default;
-
-    /**
-     * ToInteger constructor.
-     *
-     * @param int $default
-     */
-    public function __construct($default = 0)
-    {
-        $this->default = (int) $default;
-    }
-
-    /**
-     * @param mixed $input
-     *
-     * @return int
-     */
-    public function __invoke($input)
-    {
-        if (is_object($input) && method_exists($input, '__toString')) {
-            $input = (string) $input;
-        }
-
-        if (is_numeric($input)) {
-            return (int) (0 + $input);
-        }
-
-        return $this->default;
-    }
 }

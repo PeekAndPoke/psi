@@ -5,41 +5,13 @@
 
 namespace PeekAndPoke\Component\Psi\Psi;
 
-use PeekAndPoke\Component\Psi\UnaryFunction;
-
 /**
+ * @deprecated Will be removed in a future version. Use Map\ToString instead
  *
+ * @see        Map\ToString
  *
- * @author Karsten J. Gerber <kontakt@karsten-gerber.de>
+ * @author     Karsten J. Gerber <kontakt@karsten-gerber.de>
  */
-class ToString implements UnaryFunction
+class ToString extends Map\ToString
 {
-    /** @var string */
-    private $default;
-
-    /**
-     * @param string $default
-     */
-    public function __construct($default = '')
-    {
-        $this->default = (string) $default;
-    }
-
-    /**
-     * @param mixed $input
-     *
-     * @return string
-     */
-    public function __invoke($input)
-    {
-        if (is_scalar($input)) {
-            return (string) $input;
-        }
-
-        if (is_object($input) && method_exists($input, '__toString')) {
-            return (string) $input;
-        }
-
-        return $this->default;
-    }
 }
