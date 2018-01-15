@@ -7,8 +7,8 @@ namespace PeekAndPoke\Component\Psi\Operation\FullSet;
 
 use PeekAndPoke\Component\Psi\Psi;
 use PeekAndPoke\Component\Psi\Psi\Map\Identity;
-use PeekAndPoke\Component\Psi\Psi\ToInteger;
-use PeekAndPoke\Component\Psi\Psi\ToString;
+use PeekAndPoke\Component\Psi\Psi\Map\ToInteger;
+use PeekAndPoke\Component\Psi\Psi\Map\ToString;
 use PeekAndPoke\Component\Psi\Stubs\UnitTestPsiObject;
 use PHPUnit\Framework\TestCase;
 
