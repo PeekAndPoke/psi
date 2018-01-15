@@ -13,6 +13,13 @@ PSI consists of multiple small operations that can be combined and chained. Doin
 
 Let's have a look at some examples.
 
+# TOC
+
+- [Examples](#examples)
+- [Details Docs](#detailed-documentation)
+- [Unit Tests](#unit-tests)
+- [Releases](#releases)
+
 ## Examples
 
 ### 1. Get all adults 
@@ -428,7 +435,7 @@ $result = Psi($input)->filter(new Psi\IsEqualTo("Summer"))->toArray();
 $result = Psi($input)->filter(new Psi\IsNotEqualTo("Winter"))->toArray();
 ```
 
-# UnitTest
+# UnitTests
 
 First install all dependencies
 
