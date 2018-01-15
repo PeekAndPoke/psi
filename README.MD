@@ -19,6 +19,7 @@ Let's have a look at some examples.
 - [Details Docs](#detailed-documentation)
 - [UnitTests](#unittests)
 - [Releases](#releases)
+- [Todos and ideas](#todos-and-ideas)
 
 ## Examples
 
@@ -803,9 +804,9 @@ $result = Psi::it($values)
 
 - things like new \DateTimeZone('+02:00') not possible -> Therefore LocalDate not working on HHVM
 
-### FullSet manipulations
+### general
 
--> have a look a lodash.js what do they do and how do they call the methods
+- make custom TerminalOperations possible
 
 ### Unary filter functions for strings
 
@@ -819,7 +820,3 @@ String-Mappers
 - Str::StrMbRegexReplace
 
 ... for PHP-Types ... LocalDate::isSameDay
-
-## How to doc
-
-http://www.sitepoint.com/using-sphinx-for-php-project-documentation/
