@@ -2,32 +2,166 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PeekAndPoke/psi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/PeekAndPoke/psi/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/PeekAndPoke/psi/badges/build.png?b=master)](https://scrutinizer-ci.com/g/PeekAndPoke/psi/build-status/master)
 
-# PSI
+# Introduction
 
-PSI aims at helping you to write better and more stable PHP-Code. Especially when it comes to iterating, filter,
-sorting.
+## What is PSI ?
 
-## Example
+PSI aims at helping you to write cleaner and more stable PHP-Code. Especially when it comes to iterating, filter,
+sorting array or array-like data.
 
-```php
-   
+PSI consists of multiple small operations that can be chained. Doing so results in easier to read and more expressive code.
+
+## Examples
+
+### 1. Get all adults 
+
+```php   
 $input = $service->getStuff();
 
+/** @var Person[] $result */
 $result = Psi::it($input)
-  ->filter(new IsInstanceOf(Person::class))
+  ->filter(new Psi\IsInstanceOf(Person::class))
   ->filter(function (Person $p) { return $p->getAge() >= 18; })
-  ->sortBy(function (Person $p) { return $p->getAge(); })
-  ->reverse()
-  ->collect();
-
+  ->toArray();
 ```
 
-The example above will filter the input and will only keep instances of *Person* that have an age of at least 18 years,
-sorts them by age descending.
+.., and sort them by age ...
 
-## Go ahead
+```php   
+$input = $service->getStuff();
 
-Find out more and the full documentation at [http://psi.readthedocs.org](http://psi.readthedocs.org)
+/** @var Person[] $result */
+$result = Psi::it($input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->sortBy(function (Person $p) { return $p->getName(); })
+  ->toArray();
+```
+
+... or sort them by age descending
+
+```php   
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->sortBy(function (Person $p) { return $p->getName(); })
+  ->reverse()
+  ->toArray();
+```
+
+### 2. Skip and Limit
+
+Let's get up to 5 adults but skip the first 10:
+
+```php   
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->skip(10)
+  ->limit(5)
+  ->toArray();
+```
+
+Or let's skip the first 10 no matter what they are and then get up to 5 adults
+
+```php   
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->skip(10)
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->limit(5)
+  ->toArray();
+```
+
+Or let's skip the first 10, then get up to 5 and then filter the adults out of these
+
+```php   
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->skip(10)
+  ->limit(5)
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->toArray();
+```
+
+### 3. Min, max, average. mean
+
+Let's get the youngest age of all people we know:
+
+```php   
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->min();
+```
+
+Let's get the oldest age of all:
+
+```php   
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->max();
+```
+
+Let's get the average age:
+
+```php   
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->avg();
+```
+
+Let's get the median age:
+
+```php   
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->median();
+```
+
+Let's get the avg age of all adults:
+
+```php   
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->median();
+```
+
+
+
+# Releases
 
 ## new in v0.6.4
 
