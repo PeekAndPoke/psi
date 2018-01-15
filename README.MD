@@ -9,13 +9,15 @@
 PSI aims at helping you to write cleaner and more stable PHP-Code. Especially when it comes to iterating, filter,
 sorting array or array-like data.
 
-PSI consists of multiple small operations that can be chained. Doing so results in easier to read and more expressive code.
+PSI consists of multiple small operations that can be combined and chained. Doing so results in easier to read and more expressive code.
+
+Let's have a look at some examples.
 
 ## Examples
 
 ### 1. Get all adults 
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -27,7 +29,7 @@ $result = Psi::it($input)
 
 .., and sort them by age ...
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -40,7 +42,7 @@ $result = Psi::it($input)
 
 ... or sort them by age descending
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -52,11 +54,62 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-### 2. Skip and Limit
+### 2. Advanced filtering
+
+*Psi::filterBy()* let's you use combine mapping and filtering. 
+
+Let's get all adults by using Psi\IsGreaterThanOrEqual()
+ 
+```php
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filterBy(
+    function (Person $p) { return $p->getAge(); }, // map the input
+    new Psi\IsGreaterThanOrEqual(18)               // apply filter on the mapped value
+  )
+  ->toArray();
+```
+
+### 4. Grouping
+
+Let's group all persons by their age
+
+```php
+$input = $service->getStuff();
+
+/** @var Person[] $result */
+$result = Psi::it($input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->groupBy(
+    function (Person $p) { return $p->getAge(); },   // define the group
+  )
+  ->toKeyValueArray();                               // toKeyValueArray() will preserve keys, in our case the age-groups
+```
+
+
+### 5. Multiple inputs
+
+You can pass multiple array or array-like parameters to Psi::it(... $inputs) 
+
+```php
+/** @var Person[] $result */
+$result = Psi::it(
+    $service->getStuff(),
+    $service->getMoreStuff(),
+    $service->getEvenMoreStuff()    
+  )
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->toArray();
+```
+
+### 6. Skip and Limit
 
 Let's get up to 5 adults but skip the first 10:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -70,7 +123,7 @@ $result = Psi::it($input)
 
 Or let's skip the first 10 no matter what they are and then get up to 5 adults
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -84,7 +137,7 @@ $result = Psi::it($input)
 
 Or let's skip the first 10, then get up to 5 and then filter the adults out of these
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -96,11 +149,35 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-### 3. Min, max, average. mean
+### 7. Count, sum, min, max, average, median
+
+Let's get the number of adults:
+
+```php
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filter(function (Person $p) { return $p->getAge() >= 18; })
+  ->count();
+```
+
+Let's sum the age of all persons:
+
+```php
+$input = $service->getStuff();
+
+/** @var float $result */
+$result = Psi::it($input)  
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->sum();
+```
 
 Let's get the youngest age of all people we know:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var float $result */
@@ -112,7 +189,7 @@ $result = Psi::it($input)
 
 Let's get the oldest age of all:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var float $result */
@@ -124,7 +201,7 @@ $result = Psi::it($input)
 
 Let's get the average age:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var float $result */
@@ -136,7 +213,7 @@ $result = Psi::it($input)
 
 Let's get the median age:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var float $result */
@@ -148,7 +225,7 @@ $result = Psi::it($input)
 
 Let's get the avg age of all adults:
 
-```php   
+```php
 $input = $service->getStuff();
 
 /** @var float $result */
@@ -159,6 +236,86 @@ $result = Psi::it($input)
   ->median();
 ```
 
+### 8. Get first, last, random
+
+Let's get the first person that fits a certain condition (name starting with "A")
+
+```php
+/** @var Person|null $result */
+$result = Psi::(input)
+  ->filter(new Psi\IsInstanceOf(Person::class))
+  ->filterBy(
+    function(function (Person $p) { return $p->getName(); }),
+    new Psi\Str\IsStartingWith('A')
+  )
+  ->getFirst()
+    
+```
+
+
+# Detailed Documentation
+
+## Filters - type checks
+
+### IsArray and IsNotArray
+
+Filters for Arrays
+
+```php
+$result = Psi($input)->filter(new Psi\IsArray())->toArray();
+$result = Psi($input)->filter(new Psi\IsNotArray())->toArray();
+```
+
+### IsBool and IsNotBool
+
+Filter for Booleans
+
+```php
+$result = Psi($input)->filter(new Psi\IsBool())->toArray();
+$result = Psi($input)->filter(new Psi\IsNotBool())->toArray();
+```
+
+### IsCallable and IsNotCallable
+
+Filter for Callables
+
+```php
+$result = Psi($input)->filter(new Psi\IsCallable())->toArray();
+$result = Psi($input)->filter(new Psi\IsNotCallable())->toArray();
+```
+
+### IsDateString and IsNotDateString
+
+Checks if the given string is a string that would be understood be new \DateTime($str)
+
+```php
+$result = Psi($input)->filter(new Psi\IsDateString())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotDateString())->toArray();
+```
+
+### IsEmpty and IsNotEmpty
+
+Filter for empty things
+
+```php
+$result = Psi($input)->filter(new Psi\IsEmpty())->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotEmpty())->toArray();
+```
+
+## Filter - comparison
+
+
+### IsEqualTo and IsNotEqualTo
+
+Filter for NON type safe eqaulity (==). See IsSame / IsNotSame for === comparison
+
+```php
+$result = Psi($input)->filter(new Psi\IsEqualTo("Summer"))->toArray();
+
+$result = Psi($input)->filter(new Psi\IsNotEqualTo("Winter"))->toArray();
+```
 
 
 # Releases
