@@ -41,6 +41,6 @@ class GetRandomOperation implements TerminalOperation
             return $this->default;
         }
 
-        return $data[(int) mt_rand(0, $count - 1)];
+        return $data[mt_rand(0, $count - 1)];
     }
 }

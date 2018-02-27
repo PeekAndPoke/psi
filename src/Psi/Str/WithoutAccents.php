@@ -16,11 +16,11 @@ use PeekAndPoke\Component\Psi\UnaryFunction;
  */
 class WithoutAccents implements UnaryFunction
 {
-    /** @var string[] */
+    /** @var string[]|null */
     private static $utf8Map;
-    /** @var string[] */
+    /** @var string[]|null */
     private static $isoIn;
-    /** @var string[] */
+    /** @var string[]|null */
     private static $isoOut;
 
     public function __invoke($input)

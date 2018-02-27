@@ -128,7 +128,7 @@ class PsiTerminalOperationsTest extends TestCase
 
         $result = Psi::it($input)->map(function ($i) { return $i * 2; })->toArray();
 
-        $this->assertTrue(is_array($result));
+        $this->assertTrue(\is_array($result));
         $this->assertEquals($expected, $result);
     }
 

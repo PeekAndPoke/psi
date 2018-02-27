@@ -73,6 +73,9 @@
     </inspection_tool>
     <inspection_tool class="PhpIllegalPsrClassPathInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpMethodOrClassCallIsNotCaseSensitiveInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpUnitTestsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="PROMOTE_PHPUNIT_API" value="false" />
+    </inspection_tool>
     <inspection_tool class="PhpVariableVariableInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="SecurityAdvisoriesInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="optionConfiguration">

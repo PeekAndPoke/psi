@@ -16,7 +16,7 @@ interface Solver
      * @param \Iterator $operations
      * @param \Iterator $items
      *
-     * @return \ArrayIterator
+     * @return \Iterator
      */
     public function solve(\Iterator $operations, \Iterator $items);
 }

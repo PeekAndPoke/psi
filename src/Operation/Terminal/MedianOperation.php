@@ -23,7 +23,7 @@ class MedianOperation implements TerminalOperation
      */
     public function apply(\Iterator $set)
     {
-        /** @var float[] $data */
+        /** @var mixed[] $data */
         $data  = array_values(iterator_to_array($set));
         $count = count($data);
 

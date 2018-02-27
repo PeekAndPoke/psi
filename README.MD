@@ -806,7 +806,7 @@ $result = Psi::it($values)
 
 ### general
 
-- make custom TerminalOperations possible
+- make custom TerminalOperations possible Psi::reduce()
 
 ### Unary filter functions for strings
 
