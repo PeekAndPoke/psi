@@ -4,14 +4,10 @@
 
 # Introduction
 
-## What is PSI ?
-
-PSI aims at helping you to write cleaner and more stable PHP-Code. Especially when it comes to iterating, filter,
-sorting array or array-like data.
+PSI helps you to write cleaner and more stable PHP-Code. Especially when it comes to iterating, filtering, mapping,
+sorting arrays or array-like data.
 
 PSI consists of multiple small operations that can be combined and chained. Doing so results in easier to read and more expressive code.
-
-Let's have a look at some examples.
 
 # TOC
 
@@ -23,7 +19,10 @@ Let's have a look at some examples.
 
 ## Examples
 
-### 1. Get all adults 
+Let's have a look at some examples.
+
+
+### Get all adults 
 
 ```php
 $input = $service->getStuff();
@@ -35,7 +34,23 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-.., and sort them by age ...
+In plain PHP this might looks like:
+
+```php
+$ipnut = $service->getStuff();
+
+$result = [];
+
+foreach ($input as $item) {
+  
+  if ($item instanceof Person && $item->getAge() >= 18) {
+    $result[] = $item
+  }
+}
+ 
+```
+
+### Get all adults and sort them by age
 
 ```php
 $input = $service->getStuff();
@@ -44,11 +59,31 @@ $input = $service->getStuff();
 $result = Psi::it($input)
   ->filter(new Psi\IsInstanceOf(Person::class))
   ->filter(function (Person $p) { return $p->getAge() >= 18; })
-  ->sortBy(function (Person $p) { return $p->getName(); })
+  ->sortBy(function (Person $p) { return $p->getAge(); })
   ->toArray();
 ```
 
-... or sort them by age descending
+In plain PHP this might looks like:
+
+```php
+$ipnut = $service->getStuff();
+
+$result = [];
+
+foreach ($input as $item) {
+  
+  if ($item instanceof Person && $item->getAge() >= 18) {
+    $result[] = $item
+  }
+}
+
+usort($result, function (Person $p1, Person $p2) {
+ 
+  return $p1->getAge() <=> $p2->getAge(); 
+}); 
+```
+
+### Get all adults and sort them by age descending
 
 ```php
 $input = $service->getStuff();
