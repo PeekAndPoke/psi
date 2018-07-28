@@ -1,6 +1,6 @@
 {
   "name": "peekandpoke/psi",
-  "description": "Java Streams Api inspired implementation for PHP. Php Streams Impl: PSI",
+  "description": "Php Simple Iterations. Inspired by Java Streams Api.",
   "type": "library",
   "license": "BSD-3-Clause",
   "authors": [
