@@ -101,7 +101,9 @@ $result = Psi::it($input)
 
 *Psi::filterBy()* let's you use combine mapping and filtering. 
 
-Let's get all adults by using Psi\IsGreaterThanOrEqual()
+Let's get all adults by checking the age using Psi\IsGreaterThanOrEqual(). 
+
+The example below will also give you all Persons with an age greater than or equal to 18.
  
 ```php
 $input = $service->getStuff();
@@ -130,6 +132,32 @@ $result = Psi::it($input)
     function (Person $p) { return $p->getAge(); },   // define the group
   )
   ->toKeyValueArray();                               // toKeyValueArray() will preserve keys, in our case the age-groups
+
+var_dump($result);
+```
+This might output:
+
+```
+array(3) {
+  [7] =>
+  array(2) { 
+    [0] =>
+    object(Person) ...
+    [1] =>
+    object(Person) ...
+  }
+  [15] =>
+  array(1) {
+    [0] =>
+    object(Person) ...
+    ...
+  }
+  [21] =>
+  array (2) {
+    ...
+  }
+  ...  
+}
 ```
 
 
@@ -194,7 +222,7 @@ $result = Psi::it($input)
 
 ### 7. Count, sum, min, max, average, median
 
-Let's get the number of adults:
+Let's count the number of adults:
 
 ```php
 $input = $service->getStuff();
@@ -266,7 +294,7 @@ $result = Psi::it($input)
   ->median();
 ```
 
-Let's get the avg age of all adults:
+Let's get the median age of all adults:
 
 ```php
 $input = $service->getStuff();
@@ -309,7 +337,7 @@ $result = Psi::(input)
     
 ```
 
-Let's get a person that fits a certain condition (name starting with "A")
+Let's get a random person that fits a certain condition (name starting with "A")
 
 ```php
 /** @var Person|null $result */
@@ -333,9 +361,9 @@ $result = Psi::(input)
 Filters for Arrays using is_array()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsArray())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsArray())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotArray())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotArray())->toArray();
 ```
 
 ### IsBool and IsNotBool
@@ -343,9 +371,9 @@ $result = Psi($input)->filter(new Psi\IsNotArray())->toArray();
 Filter for Booleans using is_bool()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsBool())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsBool())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotBool())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotBool())->toArray();
 ```
 
 ### IsCallable and IsNotCallable
@@ -353,9 +381,9 @@ $result = Psi($input)->filter(new Psi\IsNotBool())->toArray();
 Filter for Callables using is_callable()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsCallable())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsCallable())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotCallable())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotCallable())->toArray();
 ```
 
 ### IsDateString and IsNotDateString
@@ -363,9 +391,9 @@ $result = Psi($input)->filter(new Psi\IsNotCallable())->toArray();
 Checks if the given string is a string that would be understood be new \DateTime($str)
 
 ```php
-$result = Psi($input)->filter(new Psi\IsDateString())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsDateString())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotDateString())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotDateString())->toArray();
 ```
 
 ### IsEmpty and IsNotEmpty
@@ -373,9 +401,9 @@ $result = Psi($input)->filter(new Psi\IsNotDateString())->toArray();
 Filter for empty things using empty()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsEmpty())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsEmpty())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotEmpty())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotEmpty())->toArray();
 ```
 
 ### IsInstanceOf and IsNotInstanceOf
@@ -383,9 +411,9 @@ $result = Psi($input)->filter(new Psi\IsNotEmpty())->toArray();
 Filter for class instance
 
 ```php
-$result = Psi($input)->filter(new Psi\IsInstanceOf())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsInstanceOf())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotInstanceOf())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotInstanceOf())->toArray();
 ```
 
 ### IsInteger and IsNotInteger
@@ -393,9 +421,9 @@ $result = Psi($input)->filter(new Psi\IsNotInstanceOf())->toArray();
 Filter for integers using is_int()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsInteger())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsInteger())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotInteger())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotInteger())->toArray();
 ```
 
 ### IsIntegerString and IsNotIntegerString
@@ -403,9 +431,9 @@ $result = Psi($input)->filter(new Psi\IsNotInteger())->toArray();
 Filter for strings that contain an integer
 
 ```php
-$result = Psi($input)->filter(new Psi\IsIntegerString())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsIntegerString())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotIntegerString())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotIntegerString())->toArray();
 ```
 
 ### IsNull and IsNotNull
@@ -413,9 +441,9 @@ $result = Psi($input)->filter(new Psi\IsNotIntegerString())->toArray();
 Filter for nulls
 
 ```php
-$result = Psi($input)->filter(new Psi\IsNull())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNull())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotNull())->toArray();
 ```
 
 ### IsNumeric and IsNotNumeric
@@ -423,9 +451,9 @@ $result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
 Filter for numeric values using is_numeric()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsNull())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNull())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotNull())->toArray();
 ```
 
 ### IsObject and IsNotObject
@@ -433,9 +461,9 @@ $result = Psi($input)->filter(new Psi\IsNotNull())->toArray();
 Filter for objects
 
 ```php
-$result = Psi($input)->filter(new Psi\IsObject())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsObject())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotObject())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotObject())->toArray();
 ```
 
 ### IsResource and IsNotResource
@@ -443,9 +471,9 @@ $result = Psi($input)->filter(new Psi\IsNotObject())->toArray();
 Filter for resources
 
 ```php
-$result = Psi($input)->filter(new Psi\IsResource())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsResource())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotResource())->toArray();
 ```
 
 ### IsScalar and IsNotScalar
@@ -453,9 +481,9 @@ $result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
 Filter for scalar values using is_scalar()
 
 ```php
-$result = Psi($input)->filter(new Psi\IsResource())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsResource())->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotResource())->toArray();
 ```
 
 ## Filter - comparison
@@ -466,9 +494,9 @@ $result = Psi($input)->filter(new Psi\IsNotResource())->toArray();
 Filter for NON type safe eqaulity (==). See IsSame / IsNotSame for === comparison
 
 ```php
-$result = Psi($input)->filter(new Psi\IsEqualTo("Summer"))->toArray();
+$result = Psi::it($input)->filter(new Psi\IsEqualTo("Summer"))->toArray();
 
-$result = Psi($input)->filter(new Psi\IsNotEqualTo("Winter"))->toArray();
+$result = Psi::it($input)->filter(new Psi\IsNotEqualTo("Winter"))->toArray();
 ```
 
 # UnitTests
