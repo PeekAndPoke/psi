@@ -313,7 +313,7 @@ Let's get the first person that fits a certain condition (name starting with "A"
 
 ```php
 /** @var Person|null $result */
-$result = Psi::(input)
+$result = Psi::it(input)
   ->filter(new Psi\IsInstanceOf(Person::class))
   ->filterBy(
     function(function (Person $p) { return $p->getName(); }),
@@ -327,7 +327,7 @@ Let's get the last person that fits a certain condition (name starting with "A")
 
 ```php
 /** @var Person|null $result */
-$result = Psi::(input)
+$result = Psi::it(input)
   ->filter(new Psi\IsInstanceOf(Person::class))
   ->filterBy(
     function(function (Person $p) { return $p->getName(); }),
@@ -341,7 +341,7 @@ Let's get a random person that fits a certain condition (name starting with "A")
 
 ```php
 /** @var Person|null $result */
-$result = Psi::(input)
+$result = Psi::it(input)
   ->filter(new Psi\IsInstanceOf(Person::class))
   ->filterBy(
     function(function (Person $p) { return $p->getName(); }),
