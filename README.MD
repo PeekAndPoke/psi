@@ -137,13 +137,13 @@ With *Psi::any()* you can check if there is at least one element matching the co
 
 ```php
 $result = Psi::it([2, 1, 4])
-    ->all(new Psi\IsEqualTo(1));  // true, there is on elements that is equal to 1
+    ->any(new Psi\IsEqualTo(1));  // true, there is on elements that is equal to 1
 
 $result = Psi::it([2, 3, 4])
-    ->all(new Psi\IsEqualTo(1));  // false, there is no element that is equal to 1
+    ->any(new Psi\IsEqualTo(1));  // false, there is no element that is equal to 1
 
 $result = Psi::it([])
-    ->all(new Psi\IsEqualTo(1));  // false, when there is no element in the list, then none can match
+    ->any(new Psi\IsEqualTo(1));  // false, when there is no element in the list, then none can match
 ```
 
 
