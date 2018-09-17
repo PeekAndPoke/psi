@@ -99,7 +99,7 @@ $result = Psi::it($input)
 
 ### 2. Advanced filtering
 
-*Psi::filterBy()* let's you use combine mapping and filtering. 
+With *Psi::filterBy()* you can combine mapping and filtering. 
 
 Let's get all adults by checking the age using Psi\IsGreaterThanOrEqual(). 
 
@@ -117,6 +117,35 @@ $result = Psi::it($input)
   )
   ->toArray();
 ```
+
+### 3. Check if all or any elements match
+
+With *Psi::all()* you can check if all elements match the given condition 
+
+```php
+$result = Psi::it([1, 1, 1])
+    ->all(new Psi\IsEqualTo(1));  // true, all elements are equal to 1
+
+$result = Psi::it([1, 2, 3])
+    ->all(new Psi\IsEqualTo(1));  // false, not all elements are equal to 1
+
+$result = Psi::it([])
+    ->all(new Psi\IsEqualTo(1));  // true, since no element does not match the condition
+```
+
+With *Psi::any()* you can check if there is at least one element matching the condition
+
+```php
+$result = Psi::it([2, 1, 4])
+    ->all(new Psi\IsEqualTo(1));  // true, there is on elements that is equal to 1
+
+$result = Psi::it([2, 3, 4])
+    ->all(new Psi\IsEqualTo(1));  // false, there is no element that is equal to 1
+
+$result = Psi::it([])
+    ->all(new Psi\IsEqualTo(1));  // false, when there is no element in the list, then none can match
+```
+
 
 ### 4. Grouping
 
@@ -515,6 +544,15 @@ vendor/bin/phpunit
 
 
 # Releases
+
+## new in v1.2.0
+
+*REMOVED PHP 5.6 SUPPORT*
+
+Added 
+- Psi::all()
+- Psi::any()
+
 
 ## new in v1.1.0
 
