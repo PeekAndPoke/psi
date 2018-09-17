@@ -5,6 +5,8 @@
 
 namespace PeekAndPoke\Component\Psi;
 
+use PeekAndPoke\Component\Psi\Psi\IsEqualTo;
+use PeekAndPoke\Component\Psi\Psi\IsSameAs;
 use PeekAndPoke\Component\Psi\Stubs\UnitTestPsiObject;
 use PHPUnit\Framework\TestCase;
 
@@ -117,6 +119,96 @@ class PsiTerminalOperationsTest extends TestCase
         $result = Psi::it($input)->join(',');
 
         $this->assertEquals($expected, $result);
+    }
+
+    ////  TERMINAL any()  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param array    $input
+     * @param callable $condition
+     * @param          $expected
+     *
+     * @dataProvider provideTestAnyOperation
+     */
+    public function testAnyOperation(array $input, callable $condition, $expected)
+    {
+        $result = Psi::it($input)->any($condition);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function provideTestAnyOperation()
+    {
+        return [
+            // negative cases
+            [
+                [], new IsEqualTo(0), false
+            ],
+            [
+                [], new IsEqualTo(null), false
+            ],
+            [
+                [new \stdClass()], new IsSameAs(new \stdClass()), false
+            ],
+            // positive cases
+            [
+                [1], new IsEqualTo(1), true
+            ],
+            [
+                [1, 1], new IsEqualTo(1), true
+            ],
+            [
+                [2, 1, 3], new IsEqualTo(1), true
+            ],
+            [
+                [$c = new \stdClass()], new IsSameAs($c), true
+            ],
+        ];
+    }
+
+    ////  TERMINAL any()  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param array    $input
+     * @param callable $condition
+     * @param          $expected
+     *
+     * @dataProvider provideTestAllOperation
+     */
+    public function testAllOperation(array $input, callable $condition, $expected)
+    {
+        $result = Psi::it($input)->all($condition);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function provideTestAllOperation()
+    {
+        return [
+            // negative cases
+            [
+                [new \stdClass()], new IsSameAs(new \stdClass()), false
+            ],
+            [
+                [2, 1, 3], new IsEqualTo(1), false
+            ],
+            // positive cases
+            [
+                [], new IsEqualTo(0), true
+            ],
+            [
+                [], new IsEqualTo(null), true
+            ],
+            [
+                [1], new IsEqualTo(1), true
+            ],
+            [
+                [1, 1], new IsEqualTo(1), true
+            ],
+            [
+                [$c = new \stdClass()], new IsSameAs($c), true
+            ],
+        ];
     }
 
     ////  COLLECT toArray()  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

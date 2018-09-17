@@ -603,6 +603,39 @@ class Psi
         return $this->solveOperationsAndApplyTerminal(new CountOperation());
     }
 
+    /**
+     * Returns true if at least one element matches the condition
+     *
+     * @param callable|UnaryFunction|BinaryFunction $condition
+     *
+     * @return bool
+     */
+    public function any($condition)
+    {
+        $this->filter($condition);
+
+        $tmp = new \stdClass();
+
+        return $this->getFirst($tmp) !== $tmp;
+    }
+
+    /**
+     * Returns true if all elements match the condition
+     *
+     * @param callable|UnaryFunction|BinaryFunction $condition
+     *
+     * @return bool
+     */
+    public function all($condition)
+    {
+        return ! $this->any(
+            // TODO: create Not predicate class
+            function ($elem, $idx) use ($condition) {
+                return ! $condition($elem, $idx);
+            }
+        );
+    }
+
     ////  PRIVATE METHODS  /////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
