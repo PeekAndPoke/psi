@@ -126,6 +126,9 @@ With *Psi::all()* you can check if all elements match the given condition
 $result = Psi::it([1, 1, 1])
     ->all(new Psi\IsEqualTo(1));  // true, all elements are equal to 1
 
+$result = Psi::it([1, 1, 1])
+    ->all(function ($it) { return $it === 1 });  // true, all elements are equal to 1
+
 $result = Psi::it([1, 2, 3])
     ->all(new Psi\IsEqualTo(1));  // false, not all elements are equal to 1
 
@@ -138,6 +141,9 @@ With *Psi::any()* you can check if there is at least one element matching the co
 ```php
 $result = Psi::it([2, 1, 4])
     ->any(new Psi\IsEqualTo(1));  // true, there is on elements that is equal to 1
+
+$result = Psi::it([2, 1, 4])
+    ->any(function ($it) { return $it === 1 });  // true, there is on elements that is equal to 1
 
 $result = Psi::it([2, 3, 4])
     ->any(new Psi\IsEqualTo(1));  // false, there is no element that is equal to 1
