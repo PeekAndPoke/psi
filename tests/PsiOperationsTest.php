@@ -305,7 +305,7 @@ class PsiOperationsTest extends TestCase
         $input = [
             $klara = new UnitTestPsiObject('Klara', 4),
             $edgar = new UnitTestPsiObject('Edgar', 3),
-            $anna = new UnitTestPsiObject('Anna', 3),
+            $anna = new UnitTestPsiObject('Anna', 2),
             $me = new UnitTestPsiObject('Me', 38),
         ];
 
@@ -321,7 +321,7 @@ class PsiOperationsTest extends TestCase
         $input = [
             $klara = new UnitTestPsiObject('Klara', 4),
             $edgar = new UnitTestPsiObject('Edgar', 3),
-            $anna = new UnitTestPsiObject('Anna', 3),
+            $anna = new UnitTestPsiObject('Anna', 2),
             $me = new UnitTestPsiObject('Me', 38),
         ];
 
