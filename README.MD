@@ -21,10 +21,10 @@ PSI consists of multiple small operations that can be combined and chained. Doin
 
 Let's have a look at some examples.
 
-
 ### Get all adults 
 
 ```php
+/** @var Person[] $input */
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -37,6 +37,7 @@ $result = Psi::it($input)
 In plain PHP this might looks like:
 
 ```php
+/** @var Person[] $input */
 $ipnut = $service->getStuff();
 
 $result = [];
@@ -53,6 +54,7 @@ foreach ($input as $item) {
 ### Get all adults and sort them by age
 
 ```php
+/** @var Person[] $input */
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -66,6 +68,7 @@ $result = Psi::it($input)
 In plain PHP this might looks like:
 
 ```php
+/** @var Person[] $input */
 $ipnut = $service->getStuff();
 
 $result = [];
@@ -86,6 +89,7 @@ usort($result, function (Person $p1, Person $p2) {
 ### Get all adults and sort them by age descending
 
 ```php
+/** @var Person[] $input */
 $input = $service->getStuff();
 
 /** @var Person[] $result */
@@ -97,7 +101,48 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-### 2. Advanced filtering
+## Mapping
+
+With *Psi::map()* you can convert incoming data.
+
+For example lets convert all persons to ints (the persons age)
+
+```php
+/** @var Person[] $input */
+$input = $service->getStuff();
+
+$result = Psi::it($input)
+  ->map(function (Person $p) { return $p->getAge(); })
+  ->toArray();
+```
+
+This might result in
+
+```
+[10, 20, 18, 31, ...]
+
+```
+
+We could also convert each Person into something else.
+
+```php
+/** @var Person[] $input */
+$input = $service->getStuff();
+
+$result = Psi::it($input)
+  ->sortBy(function (Person $p) { return $p->getName(); })
+  ->map(function (Person $p) { return [ $p->getName(), $p->getAge() ]; })
+  ->toArray();
+```
+
+This might result in
+
+```
+[["Elsa", 20], ["Joe", 10], ["John", 18], ["Mary", 31], ...]
+
+```
+
+## Advanced filtering
 
 With *Psi::filterBy()* you can combine mapping and filtering. 
 
@@ -118,7 +163,7 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-### 3. Check if all or any elements match
+## Check if all or any elements match
 
 With *Psi::all()* you can check if all elements match the given condition 
 
@@ -152,8 +197,7 @@ $result = Psi::it([])
     ->any(new Psi\IsEqualTo(1));  // false, when there is no element in the list, then none can match
 ```
 
-
-### 4. Grouping
+## Grouping
 
 Let's group all persons by their age
 
@@ -196,7 +240,7 @@ array(3) {
 ```
 
 
-### 5. Multiple inputs
+## Multiple inputs
 
 You can pass multiple array or array-like parameters to Psi::it(... $inputs) 
 
@@ -211,7 +255,7 @@ $result = Psi::it(
   ->toArray();
 ```
 
-### 6. Skip and Limit
+## Skip and Limit
 
 Let's get up to 5 adults but skip the first 10:
 
@@ -255,7 +299,7 @@ $result = Psi::it($input)
   ->toArray();
 ```
 
-### 7. Count, sum, min, max, average, median
+## Count, sum, min, max, average, median
 
 Let's count the number of adults:
 
@@ -342,7 +386,7 @@ $result = Psi::it($input)
   ->median();
 ```
 
-### 8. Get first, last, random
+## Get first, last, random
 
 Let's get the first person that fits a certain condition (name starting with "A")
 
