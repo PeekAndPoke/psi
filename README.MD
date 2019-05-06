@@ -9,6 +9,8 @@ sorting arrays or array-like data.
 
 PSI consists of multiple small operations that can be combined and chained. Doing so results in easier to read and more expressive code.
 
+PSI supports PHP versions >= 7.0
+
 # TOC
 
 - [Examples](#examples)
